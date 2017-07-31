@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Felta</title>
+</head>
+<style>
+    @font-face{
+        font-family: 'Akkurat';
+        font-weight: 300;
+        font-size: 1em;
+        src: url('http://kolmans.com/fonts/Akkurat.woff2');
+    }
+    body{
+        padding: 0;
+        margin: 0;
+        background: white;
+    }
+    h2{
+        font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+        color: #010e21;
+        position: relative;
+    }
+    .container{
+        width: 100%; 
+        height: 100%; 
+        background: white;
+    }
+    table{
+        width: 560px; 
+        background: rgb(211,211,211);
+        margin: 0 auto;
+        outline: none;
+        border: none;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 35px -8px rgba(0,0,0,0.45);
+    }
+    tr.top{
+        position: relative;
+        width: 100%;
+        height: 50px;
+        margin: 0;
+        padding: 0;
+        background: #f1f1f1;
+    }
+    tr.top td{
+        display: block;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+    tr.top img{
+        height: 65px;
+        width: auto;
+        background: rgb(80,169,112);
+    }
+    tr.bottom{
+        width: 100%;
+        background: #010e21;
+        color: rgba(211,211,211,0.8);
+        font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+        font-weight: 600;
+    }
+    tr.gray{
+        background: rgb(211,211,211);
+        color: #010e21;
+    }
+    tr.bottom.gray h1,tr.bottom.gray h2{
+        color: #010e21;
+    }
+    tr.white{
+        background: #f1f1f1;
+        color: #010e21;
+    }
+    tr.bottom.white h1,tr.bottom.white h2{
+        color: #010e21;
+    }
+    tr.bottom h1{
+        font-family: 'Akkurat';
+        font-size: 25px;
+        font-weight: 300;
+        margin-top: 20px;
+        color: #fafafa;
+        width: 70%;
+    }
+    tr.bottom h2{
+        font-size: 1.1em;
+        margin: 0px;
+        color:  #fafafa;
+    }
+    tr.bottom td{
+        padding: 40px 30px 0px 30px;
+    }
+    tr.bottom.fullpadding td{
+        padding: 20px 30px;
+    }
+    tr.email button{
+        width: 200px;
+        height: 50px;
+        border: 4px solid rgb(80,169,112);
+        border-radius: 4px;
+        background: rgb(80,169,112);
+        margin: 0 auto;
+        display: block;
+        position: relative;
+        font-family: 'Akkurat';
+        font-size: 25px;
+        font-weight: 300;
+        color: #010e21;
+        transition: 0.4s;
+        -webkit-transition: 0.4s;
+    }
+    tr.email div:hover{
+        cursor: pointer;
+        color: #fafafa !important;
+    }
+    tr.email a{
+        text-decoration: none;
+    }
+    tr.email td{
+        padding: 45px 0;
+    }
+    tr.img{
+        height: 200px;
+        width: 100%;
+        overflow: hidden;
+        background: #010e21;
+    }
+    tr.img img{
+        height: auto;
+        width: 100%;
+        display: inherit;
+    }
+    tr.img td{
+        height: 200px;
+        display: block;
+        overflow: hidden;
+    }
+    tr.footer td{
+        height: 50px;
+    }
+</style>
+<body style="padding: 0;margin: 0;background: white;">
+    <div class="container" " style="width: 100%;height: 100%;background: white;">
+        <table style="width: 560px !important;background: rgb(211,211,211);margin: 0 auto;outline: none;border: none;border-collapse: collapse;     box-shadow: 0px 0px 35px -8px rgba(0,0,0,0.45);">
+            <tr class="top" style="position: relative;width: 100%;height: 50px;;margin: 0;padding: 0;background: #010e21;">
+                <td style=";margin: 0;padding: 0;position: relative;"><img src="http://kolmans.com/images/kolmans.png" alt="kolmans" style="height: 65px;width: 65px;display:block; margin-left: 247px;position:absolute;background: rgb(80,169,112);"></td>
+            </tr>
+            <tr class="img" style="height: 200px;width: 100%;overflow: hidden;background: #010e21;">
+                <td style="height: 200px;display: block;overflow: hidden; padding: 0px">
+                    <img src="http://kolmans.com/images/welcome_email.png" style="height: auto;width: 560px !important; max-width: 560px;display: inherit;">
+                </td>
+            </tr>   
+            <tr class="bottom" style="width: 100%;background: #010e21;color: rgb(169, 172, 175) !important;font-family: &quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;font-weight: 600; font-size: 16px">
+                <td style="padding: 40px 30px 0px 30px;">
+                    <h2 style="font-family: &quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;color: #fafafa;position: relative;font-size: 20px;margin-top: 20px;margin: 0px;">Welcome!</h2>
+                    <div style="width: 50px; height: 4px; background: rgb(80,169,112); margin-top: 5px"></div>
+                    <h1 style="font-family: 'Akkurat';font-size: 25px;font-weight: 300;margin-top: 20px;color: #fafafa;width: 70%;">Let's get started! In order to get you all set up, you will have to confirm your email</h1>
+                    We're excited to have you. In order to have a high quality standard for users, we have to to go through a couple of steps. One of them is to confirm your email.
+                </td>
+            </tr>
+            <tr class="bottom email" style="width: 100%;background: #010e21;color: rgb(169, 172, 175);font-family: &quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;font-weight: 600;">
+                <td style="padding: 35px 0;">
+                    <a href="http://kolmans.com/user/verify/key/{key}" style="text-decoration: none !important;"><div style="text-decoration: none;width: 200px;height: 40px;border: 2px solid rgb(80,169,112);border-radius: 4px;background: rgb(80,169,112);margin: 0 auto;display: block;position: relative;font-size: 16px;font-weight: 600;color: #010e21;transition: 0.4s;-webkit-transition: 0.4s; text-align: center; line-height: 40px">Confirm my email</div></a>
+                </td>
+            </tr>
+            <tr class="bottom" style="width: 100%;background: #010e21;color: rgb(169, 172, 175);font-family: &quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;font-weight: 600; font-size: 15px">
+                <td style="padding: 0;width: 500px;margin-left: 30px !important;margin-bottom: 45px !important;border-left: 4px solid rgb(80,169,112);display: block;padding-left: 15px;"><i style="width: 100%; margin: auto">*Button isnt't working? Here's the link, copy it into your browser: <a href="http://kolmans.com/user/verify/key/{key}"; style="color: #f1f1f1;">http://kolmans.com/user/verify/key/{key}</a></i></td>
+            </tr>
+  
+            <tr class="bottom white fullpadding" style="width: 100%;background: #f1f1f1;color: #010e21;font-family: &quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;font-weight: 600; font-size: 16px">
+                <td style="padding: 20px 30px;">
+                    <h2 style="font-family: &quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;color: #010e21;position: relative;font-size: 20px;margin-top: 20px;margin: 0px;">Wrong person?</h2>
+                    <div style="width: 50px; height: 4px; background: rgb(80,169,112); margin-top: 5px"></div>
+                    <h1 style="font-family: 'Akkurat';font-size: 25px;font-weight: 300;margin-top: 20px;color: #010e21 !important;width: 70%;">It may have happend that someone used your email, ignore it. </h1>
+                    In the occasion that this email was not meant for you, ignore it, and all will be fine. 
+                </td>
+            </tr>
+            <tr class="footer gray" style="background: rgb(211,211,211);color: #010e21;">
+                <td style="height: 50px;">
+                    <div style="text-align: center; color:#010e21; ">
+                        <img src="http://kolmans.com/images/bottom.png" style="height: 25px; width: 104px; margin-top: 15px">
+                    </div>
+                    <div style="text-align: center; padding: 15px 0; color: #010e21; font-weight: 600; font-family:&quot;Open sans&quot;, &quot;Segoe UI&quot;, &quot;Segoe WP&quot;, Helvetica, Arial, sans-serif;">
+                        <a href="http://kolmans.com" style="text-decoration: none !important;color: rgb(100,100,100); padding: 0 10px;">Services</a>
+                        <a href="http://kolmans.com" style="text-decoration: none !important;color: rgb(100,100,100); padding: 0 10px;">Privacy Policy</a>
+                        <a href="http://kolmans.com" style="text-decoration: none !important;color: rgb(100,100,100); padding: 0 10px;">Services</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

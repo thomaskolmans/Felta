@@ -1,0 +1,551 @@
+@charset "UTF-8";
+/* line 5, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: FontAwesome;
+  src: url(../fonts/FontAwesome.otf);
+}
+/* line 4, ../sass/base/_base.sass */
+body {
+  background: #f1f1f1;
+  text-align: center;
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  overflow-x: none;
+}
+
+/* line 9, ../sass/base/_base.sass */
+.top {
+  width: 100%;
+  height: 55px;
+  background: #000c0c;
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+/* line 18, ../sass/base/_base.sass */
+.top .listbutton {
+  float: left;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  margin-top: 10px;
+  display: none;
+  color: #f1f1f1;
+  position: relative;
+  margin-left: 15px;
+}
+/* line 28, ../sass/base/_base.sass */
+.top .listbutton:hover {
+  cursor: pointer;
+}
+/* line 30, ../sass/base/_base.sass */
+.top .listbutton:hover::before {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  color: #2196F3;
+}
+/* line 33, ../sass/base/_base.sass */
+.top .listbutton::before {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  position: absolute;
+  left: 0;
+  color: #f1f1f1;
+  content: "";
+  font-family: "FontAwesome";
+  font-size: 25px;
+}
+/* line 42, ../sass/base/_base.sass */
+.top .account {
+  width: auto;
+  min-width: 250px;
+  float: right;
+  height: 55px;
+  color: #f1f1f1;
+  text-align: center;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 50, ../sass/base/_base.sass */
+.top .account:hover {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  cursor: pointer;
+  color: #2196F3;
+  background: #151e23;
+}
+/* line 55, ../sass/base/_base.sass */
+.top .account:hover menu::before {
+  color: #2196F3;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 58, ../sass/base/_base.sass */
+.top .account:hover menu li {
+  display: block;
+}
+/* line 60, ../sass/base/_base.sass */
+.top .account .name {
+  line-height: 55px;
+  margin-right: 40px;
+  margin-left: 40px;
+  position: relative;
+}
+/* line 65, ../sass/base/_base.sass */
+.top .account menu {
+  width: 100%;
+  display: inline-block;
+}
+/* line 68, ../sass/base/_base.sass */
+.top .account menu:hover {
+  cursor: pointer;
+}
+/* line 70, ../sass/base/_base.sass */
+.top .account menu::before {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  height: 55px;
+  line-height: 55px;
+  top: 0;
+  color: #f1f1f1;
+  position: absolute;
+  right: 20px;
+  z-index: 20;
+  content: "";
+  font-family: "FontAwesome";
+  font-size: 20px;
+}
+/* line 83, ../sass/base/_base.sass */
+.top .account menu a {
+  text-decoration: none;
+}
+/* line 85, ../sass/base/_base.sass */
+.top .account menu li {
+  list-style: none;
+  display: none;
+  background: #000c0c;
+  color: #f1f1f1;
+  text-decoration: none;
+  height: 35px;
+  padding: 0 40px;
+  line-height: 35px;
+  position: relative;
+  text-align: center;
+}
+/* line 96, ../sass/base/_base.sass */
+.top .account menu li i {
+  float: left;
+  line-height: 38px;
+  position: absolute;
+  left: 35px;
+}
+/* line 101, ../sass/base/_base.sass */
+.top .account menu li:hover {
+  color: #2196F3;
+}
+/* line 103, ../sass/base/_base.sass */
+.top button {
+  border: 2px solid #f1f1f1;
+  border-radius: 50px;
+  background: #f1f1f1;
+  color: #000c0c;
+  height: 35px;
+  padding: 0 15px;
+  margin-top: 10px;
+  float: left;
+  margin-left: 250px;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  border-radius: 50px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 119, ../sass/base/_base.sass */
+.top button:hover {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  background: none;
+  color: #f1f1f1;
+  cursor: pointer;
+}
+/* line 124, ../sass/base/_base.sass */
+.top button:active, .top button:focus {
+  outline: none;
+}
+
+/* line 127, ../sass/base/_base.sass */
+.left {
+  position: fixed;
+  height: 100vh;
+  width: 220px;
+  background: #000c0c;
+  box-shadow: 0px 0px 42px -8px black;
+  z-index: 130;
+  top: 0;
+  left: 0;
+}
+/* line 136, ../sass/base/_base.sass */
+.left.active {
+  transform: translateX(0);
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 139, ../sass/base/_base.sass */
+.left img {
+  width: 100px;
+  margin-top: 55px;
+}
+/* line 142, ../sass/base/_base.sass */
+.left ul {
+  margin-top: 75px;
+  color: #f1f1f1;
+  text-align: left;
+  list-style: none;
+}
+/* line 147, ../sass/base/_base.sass */
+.left a {
+  color: #f1f1f1;
+  text-decoration: none;
+}
+/* line 151, ../sass/base/_base.sass */
+.left a.active li, .left a:hover li {
+  cursor: pointer;
+  background: #151e23;
+  color: #2196F3;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 156, ../sass/base/_base.sass */
+.left li {
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  font-size: 23px;
+  font-weight: 100;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 166, ../sass/base/_base.sass */
+.left li:hover, .left li.active {
+  cursor: pointer;
+  background: #151e23;
+  color: #2196F3;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 171, ../sass/base/_base.sass */
+.left li i {
+  padding-right: 15px;
+  margin-left: 15px;
+}
+/* line 174, ../sass/base/_base.sass */
+.left .bottom {
+  width: 220px;
+  height: 35px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  color: #f1f1f1;
+  line-height: 35px;
+}
+/* line 182, ../sass/base/_base.sass */
+.left .bottom .settings, .left .bottom .logout {
+  color: #f1f1f1;
+  font-size: 20px;
+  float: right;
+  display: inline-block;
+  line-height: 30px;
+  margin-right: 10px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 190, ../sass/base/_base.sass */
+.left .bottom .settings i, .left .bottom .logout i {
+  font-size: 30px;
+  padding-left: 20px;
+}
+/* line 193, ../sass/base/_base.sass */
+.left .bottom .settings:hover, .left .bottom .logout:hover {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  color: #2196F3;
+}
+/* line 196, ../sass/base/_base.sass */
+.left .bottom .logout {
+  float: left;
+  display: none;
+}
+
+/* line 199, ../sass/base/_base.sass */
+em, i, cite {
+  font-style: italic;
+}
+
+/* line 201, ../sass/base/_base.sass */
+strong, b {
+  font-weight: 900;
+}
+
+/* line 204, ../sass/base/_base.sass */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+/* line 209, ../sass/base/_base.sass */
+.switch input[type="checkbox"].switcher {
+  display: none;
+}
+
+/* line 211, ../sass/base/_base.sass */
+.tabs {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  background: black;
+  color: white;
+}
+/* line 217, ../sass/base/_base.sass */
+.tabs .tab {
+  width: auto;
+  padding: 15px 25px;
+  float: left;
+  font-weight: 500;
+  font-size: 20px;
+  user-select: none;
+  box-sizing: border-box;
+}
+/* line 225, ../sass/base/_base.sass */
+.tabs .tab.active {
+  background: #151e23;
+  color: #2196F3;
+  border-top: 2px solid #2196F3;
+  padding-top: 13px;
+}
+/* line 230, ../sass/base/_base.sass */
+.tabs .tab:hover, .tabs .tab:active {
+  cursor: pointer;
+  background: #151e23;
+  color: #2196F3;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+
+/* line 235, ../sass/base/_base.sass */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+/* line 246, ../sass/base/_base.sass */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* line 259, ../sass/base/_base.sass */
+input[type="checkbox"].switcher:checked + .slider {
+  background-color: green;
+}
+/* line 261, ../sass/base/_base.sass */
+input[type="checkbox"].switcher:focus + .slider {
+  box-shadow: 0 0 1px green;
+}
+/* line 263, ../sass/base/_base.sass */
+input[type="checkbox"].switcher:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* line 3, ../sass/front.sass */
+form.reset {
+  height: 350px;
+}
+
+/* line 5, ../sass/front.sass */
+form {
+  position: absolute;
+  width: 320px;
+  height: 450px;
+  background: #000c0c;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  display: inline-block;
+  box-shadow: 0px 0px 42px -8px black;
+}
+/* line 15, ../sass/front.sass */
+form .remember {
+  width: 125px;
+  height: 20px;
+  line-height: 20px;
+  float: left;
+  margin-left: 35px;
+}
+/* line 21, ../sass/front.sass */
+form img {
+  width: 100px;
+  margin: 15px;
+}
+/* line 24, ../sass/front.sass */
+form input {
+  width: 250px;
+  height: 35px;
+  margin-top: 4px;
+  border: none;
+  background: #f1f1f1;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+/* line 32, ../sass/front.sass */
+form input:focus, form input:active {
+  outline: none;
+}
+/* line 34, ../sass/front.sass */
+form input[type="checkbox"] {
+  height: 20px;
+  width: 50px;
+  margin-left: 15px;
+}
+/* line 38, ../sass/front.sass */
+form input[type="submit"] {
+  width: 125px;
+  height: 35px;
+  color: #000c0c;
+  font-size: 18px;
+  font-weight: 900;
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  border-radius: 50px;
+  float: right;
+  margin-right: 35px;
+  margin-top: 25px;
+  line-height: 25px;
+  border: 2px solid #f1f1f1;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 53, ../sass/front.sass */
+form input[type="submit"]:hover {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  cursor: pointer;
+  background: none;
+  color: #f1f1f1;
+}
+/* line 58, ../sass/front.sass */
+form a {
+  margin-top: 25px;
+  float: right;
+  margin-right: 35px;
+  color: #f1f1f1;
+}
+/* line 63, ../sass/front.sass */
+form a:hover {
+  font-weight: 700;
+}
+/* line 65, ../sass/front.sass */
+form .input-group:not(:first-child) {
+  margin-top: 15px;
+}
+/* line 67, ../sass/front.sass */
+form label {
+  width: 250px;
+  display: block;
+  text-align: left;
+  margin: auto;
+  color: #f1f1f1;
+}
+/* line 73, ../sass/front.sass */
+form h1 {
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  font-size: 65px;
+  font-weight: 100;
+  position: absolute;
+  color: #000c0c;
+  top: -70px;
+}
