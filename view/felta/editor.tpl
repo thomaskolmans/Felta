@@ -8,6 +8,7 @@
  <link rel="stylesheet" href="felta/fonts/font-awesome.css" />
  <link rel="icon" href="felta/images/black.png" type="image/png" />
  <script src="felta/js/jquery-1.11.3.min.js"></script>
+ <script src="felta/js/jquery-mobile.js"></script>
  <script src="felta/js/Jcrop/jquery.Jcrop.js"></script>
  <script src="felta/js/quill/quill.min.js"></script>
  <script src="felta/js/edit.js"></script>

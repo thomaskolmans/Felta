@@ -1,6 +1,6 @@
 </html>
 <head>
-   <title>Felta System | Social</title>
+   <title>Felta System | Statistics</title>
    <link href="felta/stylesheets/main.css" rel="stylesheet">
    <link href="felta/js/quill/quill.snow.css" rel="stylesheet">
    <link rel="icon" href="felta/images/black.png" type="image/png" />
@@ -13,7 +13,7 @@
 <body>
   <include>felta/parts/nav.tpl</include>
   <div class="main dashboard">
-    <h1>Social media</h1>
+    <h1>Statistics</h1>
   </div>
 </body>
 </html>

@@ -13,6 +13,7 @@ class File{
     private $name;
     private $tmp_name;
     private $basedir;
+    private $base;
     private $succes;
 
     protected $image = ["jpg","png","gif","tiff"];
@@ -28,7 +29,8 @@ class File{
         }else{
             $this->name = $this->createName();
         }
-        $this->basedir = $_SERVER['DOCUMENT_ROOT'];
+        $this->basedir = str_replace(ROOT, "", $_SERVER["DOCUMENT_ROOT"]);
+        $this->base = $this->getDefaultDir();
     }
     
     public function getFiletype(){
@@ -46,11 +48,11 @@ class File{
     }
     public function upload($destination = null, $onsucces = null){
         if($destination != null){
-            $this->dest =  $this->basedir."/".$destination."/".$this->name.".".$this->getExtension();
-            $this->relative_dest = "/".$destination."/".$this->name.".".$this->getExtension();
+            $this->dest =  $this->basedir.$this->base."/".$destination."/".$this->name.".".$this->getExtension();
+            $this->relative_dest = $this->base."/".$destination."/".$this->name.".".$this->getExtension();
         }else{
-            $this->dest = $this->basedir."/".$this->name.".".$this->getExtension();
-            $this->relative_dest = "/".$this->name.".".$this->getExtension();
+            $this->dest = $this->basedir.$this->base."/".$this->name.".".$this->getExtension();
+            $this->relative_dest = $this->base."/".$this->name.".".$this->getExtension();
         }
         if(move_uploaded_file($this->getTmpFile($this->getFilename()), $this->dest)){
             $this->succes = true;
@@ -71,6 +73,13 @@ class File{
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+    public function getDefaultDir(){
+        $dir = \lib\Felta::getInstance()->settings->get("default_dir");
+        if(!file_exists(ROOT.$dir)){
+            mkdir(ROOT.$dir);
+        }
+        return $dir;
     }
     public function getDestination(){
         return $this->dest;

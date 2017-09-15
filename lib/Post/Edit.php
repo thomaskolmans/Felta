@@ -16,7 +16,7 @@ class Edit extends Post{
         $this->create([
             "n" => "int auto_increment",
             "id" => "varchar(255)",
-            "text" => "varchar(255)",
+            "text" => "longtext",
             "language" => "varchar(50)"
             ]);
     }

@@ -11,7 +11,6 @@ class News extends Post{
         "title" => "varchar(255)",
         "description" => "longtext",
         "image" => "varchar(255)",
-        "location" => "varchar(255)",
         "date" => "DateTime",
         "posted" => "DateTime"
     ];
@@ -20,10 +19,10 @@ class News extends Post{
         $this->sql = Felta::getInstance()->sql;
         $this->create($this->structure);
     }
-    public function new($title,$description,$image,$location,$date){
+    public function put($title,$description,$image,$date){
         $now = new \DateTime;
         $now = $now->format("Y-m-d H:i:s");
-        $this->add([0,$title,$description,$image,$location,$date->format("Y-m-d H:i:s"),$now]);
+        $this->add([0,$title,$description,$location,$date->format("Y-m-d H:i:s"),$now]);
     }
     public function getAll(){
         return $this->select("*", []);

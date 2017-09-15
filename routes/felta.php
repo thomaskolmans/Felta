@@ -9,9 +9,10 @@ $felta = Felta::getInstance();
 $edit = new Edit();
 $host = $felta->getHost();
 
-Route::group(["domain" => "felta.".$host],function() use ($edit,$felta){
+Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
 
     $agenda = new lib\Post\Agenda();
+    $news = new lib\Post\News();
 
     Route::get("/felta/login","felta/login.tpl")->when(!$felta->user->hasSession())->primary();
     Route::post("/felta/login",function(){
@@ -22,7 +23,12 @@ Route::group(["domain" => "felta.".$host],function() use ($edit,$felta){
             echo json_encode(["logged_in" => false,"message" =>"Incorrect username and/or password"]);
         }
     });
-    Route::get("/felta/forgot","felta/reset.tpl");
+    Route::get("/felta/user/verify/{key}",function($key) use ($felta){
+        $user = $felta->user;
+        $user->verifyVerification($key);
+        header("Location: /felta");
+    });
+    Route::any("/felta/forgot","felta/reset.tpl");
     Route::get("/felta/forgot/code/{code}","felta/reset.tpl");
 
     if($felta->user->hasSession()){
@@ -31,34 +37,58 @@ Route::group(["domain" => "felta.".$host],function() use ($edit,$felta){
         Route::get("/felta/settings","felta/settings.tpl");
         Route::post("/felta/settings",function() use ($felta){
             $user = $felta->user;
-            var_dumP($_POST);
-            if(isset($_POST['add-user'])){
+            if(isset($_POST['addition'])){
                 $username = $_POST['username'];
                 $email = $_POST['email'];
                 if($user->createWithPassword($username,$email)){
-                    header("Location: /Felta/settings");
+                    echo "<div class='message'>User had been added!</div>";
+                }else{
+                    echo "<div class'message'>Sorry, something went wrong</div>";
                 }
-                header("Location: /Felta/settings");
             }
             if(isset($_POST['changepassword'])){
-              $old = $_POST['old_password'];
-              $new = $_POST['new_password'];
-              $repeat = $_POST['repeat_new_password'];
-              if($user->resetPassword($old,$new,$repeat)){
-                echo "Password has changed";
-              }else{
-                echo "Either wrong password or new passwords didn't match";
-              }
-              header("Location: /Felta/settings");
+                $old = $_POST['old_password'];
+                $new = $_POST['new_password'];
+                $repeat = $_POST['repeat_new_password'];
+                if($user->resetPassword($old,$new,$repeat)){
+                    echo "Password has changed";
+                }else{
+                    echo "Either wrong password or new passwords didn't match";
+                }
             }
+            if(isset($_POST['general'])){
+                $felta->settings->set('website_url',$_POST['website_url']);
+                $felta->settings->set('website_name',$_POST['website_name']);
+                $felta->settings->set('default_dir',$_POST['default_dir']);
+            }
+        });
+        Route::post("/felta/settings/delete/user",function() use ($felta){
+            $user = $felta->user;
+            $user->delete($_POST['id']);
         });
         Route::get("/felta/agenda","felta/agenda.tpl");
         Route::get("/felta/agenda/id/update","felta/agenda.tpl");
         Route::get("/felta/news","felta/news.tpl");
+        
+        Route::post("/felta/news",function() use ($news){
+            $agenda->put($_POST['title'],$_POST['description'],null,new \DateTime($_POST['date']));
+            header("Location: /Felta/news");
+        });
+        Route::post("/felta/news/update",function() use($news){
+            $id = $_POST['id'];
+            $news->update('title',['id' => $id],$_POST['title']);
+            $news->update('description',['id' => $id],$_POST['description']);
+            $date = new \DateTime($_POST['date']);
+            $news->update('date',['id' => $id],$date->format("Y-m-d H:i:s"));
+            header("Location: /Felta/news");
+        });
+        Route::get("/felta/news/delete/{id}",function($id) use ($news){
+            $news->delete(["id"=>$id]);
+            header("Location: /Felta/news");
+        });
         Route::get("/felta/blog","felta/blog_main.tpl");
         Route::post("/felta/agenda",function() use ($agenda){
-            var_dump(new \DateTime($_POST['date']));
-            $agenda->new($_POST['title'],$_POST['description'],null,$_POST['location'],new \DateTime($_POST['date']));
+            $agenda->put($_POST['title'],$_POST['description'],null,$_POST['location'],new \DateTime($_POST['date']));
             header("Location: /Felta/agenda");
         });
         Route::post("/felta/agenda/update",function() use($agenda){

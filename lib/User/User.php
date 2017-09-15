@@ -74,12 +74,14 @@ class User extends Felta{
             $pass[] = $alphabet[$n];
         }
         $password = implode($pass);
-        if($this->create($username,$username,$password,$email)){
-            return $password;
+        if(!$this->exists($username,$email)){
+            if($this->create($username,$username,$password,$email)){
+                return true;
+            }
         }
         return false;
     }
-    public function forgot($input){
+    public function forgot($input,$time = 1800000){
         if($this->isEmail($input)){
             $id = $this->sql->select("id",$this->table,array("email" => $input));
         }else{
@@ -87,11 +89,13 @@ class User extends Felta{
         }
         if(!$this->sql->exists($this->table."_forgot", ["id" => $id])){
             $key = $this->uuid();
+            $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/felta/forgot/code/".$key;
+            $adress = $this->sql->select("email",$this->table,["id" => $id]);
             $email = new Email();
             $email->html(true);
             $email->setTo($adress);
-            $email->setSubject("Your recovering email.");
-            $email->setMessage(str_replace("{key}", $verifycode, $email->load("emails/forgto.html")));
+            $email->setSubject("Account recovery");
+            $email->setMessage(str_replace("{url}", $url, $email->load("emails/forgot.html")));
             $email->send();
 
             $now = new \DateTime();
@@ -103,12 +107,18 @@ class User extends Felta{
                 $until->setTimestamp(time() + $time);
                 $until = $until->format("Y-m-d h:i:s"); 
             }
-            $this->sql->insert($this->table."_forgot",[$id,$adress,$verifycode,$now,$until]);
+            $this->sql->insert($this->table."_forgot",[$id,$key,$now,$until]);
         }
-
     }
-    public function verifyForgot($id){
-        $now = new DateTime();
+    public function verifyForgot($key){
+        $now = new \DateTime();
+        if($this->sql->exists($this->table."_forgot",["key" => $key])){
+            $dtime = new \DateTime($this->sql->select("expire",$this->table."_forgot",["key" => $key]));
+            if($now->format("Y-m-d H:i:s") <= $dtime->format("Y-m-d H:i:s")){
+                return true;
+            }
+        }
+        return false;
     }
     public function delete($id = null){
         if($id === null)
@@ -174,12 +184,13 @@ class User extends Felta{
     public function sendVerification($time = null,$adress,$id,$password){
         if(!$this->sql->exists($this->table."_verification", ["id" => $id])){
             $verifycode = $this->uuid();
+            $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/felta/user/verify/".$verifycode;
             $username = $this->sql->select("username",$this->table,["id" => $id]);
             $email = new Email();
             $email->html(true);
             $email->setTo($adress);
-            $email->setSubject("Welcome, we have been waiting for you.");
-            $email->setMessage(str_replace(["{key}","{password}","{username}"], [$verifycode,$password,$username], $email->load("emails/welcome.html")));
+            $email->setSubject("Welcome, your website is ready.");
+            $email->setMessage(str_replace(["{url}","{password}","{username}"], [$url,$password,$username], $email->load("emails/welcome.html")));
             $email->send();
 
             $now = new \DateTime();
@@ -275,6 +286,15 @@ class User extends Felta{
         if(password_verify($old,$hash)){
             if($new === $repeat){
                 $this->sql->update("password",$this->table,["id" => $id],password_hash($new,PASSWORD_DEFAULT));
+                return true;
+            }
+        }
+        return false;
+    }
+    public function recoverPassword($key,$newpassword,$repeatpassword){
+        if($this->verifyForgot($key)){
+            if($newpassword === $repeatpassword){
+                $this->sql->update("password",$this->table,["id" => $id],password_hash($newpassword,PASSWORD_DEFAULT));
                 return true;
             }
         }

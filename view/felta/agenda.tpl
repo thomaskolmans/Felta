@@ -1,15 +1,15 @@
 </html>
 <head>
    <title>Felta | Agenda</title>
-   <link href="Felta/stylesheets/main.css" rel="stylesheet">
-   <link href="Felta/js/quill/quill.snow.css" rel="stylesheet">
+   <link href="felta/stylesheets/main.css" rel="stylesheet">
+   <link href="felta/js/quill/quill.snow.css" rel="stylesheet">
    <link rel="stylesheet" type="text/css" href="Felta/js/datepicker/jquery.datetimepicker.css">
    <link rel="icon" href="Felta/images/black.png" type="image/png" />
-   <link rel="stylesheet" href="Felta/fonts/font-awesome.min.css" />
-   <link rel="stylesheet" href="Felta/fonts/font-awesome.css" />
-   <script src="Felta/js/jquery-1.11.3.min.js"></script>
+   <link rel="stylesheet" href="felta/fonts/font-awesome.min.css" />
+   <link rel="stylesheet" href="felta/fonts/font-awesome.css" />
+   <script src="felta/js/jquery-1.11.3.min.js"></script>
    <script src="felta/js/quill/quill.min.js"></script>
-   <script src="Felta/js/datepicker/jquery.datetimepicker.min.js" type="text/javascript"></script>
+   <script src="felta/js/datepicker/jquery.datetimepicker.min.js" type="text/javascript"></script>
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <script type="text/javascript">
     $(document).ready(function(){
@@ -47,6 +47,7 @@
                 lastactive = id;       
             }
         });
+
         var quill = new Quill('#editor', {
           theme: 'snow',
           font: 'Sans Serif',
@@ -73,9 +74,13 @@
                      ]
           }
         });
-        $('#update_editor > .ql-editor').change(function(){
-            document.getElementById('update_editor_value').innerHTML = $('#update_editor > .ql-editor').html();
+        quill.on('text-change',function(delta,text){
+          document.getElementById('description').innerHTML = quill.root.innerHTML;
         });
+        update_quill.on('text-change',function(delta,text){
+          document.getElementById('update_editor_value').innerHTML = update_quill.root.innerHTML;
+        });
+
     });
     function onePage(first,id,lastactive){
         if(lastactive != null){
@@ -101,7 +106,7 @@
    </script>
 </head>
 <body>
-  <include>Felta/parts/nav.tpl</include>
+  <include>felta/parts/nav.tpl</include>
   <div class="main dashboard container multi-page" id="main">
     <h1> Agenda </h1>
     <a href="#new"><button class="add">Add date</button></a>
@@ -159,7 +164,7 @@
       <div class="input-group">
         <label>Description</label>
         <div id="editor"></div>
-        <textarea style="display: none" name="description">
+        <textarea style="display: none" id="description" name="description">
       </div>
       <div class="input-group right">
         <a href="/Felta/agenda"><input type="button" value="Cancel" id="cancel_agenda"></a>
@@ -195,7 +200,7 @@
       </div>
       <div class="input-group">
         <label>Description</label>
-        <div id="update_editor"></div>
+        <?php echo '<div id="update_editor">'.$description.'</div>'; ?>
         <?php echo '<textarea style="display: none" id="update_editor_value" value="'.$description.'" name="description"></textarea>'; ?>
       </div>
       <div class="input-group right">
