@@ -31,6 +31,49 @@
                 active = $(this).attr("column");
                 $("#"+active).removeClass("hidden");
             });
+            $("#user-add").on("submit",function(e){
+                e.preventDefault();
+                $.ajax({
+                  url: "/Felta/settings",
+                  type: "POST",
+                  data: {'addition': "true", 'username': $("#user-username").val(), 'email': $("#user-email").val()},
+                  success: function(data){
+                    $('#user-add').append(data.trim());
+                  }
+                });
+                $(this).trigger("reset");
+            });
+            $("#changepassword").on("submit",function(e){
+                e.preventDefault();
+                $.ajax({
+                  url: "/Felta/settings",
+                  type: "POST",
+                  data: {'changepassword': "true", 'old_password': $("#old_password").val(), 'new_password': $("#new_password").val(),'repeat_new_password':$('#repeat_new_password').val()},
+                  success: function(data){
+                    $('#changepassword').append(data.trim());
+                  }
+                });
+                $(this).trigger("reset");
+            })
+            $(".delete-user-button").on("click",function(e){
+              e.preventDefault();
+              var id = $(this).attr('user-id');
+              $.ajax({
+                url: "/Felta/settings/delete/user",
+                type: "POST",
+                data: {id: id}
+              });
+              $(this).parent().parent().remove();
+            });
+            $("#general").on("submit",function(e){
+              e.preventDefault();
+              $.ajax({
+                url: "/Felta/settings",
+                type: "POST",
+                data: {'general': 'true','website_url': $("#website_url").val(),'website_name': $("#website_name").val(),'default_dir': $("#default_dir").val()}
+              });
+              $(this).append("Changes have been saved!");
+            });
         });
     </script>
 </head>
@@ -44,21 +87,25 @@
           <div class="tab" id="acc-tab" column="acc">Account</div>
       </div>
       <section class="hidden" id="general">
-          <form method="post">
+          <?php
+            $felta = lib\Felta::getInstance();
+            $settings= $felta->settings;
+          ?>
+          <form method="post" id="general">
             <div class="input-group">
               <label>Website URL</label>
-              <input type="text" name="website_url" />
+              <?php echo '<input type="text" name="website_url" id="website_url" value="'.$settings->get('website_url').'" />'; ?>
             </div>
             <div class="input-group">
               <label>Website name</label>
-              <input type="text" name="website_name" />
+              <?php echo '<input type="text" name="website_name" id="website_name" value="'.$settings->get('website_name').'" />'; ?>
             </div>
             <div class="input-group">
-              <label>Default filing directory</label>
-              <input type="text" name="website_name" />
+              <label>Default directory</label>
+              <?php echo '<input type="text" name="default_dir" id="default_dir" value="'.$settings->get('default_dir').'"/>'; ?>
             </div>
             <div class='input-group right'>
-              <input type="submit" name="add-user" value="Change"/>
+              <input type="submit" name="add-user" value="Save"/>
             </div> 
           </form>
       </section>
@@ -76,7 +123,7 @@
                     <div class="email">'.$part['email'].'</div>
                     ';
                     if($id > 0){
-                      echo '<div class="delete"><a href="'.$part['id'].'"><button></button></a></div>';
+                      echo '<div class="delete"><button class="delete-user-button" user-id="'.$part['id'].'"></button></div>';
                     }else{
                       echo '<div class="delete"></div>';
                     }
@@ -86,15 +133,15 @@
             ?>
       </section>
       <section class="hidden no-padding" id="add-user">
-        <form method="post">
+        <form method="post" id="user-add">
           <h1>New user</h1>
           <div class="input-group">
             <label> Username </label>
-            <input type="text" name="username">
+            <input id="user-username" type="text" name="username">
           </div>
           <div class="input-group">
             <label> Email </label>
-            <input type="text" name="email">
+            <input id="user-email" type="text" name="email">
           </div>
           <div class='input-group right'>
             <input type="submit" name="add-user" value="add"/>
@@ -113,20 +160,20 @@
                   </div>';
           ?>
           <hr>
-          <form method="post">
+          <form method="post" id="changepassword">
             <h1>Change password</h1>
             <div class="input-group">
               <label>Old password</label>
-              <input type="password" name="old_password">
+              <input type="password" name="old_password" id="old_password">
             </div>
             <div class="break"></div>
             <div class="input-group">
               <label>New password</label>
-              <input type="password" name="new_password">
+              <input type="password" name="new_password" id="new_password">
             </div>
             <div class="input-group">
               <label>Repeat password</label>
-              <input type="password" name="repeat_new_password">
+              <input type="password" name="repeat_new_password" id="repeat_new_password">
             </div>
             <div class="input-group right">
               <input type="submit" name="changepassword" value="Change">

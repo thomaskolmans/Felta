@@ -29,7 +29,7 @@ $(document).ready(function(){
             success: function(data){
                 data = $.parseJSON(data.trim());
                 if(data['logged_in'] == true){
-                    window.location.replace("/");
+                    window.location.replace("/felta");
                 }else{
                     $(".error").remove();
                     $("#login_password").val("");

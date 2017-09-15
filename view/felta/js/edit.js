@@ -186,8 +186,7 @@ function editor(id){
         }
         if(hover){
           atr.css({
-            "box-sizing": "inherit",
-            "border": "1px dashed #2196F3",
+            "outline": "2px dashed #2196F3",
             "cursor": "pointer"
           });
          lastloc = atr;

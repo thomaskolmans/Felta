@@ -29,11 +29,12 @@ abstract class Post implements IPost{
         $this->sql->delete($this->name,$whereequals);
         return $this;
     }
-    public function sortByDate($datecolumn,$limit = null){
-        
-    }
-    public function request(){
-        
+    public function sortByDate($dates,$limit = null){
+        usort($dates, function($a,$b){
+            $t1 = strtotime($a['date']);
+            $t2 = strtotime($b['date']);
+            return $t1 - $t2;
+        });
     }
     public function update($column,array $whereequals,$to){
         $this->sql->update($column,$this->name,$whereequals,$to);

@@ -443,11 +443,18 @@ input[type="checkbox"].switcher:checked + .slider:before {
 }
 
 /* line 3, ../sass/front.sass */
+.error {
+  color: white;
+  width: 100%;
+  margin-top: 110px;
+}
+
+/* line 7, ../sass/front.sass */
 form.reset {
   height: 350px;
 }
 
-/* line 5, ../sass/front.sass */
+/* line 9, ../sass/front.sass */
 form {
   position: absolute;
   width: 320px;
@@ -459,7 +466,7 @@ form {
   display: inline-block;
   box-shadow: 0px 0px 42px -8px black;
 }
-/* line 15, ../sass/front.sass */
+/* line 19, ../sass/front.sass */
 form .remember {
   width: 125px;
   height: 20px;
@@ -467,12 +474,12 @@ form .remember {
   float: left;
   margin-left: 35px;
 }
-/* line 21, ../sass/front.sass */
+/* line 25, ../sass/front.sass */
 form img {
   width: 100px;
   margin: 15px;
 }
-/* line 24, ../sass/front.sass */
+/* line 28, ../sass/front.sass */
 form input {
   width: 250px;
   height: 35px;
@@ -482,17 +489,17 @@ form input {
   box-sizing: border-box;
   padding: 0 8px;
 }
-/* line 32, ../sass/front.sass */
+/* line 36, ../sass/front.sass */
 form input:focus, form input:active {
   outline: none;
 }
-/* line 34, ../sass/front.sass */
+/* line 38, ../sass/front.sass */
 form input[type="checkbox"] {
   height: 20px;
   width: 50px;
   margin-left: 15px;
 }
-/* line 38, ../sass/front.sass */
+/* line 42, ../sass/front.sass */
 form input[type="submit"] {
   width: 125px;
   height: 35px;
@@ -509,7 +516,7 @@ form input[type="submit"] {
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 53, ../sass/front.sass */
+/* line 57, ../sass/front.sass */
 form input[type="submit"]:hover {
   transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -517,22 +524,22 @@ form input[type="submit"]:hover {
   background: none;
   color: #f1f1f1;
 }
-/* line 58, ../sass/front.sass */
+/* line 62, ../sass/front.sass */
 form a {
   margin-top: 25px;
   float: right;
   margin-right: 35px;
   color: #f1f1f1;
 }
-/* line 63, ../sass/front.sass */
+/* line 67, ../sass/front.sass */
 form a:hover {
   font-weight: 700;
 }
-/* line 65, ../sass/front.sass */
+/* line 69, ../sass/front.sass */
 form .input-group:not(:first-child) {
   margin-top: 15px;
 }
-/* line 67, ../sass/front.sass */
+/* line 71, ../sass/front.sass */
 form label {
   width: 250px;
   display: block;
@@ -540,7 +547,7 @@ form label {
   margin: auto;
   color: #f1f1f1;
 }
-/* line 73, ../sass/front.sass */
+/* line 77, ../sass/front.sass */
 form h1 {
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   font-size: 65px;

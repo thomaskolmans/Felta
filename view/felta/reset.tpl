@@ -10,7 +10,10 @@
 <body>
 <?php 
     $id = isset($_GET["code"]) ? $_GET["code"] : null;
-    if(isset($id)){ ?>
+    $user = lib\Felta::getInstance()->user;
+    if($id !== null){
+      if($user->verifyForgot($id)){
+     ?>
         <form method="post">
             <img src="Felta/images/logo_white2.png">
             <div class="input-group">
@@ -21,18 +24,33 @@
                 <label>Repeat password</label>
                 <input type="password" name="repeat_password">
             </div>
-            <input type="submit" value="Reset">
+            <input type="submit" name="newpassword" value="Reset">
         </form>
-    <?php }else{ ?>
+    <?php
+      if(isset($_POST['newpassword'])){
+        $password = $_POST['password'];
+        $repeatpassword = $_POST['repeat_password'];
+        $user->recoverPassword($id,$password,$repeatpassword);
+        header("Location: /");
+      }
+      }else{
+        echo "Invalid key";
+      }
+    }else{ ?>
      <form method="post" class="reset">
       <img src="Felta/images/logo_white2.png">
       <div class="input-group">
        <label>Your username/email</label>
-       <input type="text" name="Email">
+       <input type="text" name="email">
       </div>
-      <input type="submit" value="Recover">
+      <input type="submit" name="reset" value="Recover">
      </form>
-    <?php } ?>
+    <?php } 
+    if(isset($_POST['reset'])){
+      $user->forgot($_POST['email']);
+      header('Location: /');
+    }
+    ?>
 </body>
 
 </html>

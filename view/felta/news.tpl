@@ -73,8 +73,11 @@
                      ]
           }
         });
-        $('#update_editor > .ql-editor').change(function(){
-            document.getElementById('update_editor_value').innerHTML = $('#update_editor > .ql-editor').html();
+        quill.on('text-change',function(delta,text){
+          document.getElementById('description').innerHTML = quill.root.innerHTML;
+        });
+        update_quill.on('text-change',function(delta,text){
+          document.getElementById('update_editor_value').innerHTML = update_quill.root.innerHTML;
         });
     });
     function onePage(first,id,lastactive){

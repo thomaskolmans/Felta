@@ -20,7 +20,7 @@ class Agenda extends Post{
         $this->sql = Felta::getInstance()->sql;
         $this->create($this->structure);
     }
-    public function new($title,$description,$image,$location,$date){
+    public function put($title,$description,$image,$location,$date){
         $now = new \DateTime;
         $now = $now->format("Y-m-d H:i:s");
         $this->add([0,$title,$description,$image,$location,$date->format("Y-m-d H:i:s"),$now]);
@@ -35,6 +35,9 @@ class Agenda extends Post{
             $t2 = strtotime($b['date']);
             return $t1 - $t2;
         });
+    }
+    public function getWeekDay($date){
+        return date(date('w',strtotime($date)));
     }
     public function getById($id){
         return $this->select("*",["id" => $id])[0];

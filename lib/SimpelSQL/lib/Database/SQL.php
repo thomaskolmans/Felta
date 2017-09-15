@@ -57,9 +57,9 @@ class SQL{
             $size = sizeof($whereequals);
             for($i = 0; $i < $size; $i++){             
                 if($i == 0){
-                    $wherestring .= " WHERE ".array_keys($whereequals)[$i]."=:".array_keys($whereequals)[$i];
+                    $wherestring .= " WHERE `".array_keys($whereequals)[$i]."`=:".array_keys($whereequals)[$i];
                 }else{
-                    $wherestring .= " AND ".array_keys($whereequals)[$i]."=:".array_keys($whereequals)[$i];
+                    $wherestring .= " AND `".array_keys($whereequals)[$i]."`=:".array_keys($whereequals)[$i];
                 }
             }
             return $wherestring;
@@ -71,7 +71,6 @@ class SQL{
     public function bind($query,$whereequals){
         $size = sizeof($whereequals);
         for($it = 0; $it < $size; $it++){
-
             $query->bindParam(":".array_keys($whereequals)[$it],$whereequals[array_keys($whereequals)[$it]]);
         }
         return $query;

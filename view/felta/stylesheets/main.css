@@ -1138,7 +1138,7 @@ form.agenda label, form.news label {
   height: 35px;
   color: white;
   background: #003258;
-  font-size: 22px;
+  font-size: 20px;
 }
 /* line 476, ../sass/main.sass */
 .main.settings section input[type="submit"]:hover {
