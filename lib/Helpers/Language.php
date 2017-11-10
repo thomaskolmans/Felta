@@ -203,6 +203,7 @@ class Language{
     public function __construct($sql){
         $this->sql = $sql;
         $this->default = \lib\Felta::getInstance()->getConfig("default_language");
+        $this->createTable();
     }   
     public function addToList($language){
         $this->languagelist[] = $language;
@@ -276,17 +277,6 @@ class Language{
         } 
         return $bestlang; 
     }
-
-    public function createTable(){
-        if(!$this->sql->exists("languages",array())){
-            $this->sql->create("languages",array(
-                "id" => "int auto_increment",
-                "lang" => "varchar(10)",
-                "name" => "varchar(255)"
-                ),"id");
-        }
-        return $this;
-    }
     public function addLang($lang,$name){
         if(!$this->sql->exists("languages",array("lang" => $lang))){
             $this->sql->insert("languages",array(0,$lang,$name));
@@ -299,6 +289,16 @@ class Language{
     }
     public function getDefault(){
         return $this->default;
+    }
+    public function createTable(){
+        if(!$this->sql->exists("languages",array())){
+            $this->sql->create("languages",array(
+                "id" => "int auto_increment",
+                "lang" => "varchar(10)",
+                "name" => "varchar(255)"
+                ),"id");
+        }
+        return $this;
     }
 }
 ?>

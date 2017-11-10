@@ -7,9 +7,9 @@
    <link rel="icon" href="Felta/images/black.png" type="image/png" />
    <link rel="stylesheet" href="Felta/fonts/font-awesome.min.css" />
    <link rel="stylesheet" href="Felta/fonts/font-awesome.css" />
-   <script src="Felta/js/jquery-1.11.3.min.js"></script>
-   <script src="felta/js/quill/quill.min.js"></script>
-   <script src="Felta/js/datepicker/jquery.datetimepicker.min.js" type="text/javascript"></script>
+   <script src="/felta/js/jquery-1.11.3.min.js"></script>
+   <script src="/felta/js/quill/quill.min.js"></script>
+   <script src="/felta/js/datepicker/jquery.datetimepicker.min.js" type="text/javascript"></script>
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <script type="text/javascript">
     $(document).ready(function(){

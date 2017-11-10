@@ -2,7 +2,7 @@
 
 return array(
     //If it's empty, that means the `root` will be where the files will get there paths from. 
-    "base" => "/view/",       
+    "base" => "",       
     "coverfile" => "",
 
     "template_tags" => array(

@@ -19,10 +19,8 @@ class Template extends Router{
             $this->route = $input;
             $this->filepath = $input->getFile();
             $this->dom = $this->getDomFromFile($this->getFile());
-            $this->load();
         }else{
             $this->dom = $this->getDom($input);
-            $this->load();
         }
 
     }
@@ -33,7 +31,7 @@ class Template extends Router{
         if(file_exists($this->filepath)){
             return $this->filepath;
         }
-        return $this->redirect()->error("404");
+        return $this->route->getRouter()->response->notfound();
     }
     public function getFileInfo(){
         return pathinfo($this->getFile());
@@ -109,6 +107,7 @@ class Template extends Router{
     }
 
     public function load(){
-        new TemplateLoader($this);
+        $templateloader = new TemplateLoader($this);
+        return $templateloader->execute();
     }
 }

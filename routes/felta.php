@@ -1,21 +1,26 @@
 <?php
-use lib\Routing\Route;
-use lib\Post\Edit;
 use lib\Cleverload;
 use lib\Felta;
+use lib\Routing\Route;
+use lib\Post\Edit;
 use lib\Helpers\Input;
+
+use lib\Post\Agenda;
+use lib\Post\News;
 
 $felta = Felta::getInstance();
 $edit = new Edit();
 $host = $felta->getHost();
+$agenda = new Agenda();
+$news = new News();
 
-Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
+Route::group(["namespace" => "/felta"],function() use ($edit,$felta,$agenda,$news){
 
-    $agenda = new lib\Post\Agenda();
-    $news = new lib\Post\News();
+    Route::any("/forgot","felta/reset.tpl");
+    Route::get("/forgot/code/{code}","felta/reset.tpl");
+    Route::get("/login","felta/login.tpl")->when(!$felta->user->hasSession())->primary();
 
-    Route::get("/felta/login","felta/login.tpl")->when(!$felta->user->hasSession())->primary();
-    Route::post("/felta/login",function(){
+    Route::post("/login",function(){
         $user = Felta::getInstance()->user;
         if($user->login($_POST["username"],$_POST["password"],$_POST["remember"])){
             echo json_encode(["logged_in" => true,"message" =>"Succesfull login"]);
@@ -23,19 +28,25 @@ Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
             echo json_encode(["logged_in" => false,"message" =>"Incorrect username and/or password"]);
         }
     });
-    Route::get("/felta/user/verify/{key}",function($key) use ($felta){
+    Route::get("/user/verify/{key}",function($key) use ($felta){
         $user = $felta->user;
         $user->verifyVerification($key);
         header("Location: /felta");
     });
-    Route::any("/felta/forgot","felta/reset.tpl");
-    Route::get("/felta/forgot/code/{code}","felta/reset.tpl");
 
     if($felta->user->hasSession()){
-        Route::get("/felta/editor","felta/editor.tpl");
-        Route::get("/felta/social","felta/social.tpl");
-        Route::get("/felta/settings","felta/settings.tpl");
-        Route::post("/felta/settings",function() use ($felta){
+        /* logged in pages */
+
+        Route::any("/dashboard","felta/dashboard.tpl")->when($felta->user->hasSession())->primary();
+        Route::get("/editor","felta/editor.tpl");
+        Route::get("/social","felta/social.tpl");
+        Route::get("/settings","felta/settings.tpl");
+        Route::get("/agenda","felta/agenda.tpl");
+        Route::get("/agenda/id/update","felta/agenda.tpl");
+        Route::get("/news","felta/news.tpl");
+        Route::get("/blog","felta/blog_main.tpl");
+
+        Route::post("/settings",function() use ($felta){
             $user = $felta->user;
             if(isset($_POST['addition'])){
                 $username = $_POST['username'];
@@ -62,19 +73,15 @@ Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
                 $felta->settings->set('default_dir',$_POST['default_dir']);
             }
         });
-        Route::post("/felta/settings/delete/user",function() use ($felta){
+        Route::post("/settings/delete/user",function() use ($felta){
             $user = $felta->user;
             $user->delete($_POST['id']);
         });
-        Route::get("/felta/agenda","felta/agenda.tpl");
-        Route::get("/felta/agenda/id/update","felta/agenda.tpl");
-        Route::get("/felta/news","felta/news.tpl");
-        
-        Route::post("/felta/news",function() use ($news){
+        Route::post("/news",function() use ($news){
             $agenda->put($_POST['title'],$_POST['description'],null,new \DateTime($_POST['date']));
             header("Location: /Felta/news");
         });
-        Route::post("/felta/news/update",function() use($news){
+        Route::post("/news/update",function() use($news){
             $id = $_POST['id'];
             $news->update('title',['id' => $id],$_POST['title']);
             $news->update('description',['id' => $id],$_POST['description']);
@@ -82,16 +89,16 @@ Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
             $news->update('date',['id' => $id],$date->format("Y-m-d H:i:s"));
             header("Location: /Felta/news");
         });
-        Route::get("/felta/news/delete/{id}",function($id) use ($news){
+        Route::get("/news/delete/{id}",function($id) use ($news){
             $news->delete(["id"=>$id]);
             header("Location: /Felta/news");
         });
-        Route::get("/felta/blog","felta/blog_main.tpl");
-        Route::post("/felta/agenda",function() use ($agenda){
+
+        Route::post("/agenda",function() use ($agenda){
             $agenda->put($_POST['title'],$_POST['description'],null,$_POST['location'],new \DateTime($_POST['date']));
             header("Location: /Felta/agenda");
         });
-        Route::post("/felta/agenda/update",function() use($agenda){
+        Route::post("/agenda/update",function() use($agenda){
             $id = $_POST['id'];
             $agenda->update('title',['id' => $id],$_POST['title']);
             $agenda->update('description',['id' => $id],$_POST['description']);
@@ -100,26 +107,25 @@ Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
             $agenda->update('date',['id' => $id],$date->format("Y-m-d H:i:s"));
             header("Location: /Felta/agenda");
         });
-        Route::get("/felta/agenda/delete/{id}",function($id) use ($agenda){
+        Route::get("/agenda/delete/{id}",function($id) use ($agenda){
             $agenda->delete(["id"=>$id]);
             header("Location: /Felta/agenda");
         });
-        Route::any("/felta/dashboard","felta/dashboard.tpl")->when($felta->user->hasSession())->primary();
-        Route::get("/felta/logout",function(){
+        Route::get("/logout",function(){
             $user = Felta::getInstance()->user;
             $user->logout();
             header("Location: /Felta/login");
         });
-        Route::get("/felta/edit/id/{id}/lang/{language}",function($id,$language) use ($edit){
+        Route::get("/edit/id/{id}/lang/{language}",function($id,$language) use ($edit){
             echo $edit->get($id,$language);
         });
-        Route::post("/felta/edit",function() use ($edit){
+        Route::post("/edit",function() use ($edit){
             $text = $_POST["text"];
             $id = $_POST["id"];
             $language = $_POST["language"];
             $edit->setText($id,$language,$text);
         });
-        Route::post("/felta/edit/image",function() use ($edit){
+        Route::post("/edit/image",function() use ($edit){
             $w = Input::value("w");
             $h = Input::value("h");
             $x = Input::value("x1");
@@ -136,7 +142,7 @@ Route::group(["namespace" => "/felta"],function() use ($edit,$felta){
             $edit->setText($id,$lang,$file->getRelativeDest());
             echo $file->getRelativeDest();
         });
-        Route::delete("/felta/language/{lng}",function($lng) use ($edit){
+        Route::delete("/language/{lng}",function($lng) use ($edit){
             $edit->language->remove($lng); 
         });
     }
