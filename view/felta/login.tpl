@@ -1,15 +1,15 @@
 <html>
     <head>
         <title>Felta System</title>
-        <link href="felta/stylesheets/front.css"  rel="stylesheet">
-        <link rel="icon" href="felta/images/black.png" type="image/png"></link>
+        <link href="/felta/stylesheets/front.css"  rel="stylesheet">
+        <link rel="icon" href="/felta/images/black.png" type="image/png"></link>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="felta/js/jquery-1.11.3.min.js"></script>
-        <script src="felta/js/login.js"></script>
+        <script src="/felta/js/jquery-1.11.3.min.js"></script>
+        <script src="/felta/js/login.js"></script>
     </head>
     <body>
         <form method="post" class="login" id="login">
-            <img src="felta/images/logo_white2.png">
+            <img src="/felta/images/logo_white2.png">
             <div class="input-group">
                <label>Username/Email</label>
                <input type="text" name="username" id="login_username">

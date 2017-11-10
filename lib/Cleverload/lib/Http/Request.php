@@ -1,30 +1,58 @@
 <?php
-
 namespace lib\Http;
 
 class Request{
 
-    public $header;
-    public $history;
+    public $router;
+    public $request;
 
-    public function __construct($headers = ""){
-        $this->header = $headers;
-        $this->getHistory();
+    public $uri;
+    public $path;
+    public $domain;
+    public $method;
+    public $userip;
+    public $serverip;
+    public $time;
+
+    public function __construct($request){
+        $this->request = $request;
+        $this->document_root = $this->request["DOCUMENT_ROOT"];
+        $this->uri = $this->request["REQUEST_URI"];
+        $this->path = str_replace($this->getDepth(), "", $this->request["REQUEST_URI"]);
+        $this->domain = $this->request["SERVER_NAME"];
+        $this->method = $this->request["REQUEST_METHOD"];
+        $this->userip = $this->request["REMOTE_ADDR"];
+        $this->serverip = $this->request["SERVER_ADDR"];
     }
-    public function set($header){
-        $this->header .= $header;
+    public function getDepth(){
+        return str_replace($this->document_root,"",str_replace("\\","/",getcwd())."/");
     }
-    public function setHistory($path){
-        return $_SESSION["history"] = $path;
+    public function setRouter($router){
+        $this->router = $router;
     }
-    private function getHistory(){
-        if(isset($_SESSION["history"])){
-            return $this->history = $_SESSION["history"];
-        }
-        return $this->history = null;
-    }   
-    public function send(){
-        return header($this->header);
+    public function getRouter(){
+        return $this->router;
+    }
+    public function getPath(){
+        return $this->path;
+    }
+    public function getServerip(){
+        return $this->serverip;
+    }
+    public function getUserip(){
+        return $this->userip;
+    }
+    public function getMethod(){
+        return $this->method;
+    }
+    public function getDomain(){
+        return $this->domain;
+    }
+    public function getRequest(){
+        return $this->request;
+    }
+    public function getUri(){
+        return $this->uri;
     }
 }
 

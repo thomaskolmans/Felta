@@ -5,6 +5,15 @@ var id;
 
 var language;
 
+var imageCords = {
+    x1: 0,
+    y1: 0,
+    x2: 0,
+    y2: 0,
+    w: 0,
+    h: 0
+};
+
 $(document).ready(function(){
     var domain = getDomain();
     document.domain = domain;
@@ -17,19 +26,52 @@ $(document).ready(function(){
       theme: 'snow',
       font: 'Sans Serif',
       modules: {
-        toolbar: [[{'header': [0,3,2,1]}],
-                  ['bold','italic','underline','strike'],
-                  ['blockquote','code-block'],
-                  [{'list': 'ordered'},{'list': 'bullet'}],
-                  [{ 'align': [] }],
-                  ['link','image','video']
-                 ]
+        toolbar: [
+          [
+            {
+              'header': [0,3,2,1]
+            }
+          ],
+          [
+            'bold','italic','underline','strike'
+          ],
+          [
+            'blockquote','code-block'
+          ],
+          [
+            {
+              'list': 'ordered'
+            },
+            {
+              'list': 'bullet'
+            }
+          ],
+          [
+            {
+              'align': [] 
+            }
+          ],
+          [
+            'link','image','video'
+          ]
+        ]
       }
     });
 
-    /* Text editor */
+    /* Close text editor */
     $("#text_edit_cancel, #text_editor_background").click(function(){
       closeTextEditor();
+    });
+    /* Close image editor */
+    $("#image_edit_cancel, #image_editor_background").click(function(){
+      closeImageEditor();
+    });
+    /* Close line editor */
+    $("#line_edit_cancel, #line_editor_background").on("click",function(){
+      closeLineEditor();
+    });
+    $("#link_edit_cancel, #link_edit_background").on("click",function(){
+      closeLinkEditor();
     });
     var isAdvancedUpload = function() {
           var div = document.createElement('div');
@@ -92,18 +134,7 @@ $(document).ready(function(){
       closeTextEditor();
     });
     $("#image_edit_save").on("click",function(){
-      var form_data = new FormData();
       var file_data = $("#file").prop("files")[0];
-      var id = $("#id").val();
-      form_data.append("file_name", file_data);
-      form_data.append("w",$("#w").val());
-      form_data.append("h",$("#h").val());
-      form_data.append("x1",$("#x1").val());
-      form_data.append("y1",$("#y1").val());
-      form_data.append("y2",$("#y2").val());
-      form_data.append("x2",$("#y2").val());
-      form_data.append("id",$("#id").val());
-      form_data.append("language",$("#active_language").val());
       $.ajax({
         url: "/Felta/edit/image",
         type: "POST",
@@ -111,9 +142,18 @@ $(document).ready(function(){
         contentType: false,
         processData: false,
         async: false,
-        data: form_data,
+        data: {
+          "id": $("#id").val(),
+          "file_name": file_data,
+          "language": $("#active_language").val(),
+          "w": imageCords.w,
+          "h": imageCords.h,
+          "x1": imageCords.x1,
+          "y1": imageCords.y1,
+          "x2": imageCords.x2,
+          "y2": imageCords.y2
+        },
         success: function(data){
-          console.log($("#id").val());
           var iframe = document.getElementById("iframe")
           var doc = iframe.contentDocument || iframe.contentWindow.document;
           var elem = doc.querySelectorAll('[edit="'+$("#id").val()+'"]');
@@ -137,34 +177,8 @@ $(document).ready(function(){
       save(id,text,$("#active_language").val());
       closeLineEditor();
     });
-    /* Image editor */
-    $("#image_edit_cancel, #image_editor_background").click(function(){
-      closeImageEditor();
-    });
-
-    $("#line_edit_cancel, #line_editor_background").on("click",function(){
-      closeLineEditor();
-    });
 });
-function getDomain(){
-    if(document.domain.length){
-        var parts = document.domain.replace(/^(www\.)/,"").split('.');
-        while(parts.length > 2){
-            var subdomain = parts.shift();
-        }
-        var domain = parts.join('.');
-        return domain.replace(/(^\.*)|(\.*$)/g, "");
-    }
-    return '';
-}
-function save(id,text,language){
-  console.log(language);
-    $.ajax({
-        url: "/Felta/edit",
-        type: "POST",
-        data: {id: id,text: text,language:language},
-    });
-}
+
 function editor(id){
     var iframe = document.getElementById("iframe");
     var doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -190,41 +204,43 @@ function editor(id){
             "cursor": "pointer"
           });
          lastloc = atr;
+        }     
+    });
+    $(doc).click(function(e){
+        atr = "";
+        if (typeof $(e.target).attr("edit") !== typeof undefined && $(e.target).attr("edit") !== false) {
+            atr = $(e.target);
+        }else if ($(e.target).parents("[edit]").length){
+            atr = $(e.target).parents("[edit]");
         }
-        isLoading = false;
-        $(e.target).click(function(e){
-            if(isLoading)
-                return;
-            atr = "";
-            if (typeof $(e.target).attr("edit") !== typeof undefined && $(e.target).attr("edit") !== false) {
-                atr = $(e.target);
-            }else if ($(e.target).parents("[edit]").length){
-                atr = $(e.target).parents("[edit]");
-            }
-            www = $(e.target).width();
-            hhh = $(e.target).height();
-            if(atr[0]["tagName"] == null){
-                return;
-            }
-            switch(atr[0]["tagName"]){
-              case "IMG":
-                openImageEditor();
-                id = atr[0].getAttribute("edit");
-                $("#id").val(id);
-                $('html,body').animate({
-                    scrollTop: 0
-                }, 1);
-                break;
-              case "IFRAME":
-                openLinkEditor();
-                id = atr[0].getAttribute("edit");
-              break;
-              case "H1":
-              case "H2":
-              case "H3":
-                openLineEditor();
-                id = atr.attr("edit");
-                $.ajax({ 
+        www = $(e.target).width();
+        hhh = $(e.target).height();
+        if(atr[0]["tagName"] == null){
+            return;
+        }
+        switch(atr[0]["tagName"]){
+          case "IMG":
+            openImageEditor();
+            id = atr[0].getAttribute("edit");
+            $("#id").val(id);
+            $('html,body').animate({
+                scrollTop: 0
+            }, 1);
+            break;
+          case "IFRAME":
+            openLinkEditor();
+            id = atr[0].getAttribute("edit");
+          break;
+          case "A":
+            openLinkAndNameEditor();
+            id = atr[0].getAttribute("edit");
+          break;
+          case "H1":
+          case "H2":
+          case "H3":
+            openLineEditor();
+            id = atr.attr("edit");
+            $.ajax({ 
                 url: '/felta/edit/id/'+id+'/lang/'+$("#active_language").val(),
                 type: "GET",
                 beforeSend: function(){
@@ -234,38 +250,109 @@ function editor(id){
                     $("#line_editor_value").attr("edit-id",id);
                     $("#line_editor_value").val(output.trim());
                 }
+            });
+            $('html,body').animate({
+                scrollTop: 0
+            }, 1);
+          break;
+          default:
+            id = atr.attr("edit");
+            if(atr != ""){
+                openTextEditor();
+                $.ajax({ 
+                url: '/felta/edit/id/'+id+'/lang/'+$("#active_language").val(),
+                type: "GET",
+                beforeSend: function(){
+                    isLoading = true;
+                },
+                success: function(output) {
+                    $(".ql-editor").attr("edit-id",id);
+                    quill.pasteHTML(output.trim());
+                }
                 });
                 $('html,body').animate({
                     scrollTop: 0
                 }, 1);
-              break;
-              default:
-                id = atr.attr("edit");
-                if(atr != ""){
-                    openTextEditor();
-                    $.ajax({ 
-                    url: '/felta/edit/id/'+id+'/lang/'+$("#active_language").val(),
-                    type: "GET",
-                    beforeSend: function(){
-                        isLoading = true;
-                    },
-                    success: function(output) {
-                        $(".ql-editor").attr("edit-id",id);
-                        quill.pasteHTML(output.trim());
-                    }
-                    });
-                    $('html,body').animate({
-                        scrollTop: 0
-                    }, 1);
-                }
-              break;
-                
             }
-            return;
-        });
-      
+          break;
+            
+        }
+        return;
     });
 }
+function image(input,width,height, id){
+    var result = "";
+    $image = $(".imageid");
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $image.attr('src', e.target.result);
+            result = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+    $image.on("load",function(){
+      $image.hide();
+      var y = ($image.width() / 2) - width;
+      var h = ($image.height());
+      var scale = width/height;
+      $image.Jcrop({
+        aspectRatio: width/height,
+        onSelect: showCoords,
+        onChange: showCoords,
+        setSelect: [h*scale,h,0,0],
+        boxWidth: $("#imageeditor").width(),
+        boxHeight: 600
+      },function(){
+          jcrop = this;
+      });
+    });
+}
+function showCoords(c){
+    imageCords.x1 = c.x;
+    imageCords.y1 = c.y;
+    imageCords.x2 = $image.width();
+    imageCords.y2 = $image.height();
+    imageCords.w = c.w;
+    imageCords.h = c.h;
+}
+
+function destroy(img){
+    $(".imageid").attr("src",null);
+    $(".imageid").removeAttr("style");
+    $(".imageid").fadeOut();
+    document.getElementsByClassName("select-image")[0].reset();
+    JcropAPI = $image.data('Jcrop');
+    JcropAPI.destroy();
+}
+
+function getDomain(){
+    if(document.domain.length){
+        var parts = document.domain.replace(/^(www\.)/,"").split('.');
+        while(parts.length > 2){
+            var subdomain = parts.shift();
+        }
+        var domain = parts.join('.');
+        return domain.replace(/(^\.*)|(\.*$)/g, "");
+    }
+    return '';
+}
+
+function save(id,text,language){
+    $.ajax({
+        url: "/Felta/edit",
+        type: "POST",
+        data: {id: id,text: text,language:language},
+    });
+}
+
+
+/*
+
+ Open editors
+
+*/
+
 function openTextEditor(){
   $("#text_edit_buttons").show();
   $("#text_editor").fadeIn();
@@ -300,53 +387,17 @@ function closeLineEditor(){
     $("#line_editor").fadeOut();
     openBasicButtons();
 }
+function openLinkEditor(){
+
+    closeBasicButtons();
+}
+function closeLinkEditor(){
+
+    openBasicButtons();
+}
 function openBasicButtons(){
     $("#basic_buttons").show();
 }
 function closeBasicButtons(){
     $("#basic_buttons").hide();
-}
-function image(input,width,height, id){
-    var result = "";
-    $image = $(".imageid");
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $image.attr('src', e.target.result);
-            result = e.target.result;
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-    $image.on("load",function(){
-        $image.hide();
-        var y = ($image.width() / 2) - width;
-        var h = ($image.height());
-        var scale = width/height;
-        $image.Jcrop({
-            aspectRatio: width/height,
-            onSelect: showCoords,
-            onChange: showCoords,
-            setSelect: [h*scale,h,0,0],
-            boxWidth: $("#imageeditor").width(),
-            boxHeight: 600
-        },function(){
-            jcrop = this;
-        });
-    });
-}
-function showCoords(c){
-    $("#x1").val(c.x);
-    $("#y1").val(c.y);
-    $("#x2").val($image.width());
-    $("#y2").val($image.height());
-    $("#w").val(c.w);
-    $("#h").val(c.h);
-}
-function destroy(img){
-    $(".imageid").attr("src",null);
-    $(".imageid").removeAttr("style");
-    $(".imageid").fadeOut();
-    document.getElementsByClassName("select-image")[0].reset();
-    JcropAPI = $image.data('Jcrop');
-    JcropAPI.destroy();
 }

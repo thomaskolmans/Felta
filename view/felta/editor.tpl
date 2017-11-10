@@ -1,17 +1,17 @@
 </html>
 <head>
  <title>Felta | Editor</title>
- <link href="felta/stylesheets/main.css" rel="stylesheet" />
- <link href="felta/js/quill/quill.snow.css" rel="stylesheet" />
- <link href="felta/js/Jcrop/jquery.Jcrop.css" rel="stylesheet" />
- <link rel="stylesheet" href="felta/fonts/font-awesome.min.css" />
- <link rel="stylesheet" href="felta/fonts/font-awesome.css" />
- <link rel="icon" href="felta/images/black.png" type="image/png" />
- <script src="felta/js/jquery-1.11.3.min.js"></script>
- <script src="felta/js/jquery-mobile.js"></script>
- <script src="felta/js/Jcrop/jquery.Jcrop.js"></script>
- <script src="felta/js/quill/quill.min.js"></script>
- <script src="felta/js/edit.js"></script>
+ <link href="/felta/stylesheets/main.css" rel="stylesheet" />
+ <link href="/felta/js/quill/quill.snow.css" rel="stylesheet" />
+ <link href="/felta/js/Jcrop/jquery.Jcrop.css" rel="stylesheet" />
+ <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
+ <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
+ <link rel="icon" href="/felta/images/black.png" type="image/png" />
+ <script src="/felta/js/jquery-1.11.3.min.js"></script>
+ <script src="/felta/js/jquery-mobile.js"></script>
+ <script src="/felta/js/Jcrop/jquery.Jcrop.js"></script>
+ <script src="/felta/js/quill/quill.min.js"></script>
+ <script src="/felta/js/edit.js"></script>
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <meta charset="UTF-8">
 </head>
@@ -64,6 +64,9 @@
         <div class="editor">
             <input type="text" id="line_editor_value"/>
         </div>
+      </section>
+      <section class="editor_link" id="link_editor" />
+
       </section>
       <section class="image_editor" id="image_editor">
         <div class="background" id="image_editor_background"></div>

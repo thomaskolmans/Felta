@@ -20,7 +20,7 @@ class File{
     protected $video = ["mp4","avi","mov"];
     protected $audio = ["wav","mp3"];
 
-    public function __construct($file,$name = ""){
+   public function __construct($file,$name = ""){
         $this->files = $file;
         $this->path = $this->files["name"];
         $this->info = pathinfo($this->path);
@@ -48,13 +48,13 @@ class File{
     }
     public function upload($destination = null, $onsucces = null){
         if($destination != null){
-            $this->dest =  $this->basedir.$this->base."/".$destination."/".$this->name.".".$this->getExtension();
+            $this->dest =  getcwd().$this->base."/".$destination."/".$this->name.".".$this->getExtension();
             $this->relative_dest = $this->base."/".$destination."/".$this->name.".".$this->getExtension();
         }else{
-            $this->dest = $this->basedir.$this->base."/".$this->name.".".$this->getExtension();
+            $this->dest = getcwd().$this->base."/".$this->name.".".$this->getExtension();
             $this->relative_dest = $this->base."/".$this->name.".".$this->getExtension();
         }
-        if(move_uploaded_file($this->getTmpFile($this->getFilename()), $this->dest)){
+        if(move_uploaded_file($this->getTmpFile(), $this->dest)){
             $this->succes = true;
             if($onsucces != null){
                 $onsucces();
@@ -64,7 +64,6 @@ class File{
         }
         return $this->succes;
     }
-
     public function createName($length = 10){
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

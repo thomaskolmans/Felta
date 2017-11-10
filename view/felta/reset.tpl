@@ -2,8 +2,8 @@
 
 <head>
  <title>Felta System</title>
- <link href="felta/stylesheets/front.css" rel="stylesheet">
- <link rel="icon" href="Felta/images/black.png" type="image/png"></link>
+ <link href="/felta/stylesheets/front.css" rel="stylesheet">
+ <link rel="icon" href="/felta/images/black.png" type="image/png"></link>
  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -15,7 +15,7 @@
       if($user->verifyForgot($id)){
      ?>
         <form method="post">
-            <img src="Felta/images/logo_white2.png">
+            <img src="/felta/images/logo_white2.png">
             <div class="input-group">
                 <label>New password</label>
                 <input type="password" name="password">
@@ -24,6 +24,7 @@
                 <label>Repeat password</label>
                 <input type="password" name="repeat_password">
             </div>
+
             <input type="submit" name="newpassword" value="Reset">
         </form>
     <?php
@@ -38,12 +39,13 @@
       }
     }else{ ?>
      <form method="post" class="reset">
-      <img src="Felta/images/logo_white2.png">
+      <img src="/felta/images/logo_white2.png">
       <div class="input-group">
        <label>Your username/email</label>
        <input type="text" name="email">
       </div>
       <input type="submit" name="reset" value="Recover">
+      <a href="/felta/login"><button>Back</button></a>
      </form>
     <?php } 
     if(isset($_POST['reset'])){

@@ -1,7 +1,7 @@
 <?php
 use lib\Routing\Route;
 
-Route::get("/home","index.tpl")->primary();
+Route::get("","index.tpl")->primary();
 Route::get("/about","about.tpl");
 Route::get("/agenda","agenda.tpl");
 Route::get("/berrie","berrie.tpl");
