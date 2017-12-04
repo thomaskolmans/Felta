@@ -442,6 +442,7 @@
    </section>
    <div class="stats head">
       <h1> Statistics </h1>
+      <canvas id="visitors"></canvas>
       <table>
         <tr>
           <th class="clean"></th>

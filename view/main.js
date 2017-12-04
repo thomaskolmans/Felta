@@ -11,8 +11,8 @@ $(document).ready(function(){
         ".slider",
         10000,
         Array(
-            "images/_MG_3378.jpg",
-            "images/_MG_3391.jpg"
+            "/images/_MG_3378.jpg",
+            "/images/_MG_3391.jpg"
             ),
         Array(
             "",
