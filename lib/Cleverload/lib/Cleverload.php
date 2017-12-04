@@ -79,6 +79,12 @@ class Cleverload{
     public function getCaseSensitive(){
         return $this->caseSensitive;
     }
+    public function forceHttps(){
+        if($_SERVER["HTTPS"] != "on"){
+            header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+            exit;
+        }
+    }
     public function getRequest(){
         return $this->request;
     }

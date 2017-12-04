@@ -14,32 +14,34 @@ class TemplateEdit{
     public $dom;
 
     public $language;
-    public $text = [];
 
-    private $nodes;
+    private $editNodes;
+    private $langNodes;
 
 
     public function __construct($dom){
         $this->dom = $dom;
-        $this->nodes = $this->dom->getElementsByTagName('edit');
+        $this->editNodes = $this->dom->getElementsByTagName('edit');
+        $this->langNodes = $this->dom->getElementsByTagName('lang');
         $this->sql = Felta::getInstance()->sql;
         $this->language = new Language($this->sql);
         $this->edit = new Edit();
-        $this->compile();
+        $this->compileEditNodes();
+        $this->compileLangNodes();
+        $this->insertEditText();
+        $this->insertLangText();
     }
-    public function compile(){
-        foreach($this->nodes as $node){
-            $value = $node->nodeValue;
+
+    public function compileEditNodes(){
+        foreach($this->editNodes as $node){
+            $value = $this->getHTML($node);
+            $val = $node->nodeValue;
+            if($node->hasAttribute("fid")){
+                $id = $node->getAttribute("fid");
+            }
             if($node->hasChildNodes()){
                 $childs = $node->childNodes;
                 foreach($childs as $child){
-                    if(isset($child->tagname)){
-                        if($child->tagname() == "img" || $child->tagname() == "iframe"){
-                            if($child->hasAttribute("src")){
-                                $value = $child->getAttribute("src");
-                            }
-                        }
-                    }
                     $class = get_class($child);
                     $reflection = new \ReflectionClass($class);
                     if($reflection->getShortName() == "DOMElement"){
@@ -49,29 +51,59 @@ class TemplateEdit{
                     }
                 }
             }
-            $this->text[$id] = $value;
+            if(count($node->childNodes) > 1){
+                $this->saveText($id,$value,$this->language->getDefault());
+            }else{
+                if($node->hasChildNodes()){
+                    $n = $node->childNodes[0];
+                    if(isset($n->tagName)){
+                        switch (strtoupper($n->tagName)) {
+                            case 'H1':
+                            case 'H2':
+                            case 'H3':
+                            case 'H4':
+                            case 'H5':
+                                $this->saveText($id,$val,$this->language->getDefault());
+                                break;
+                            case 'IMG':
+                            case 'IFRAME':
+                                if($child->hasAttribute("src")){
+                                    $this->saveText($id,$child->getAttribute("src"),$this->language->getDefault());
+                                }
+                                break;
+                        }
+                    }
+                }
+
+            }
+            
         }
-        $this->updateDatabase();
-        $this->putText();
         return $this->dom;
     }
-    public function updateDatabase(){
-        $date = new \DateTime("now");
-        $date->setTimestamp(time());
-        $language = $this->language->getDefault();
-        foreach(array_keys($this->text) as $id){
-            if(!$this->sql->exists("post_edit",["id" => $id])){
-                $this->sql->insert("post_edit",array(
-                    0,
-                    $id,
-                    $this->text[$id],
-                    $language
-                ));
+    public function compileLangNodes(){
+        foreach($this->langNodes as $node){
+            if($node->hasAttribute("fid")){
+                $id = $node->getAttribute("fid");
+                if($node->hasChildNodes()){
+                    foreach($node->childNodes as $langNode){
+                        $class = get_class($langNode);
+                        $reflection = new \ReflectionClass($class);
+                        if($reflection->getShortName() === "DOMElement"){
+                            if($langNode->hasAttribute("lang")){
+                                $language = $langNode->getAttribute("lang");
+                                $this->saveText($id,$this->getHTML($langNode),$language);
+                            }
+                        }
+                    }
+                }
             }
+
         }
+        return $this->dom; 
     }
-    public function putText(){
-        foreach($this->nodes as $node){
+
+    public function insertEditText(){
+        foreach($this->editNodes as $node){
             if($node->hasChildNodes()){
                 $childs = $node->childNodes;
                 foreach($childs as $child){
@@ -83,6 +115,7 @@ class TemplateEdit{
                         }
                         switch($child->tagName){
                             case "img":
+                            case "iframe":
                                 $child->setAttribute("src",$this->edit->getText($id));
                             break;
                             default:
@@ -92,6 +125,37 @@ class TemplateEdit{
                     }
                 }
             }
+        }
+    }
+    public function insertLangText(){
+        foreach($this->langNodes as $node){
+            if($node->hasAttribute("fid")){
+                $id = $node->getAttribute("fid");
+                $node->nodeValue = $this->edit->getText($id);
+            }
+        }
+    }
+
+    private function saveText($id,$text,$language){
+        if(!$this->sql->exists("post_edit",["id" => $id, "language" => $language])){
+            $this->sql->insert("post_edit",array(
+                0,
+                $id,
+                $text,
+                $language
+            ));
+        }
+    }
+    private function getHTML($node){
+        if($node instanceof DOMNode){
+            $html = "";
+            $children = $node->childNodes;
+            foreach($children as $child){
+                $html .= $node->ownerDocument->saveHTML($child);
+            }
+            return $html;
+        }else{
+            return $node->ownerDocument->saveHTML($node);
         }
     }
 }

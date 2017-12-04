@@ -1,4 +1,4 @@
-</html>
+<html>
 <head>
    <title>Felta | Agenda</title>
    <link href="/felta/stylesheets/main.css" rel="stylesheet">

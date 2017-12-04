@@ -2,7 +2,6 @@
 namespace lib\Post;
 
 use lib\Felta;
-
 class Statistics{
 
     public $sql;
@@ -26,7 +25,9 @@ class Statistics{
             $this->sql->insert("visitors_unqiue",[0,$ip,$now->format("Y-m-d H:i:s")]);
         }
     }
-    public function getUniqueVisitors(){    }
+    public function getUniqueVisitors(){
+        $this->sql->count("visitors_unqiue");
+    }
     public function getTotalVisitors(){
         return $this->sql->count("visit_total");
     }
@@ -42,6 +43,13 @@ class Statistics{
                 "ip" => "varchar(65)",
                 "date" => "DateTime"
                 ],"id");
+            $this->sql->create("visitors_unqiue_location",[
+                "id" => "int auto_increment",
+                "ip" => "varchar(65)",
+                "country" => "varchar(255)",
+                "city" => "varchar(255)",
+                "postalcode" => "varchar(255)"
+            ]);
         }
     }
 }

@@ -134,31 +134,30 @@ $(document).ready(function(){
       closeTextEditor();
     });
     $("#image_edit_save").on("click",function(){
+      var form_data = new FormData();
       var file_data = $("#file").prop("files")[0];
+      form_data.append("file_name", file_data);
+      form_data.append("w",imageCords.w);
+      form_data.append("h",imageCords.h);
+      form_data.append("x1",imageCords.x1);
+      form_data.append("y1",imageCords.y1);
+      form_data.append("y2",imageCords.y2);
+      form_data.append("x2",imageCords.x2);
+      form_data.append("id",$("#image_id").val());
+      form_data.append("language",$("#active_language").val());
       $.ajax({
-        url: "/Felta/edit/image",
+        url: "/felta/edit/image",
         type: "POST",
         cache: false,
         contentType: false,
         processData: false,
         async: false,
-        data: {
-          "id": $("#id").val(),
-          "file_name": file_data,
-          "language": $("#active_language").val(),
-          "w": imageCords.w,
-          "h": imageCords.h,
-          "x1": imageCords.x1,
-          "y1": imageCords.y1,
-          "x2": imageCords.x2,
-          "y2": imageCords.y2
-        },
+        data: form_data,
         success: function(data){
           var iframe = document.getElementById("iframe")
           var doc = iframe.contentDocument || iframe.contentWindow.document;
-          var elem = doc.querySelectorAll('[edit="'+$("#id").val()+'"]');
+          var elem = doc.querySelectorAll('[edit="'+$("#image_id").val()+'"]');
           for(i = 0; i < elem.length; i++){
-            console.log("source");
             elem[0].src = data.trim();
           }
           closeImageEditor();
@@ -222,7 +221,7 @@ function editor(id){
           case "IMG":
             openImageEditor();
             id = atr[0].getAttribute("edit");
-            $("#id").val(id);
+            $("#image_id").val(id);
             $('html,body').animate({
                 scrollTop: 0
             }, 1);

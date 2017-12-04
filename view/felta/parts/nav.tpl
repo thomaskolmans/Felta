@@ -16,6 +16,7 @@
      <a href="/felta/dashboard"><li><i class="fa fa-home"></i>Dashboard</li></a>
      <a href="/felta/editor"><li><i class="fa fa-eraser"></i>Edit</li></a>
      <a href="/felta/agenda"><li><i class="fa fa-calendar"></i>Agenda</li></a>
+     <a href="/felta/statistics"><li><i class="fa fa-bar-chart"></i>Statistics</li></a>
    </ul>
     <div class="bottom">
       <a class="logout" href="/felta/logout"><i class="fa fa-sign-out"></i></a>

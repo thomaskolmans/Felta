@@ -12,6 +12,16 @@ $(document).ready(function(){
             type: "DELETE"
         });
     });
+
+    var ctx = document.getElementyById("visitors");
+    var visitors = new Chart(ctx,{
+        type: 'line',
+        data:{
+            dataset:[
+
+            ]
+        }
+    })
 });
 function checkServer(){
     ifServerOnline(function(){

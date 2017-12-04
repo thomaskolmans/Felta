@@ -24,6 +24,7 @@ class Router{
 
         $this->route = new Route([$request->getMethod()],$request->getUri(),null);
         $this->route->setDomain($this->request->getDomain());
+        $this->route->run();
     }
 
     public function get($uri, $action){

@@ -9,34 +9,36 @@ use lib\Post\Agenda;
 use lib\Post\News;
 
 $felta = Felta::getInstance();
+$user = $felta->user;
 $edit = new Edit();
-$host = $felta->getHost();
 $agenda = new Agenda();
 $news = new News();
 
-Route::group(["namespace" => "/felta"],function() use ($edit,$felta,$agenda,$news){
+Route::group(["namespace" => "/felta"],function() use ($user,$edit,$felta,$agenda,$news){
+    if(!$felta->user->hasSession()){
+        Route::get("/login","felta/login.tpl")->when(!$felta->user->hasSession())->primary();
+        Route::any("/forgot","felta/reset.tpl");
+        Route::get("/forgot/code/{code}","felta/reset.tpl");
 
-    Route::any("/forgot","felta/reset.tpl");
-    Route::get("/forgot/code/{code}","felta/reset.tpl");
-    Route::get("/login","felta/login.tpl")->when(!$felta->user->hasSession())->primary();
+        Route::post("/login",function() use ($user){
+            if($user->login($_POST["username"],$_POST["password"],$_POST["remember"])){
+                echo json_encode(["logged_in" => true,"message" =>"Succesfull login"]);
+            }else{
+                echo json_encode(["logged_in" => false,"message" =>"Incorrect username and/or password"]);
+            }
+        });
 
-    Route::post("/login",function(){
-        $user = Felta::getInstance()->user;
-        if($user->login($_POST["username"],$_POST["password"],$_POST["remember"])){
-            echo json_encode(["logged_in" => true,"message" =>"Succesfull login"]);
-        }else{
-            echo json_encode(["logged_in" => false,"message" =>"Incorrect username and/or password"]);
-        }
-    });
-    Route::get("/user/verify/{key}",function($key) use ($felta){
-        $user = $felta->user;
-        $user->verifyVerification($key);
-        header("Location: /felta");
-    });
+        Route::get("/user/verify/{key}",function($key) use ($felta){
+            $user = $felta->user;
+            $user->verifyVerification($key);
+            header("Location: /felta");
+        });  
+    }
+
 
     if($felta->user->hasSession()){
+        
         /* logged in pages */
-
         Route::any("/dashboard","felta/dashboard.tpl")->when($felta->user->hasSession())->primary();
         Route::get("/editor","felta/editor.tpl");
         Route::get("/social","felta/social.tpl");
@@ -45,6 +47,7 @@ Route::group(["namespace" => "/felta"],function() use ($edit,$felta,$agenda,$new
         Route::get("/agenda/id/update","felta/agenda.tpl");
         Route::get("/news","felta/news.tpl");
         Route::get("/blog","felta/blog_main.tpl");
+        Route::get("/statistics","felta/statistics.tpl");
 
         Route::post("/settings",function() use ($felta){
             $user = $felta->user;
