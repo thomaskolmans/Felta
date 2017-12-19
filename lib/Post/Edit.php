@@ -35,9 +35,9 @@ class Edit extends Post{
         $languagelist = $this->language->getLanguageList();
         if(is_array($languages)){
             $outcome = [];
-            foreach($languages as $result){
-                if(in_array($this->language->languages[$result["language"]], $languagelist)){
-                    $outcome[] = $result["language"];
+            foreach($languages as $l){
+                if(in_array($this->language->languages[$l["language"]], $languagelist)){
+                    $outcome[] = $l["language"];
                 }
             }
             $languages = $outcome;

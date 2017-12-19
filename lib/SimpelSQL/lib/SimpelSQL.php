@@ -32,7 +32,7 @@ class SimpelSQL extends SQL{
     }
 
     public static function getConfig($item,$key = false){
-        $config = include(__DIR__."\..\config.php");
+        $config = include(__DIR__."/../config.php");
         foreach($config as $keys => $value){
             if($keys == $item){
                 if($key){
@@ -44,7 +44,7 @@ class SimpelSQL extends SQL{
     }
 
     public static function getSettings($item,$key = false){
-        $config = include(__DIR__."\..\settings.php");
+        $config = include(__DIR__."/../settings.php");
         foreach($config as $keys => $value){
             if($keys == $item){
                 if($key){

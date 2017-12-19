@@ -12,7 +12,8 @@ class Agenda extends Post{
         "description" => "longtext",
         "image" => "varchar(255)",
         "location" => "varchar(255)",
-        "date" => "DateTime",
+        "from" => "DateTime",
+        "until" => "DateTime",
         "posted" => "DateTime"
     ];
 

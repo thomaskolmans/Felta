@@ -8,7 +8,7 @@ body
   overflow-x: none
 .top
   width: 100%
-  height: 55px
+  height: 45px
   background: $main
   display: block
   position: fixed
@@ -20,7 +20,7 @@ body
     width: 34px
     height: 34px
     line-height: 34px
-    margin-top: 10px
+    margin-top: 7.5px
     display: none
     color: $base
     position: relative
@@ -43,7 +43,7 @@ body
     width: auto
     min-width: 250px
     float: right
-    height: 55px
+    height: 45px
     color: $base
     text-align: center
     +transition($s)
@@ -58,7 +58,7 @@ body
       menu li
         display: block
     .name
-      line-height: 55px
+      line-height: 45px
       margin-right: 40px
       margin-left: 40px
       position: relative
@@ -69,8 +69,8 @@ body
         cursor: pointer
       &::before
         +transition($s)
-        height: 55px
-        line-height: 55px
+        height: 45px
+        line-height: 40px
         top: 0
         color: $base
         position: absolute
@@ -102,14 +102,13 @@ body
           color: $lightblue
   button
     border: 2px solid $base
-    border-radius: 50px
     background: $base
     color: $main
-    height: 35px
+    height: 30px
     padding: 0 15px
-    margin-top: 10px
+    margin-top: 7.5px
     float: left
-    margin-left: 250px
+    margin-left: 200px
     font:
       size: 15px
       weight: 900
@@ -127,9 +126,9 @@ body
 .left
   position: fixed
   height: 100vh
-  width: 220px
+  width: 180px
   background: $main
-  box-shadow: 0px 0px 42px -8px black
+  box-shadow: 0px 0px 22px -5px black
   z-index: 130
   top: 0
   left: 0
@@ -156,7 +155,7 @@ body
   li
     font:
       family: $font
-      size: 23px
+      size: 20px
       weight: 100
     width: 100%
     height: 50px
@@ -169,10 +168,10 @@ body
       color: $lightblue
       +transition($s)
     i
-      padding-right: 15px
-      margin-left: 15px
+      padding-right: 10px
+      margin-left: 10px
   .bottom
-    width: 220px
+    width: 180px
     height: 35px
     position: fixed
     bottom: 0
@@ -189,7 +188,7 @@ body
       +transition($s)
       i
         font-size: 30px
-        padding-left: 20px
+        padding-left: 10px
       &:hover
         +transition($s)
         color: $lightblue
@@ -264,3 +263,8 @@ input[type="checkbox"].switcher
     -webkit-transform: translateX(26px)
     -ms-transform: translateX(26px)
     transform: translateX(26px)
+@media only screen and ( max-width: 760px )
+  .left
+    box-shadow: none
+    ul
+      margin-top: 45px

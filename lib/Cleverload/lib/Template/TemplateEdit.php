@@ -29,7 +29,6 @@ class TemplateEdit{
         $this->compileEditNodes();
         $this->compileLangNodes();
         $this->insertEditText();
-        $this->insertLangText();
     }
 
     public function compileEditNodes(){
@@ -82,22 +81,32 @@ class TemplateEdit{
     }
     public function compileLangNodes(){
         foreach($this->langNodes as $node){
-            if($node->hasAttribute("fid")){
-                $id = $node->getAttribute("fid");
-                if($node->hasChildNodes()){
-                    foreach($node->childNodes as $langNode){
-                        $class = get_class($langNode);
-                        $reflection = new \ReflectionClass($class);
-                        if($reflection->getShortName() === "DOMElement"){
-                            if($langNode->hasAttribute("lang")){
-                                $language = $langNode->getAttribute("lang");
-                                $this->saveText($id,$this->getHTML($langNode),$language);
-                            }
+            if($node->hasChildNodes()){
+                $langs = [];
+                foreach($node->childNodes as $langNode){
+                    $class = get_class($langNode);
+                    $reflection = new \ReflectionClass($class);
+                    if($reflection->getShortName() === "DOMElement"){
+                        if($langNode->hasAttribute("lang")){
+                            $language = $langNode->getAttribute("lang");
+                            $langs[$language] = $this->getHTML($langNode);
                         }
                     }
                 }
+                $languagelist = $this->language->getLanguageList();
+                $languages = array_keys($langs);
+                if(is_array($languages)){
+                    $outcome = [];
+                    foreach($languages as $l){
+                        if(in_array($this->language->languages[$l], $languagelist)){
+                            $outcome[] = $l;
+                        }
+                    }
+                    $languages = $outcome;
+                }
+                $l = $this->language->get((array) $languages);
+                $node->nodeValue = $langs[$l];
             }
-
         }
         return $this->dom; 
     }
@@ -127,15 +136,6 @@ class TemplateEdit{
             }
         }
     }
-    public function insertLangText(){
-        foreach($this->langNodes as $node){
-            if($node->hasAttribute("fid")){
-                $id = $node->getAttribute("fid");
-                $node->nodeValue = $this->edit->getText($id);
-            }
-        }
-    }
-
     private function saveText($id,$text,$language){
         if(!$this->sql->exists("post_edit",["id" => $id, "language" => $language])){
             $this->sql->insert("post_edit",array(

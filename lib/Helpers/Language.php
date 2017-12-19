@@ -230,6 +230,7 @@ class Language{
         }
         return $this->languagelist;
     }
+
     public function remove($language){
         $this->removeLang($language);
         return $this;
@@ -244,11 +245,16 @@ class Language{
             return $_GET["lang"];
         }else if(isset($_SESSION["lang"]) && in_array($_SESSION["lang"], $this->languagelist)){
             return $_SESSION["lang"];
-        }else if(isset($_COOKIE["lang"]) && in_array($_SESSION["lang"], $this->languagelist)){
+        }else if(isset($_COOKIE["lang"]) && in_array($_COOKIE["lang"], $this->languagelist)){
             return $_COOKIE["lang"];
         }
-        return $this->getPrefered($this->languagelist);
+        $l = $this->getPrefered($this->languagelist);
+        if(strlen($l) > 2){
+            return $this->findShort($l);
+        }
+        return $l;
     }
+
     public function getPrefered($available_languages,$http_accept_language="auto"){ 
         if ($http_accept_language == "auto") $http_accept_language = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : ''; 
         preg_match_all("/([[:alpha:]]{1,8})(-([[:alpha:]|-]{1,8}))?" . 

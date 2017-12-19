@@ -52,6 +52,7 @@ class Route{
                 case "png": $ctype = "image/png"; break;
                 case "css": $ctype = "text/css"; break;
                 case "js": $ctype = "text/javascript"; break;
+                case "svg": $ctype = "image/svg+xml"; break;
             }
             header("Content-type: ".$ctype);
             $this->getRouter()->response->sendFile(Cleverload::getInstance()->getStaticFilesDir().$this->uri);
@@ -80,20 +81,24 @@ class Route{
     }
     public function getMatch(Router $router){
         $routes = $router->getRoutes();
+        if(count($routes) < 1){
+            $this->getRouter()->response->noRoutes();
+        }
         $found = false;
         $simelarities = false;
         for($i = 0; $i < $this->sectioncount; $i++){
             if(!$found && count($routes) > 0){
+                $previous = $routes;
                 $routes = $this->matchSectionToRoutes($i,$routes);
                 if(count($routes) == 1){
                     if($this->hasRest($i)){
-                        if($this->validRest($i)){
-                            $this->getRest($i,$routes[0]);
+                        if($this->validRest($i + 1,true)){
+                            $this->getRest($i+1,$routes[0],true);
                         }else{
                             $found = false;
                             continue;
-                        }
-                    }
+                        }    
+                    }    
                     $found = true;
                     break;
                 }else if(count($routes) > 1 && $this->sectioncount == $i + 1){
@@ -104,23 +109,28 @@ class Route{
                             break;
                         }
                     }
+                }else if(count($routes) < 1){
+                    $routes = $previous;
                 }
                 continue;
             }
         }
         if(!$found){
-            if(count($routes) > 1){
+            if(count($routes) > 0){
                 $r = $this->getRouter()->getDefault();
                 if(!$r instanceof Route){
                     $this->getClosest($routes);
                 }
+                return $r;
+            }else{
+                return $this->getRouter()->response->notFound();
             }
             return $this->getRouter()->getDefault();
         }
         return $this->handleMatch($routes[0]);
     }
-    public function getRest($i,$route){
-        if($this->validRest($i)){
+    public function getRest($i,$route,$ignore_zero = false){
+        if($this->validRest($i,$ignore_zero)){
             for($j = $i + 1; $j < $this->sectioncount; $j += 2){
                 $key = $this->getSection($j - 1)->toString();
                 $value = $this->getSection($j)->toString();
@@ -130,13 +140,18 @@ class Route{
         }
         return false;
     }
-    public function validRest($i){
+    public function validRest($i,$ignore_zero = false){
         if($this->hasRest($i)){
-            if($i === 0){
-                $rest = $this->sectioncount;
+            if(!$ignore_zero){
+                if($i === 0){
+                    $rest = $this->sectioncount;
+                }else{
+                    $rest = $this->sectioncount - ($i + 1);
+                }   
             }else{
-                $rest = $this->sectioncount - ($i + 1);
+                $rest = $this->sectioncount - $i;
             }
+
             if($rest % 2 == 0 && $rest > 0){
                 return true;
             }  
@@ -264,6 +279,8 @@ class Route{
             foreach($this->groupstack[$i] as $grouptype => $value){
                 switch($grouptype){
                     case "namespace":
+                        $this->uri = $value.$this->uri;
+                    break;
                     case "prefix":
                         $this->uri = $value.$this->uri;
                     break;
