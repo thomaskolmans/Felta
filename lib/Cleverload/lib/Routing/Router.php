@@ -45,10 +45,22 @@ class Router{
     public function any($uri,$action){
         return $this->add(["GET","HEAD","PUT","DELETE","OPTIONS","PATCH","POST"],$uri,$action);
     }
-    public function add($method,$uri,$action){
+    public function group(array $arguments, callable $action){
+        $this->addToGroupstack($arguments,$action);
+        $action($this);
+        array_pop($this->groupstack);
+    }
+    private function add($method,$uri,$action){
+        if(is_array($uri)){
+            $routes = [];
+            foreach($uri as $u){
+                $routes[] = $this->routes->add($this->newRoute($method,$u,$action));
+            }
+            return $routes;
+        }
         return $this->routes->add($this->newRoute($method,$uri,$action));
     }
-    public function newRoute($method,$uri,$action){
+    private function newRoute($method,$uri,$action){
         $route = new Route($method,$uri,$action);
         $route->setGroupstack($this->groupstack);
         return $route;
@@ -64,11 +76,6 @@ class Router{
         if(!empty($arguments)){
             $this->groupstack[] = $arguments;
         }
-    }
-    public function group(array $arguments, callable $action){
-        $this->addToGroupstack($arguments,$action);
-        $action($this);
-        array_pop($this->groupstack);
     }
     public function getRoutes(){
         $this->getRouterFiles();

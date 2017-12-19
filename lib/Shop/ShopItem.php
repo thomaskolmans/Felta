@@ -1,5 +1,7 @@
 <?php
 
+namespace lib\Shop;
+
 class ShopItem{
 
     public $active = false;
