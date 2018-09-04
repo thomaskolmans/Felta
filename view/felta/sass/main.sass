@@ -1,0 +1,793 @@
+@import "base/_base"
+
+#text_edit_buttons,#text_editor,#image_edit_buttons,#image_editor,#line_editor,#line_edit_buttons
+  display: none
+
+.main
+  width: calc(100% - 180px)
+  margin-left: 180px
+  margin-top: 45px
+  display: inline-block
+  overflow: hidden
+  position: relative
+  &.no-top
+    margin-top: 0
+    margin-left: 0
+  &.container
+    width: 1034px
+    >*
+      vertical-align: top
+  &.dashboard,&.settings
+    width: 1034px
+    >*
+      vertical-align: top
+    section
+      width: 500px
+      display: inline-block
+      box-shadow: 0px 0px 25px -8px black
+      margin: 15px 7px
+      text-align: center
+      background: $main
+      color: $base
+      &.transparent
+        background: none
+        color: $main
+        box-shadow: none
+        margin: 0
+        width: 100%
+        text-align: left
+        h1
+          text-align: left
+      &.hidden
+        display: none
+      &.full
+        width: 100%
+        margin: 15px 0
+      &.more
+        margin: 50px 0 15px
+      &.overview
+        h2
+          margin: 15px 0
+          font-size: 25px
+          padding: 0 35px
+          text-align: center
+      h1
+        font-size: 35px
+        font-weight: 500
+        padding: 15px 0
+        text-align: center
+      h2
+        text-align: center
+        margin-bottom: 15px
+    h1
+      padding: 25px 0
+      font-size: 60px
+      font-weight: 100
+    h2
+      font-size: 45px
+      padding: 25px 0
+      font-weight: 100
+    h3
+      padding: 25px 0
+      font-size: 20px 
+    .hub
+      background: $main
+      color: $base
+      h1
+        font-size: 35px
+        font-weight: 500
+      h2
+        font-size: 20px
+        padding: 15px 0
+    .status
+      width: 300px
+      height: 50px
+      display: inline-block
+      line-height: 50px
+      border-radius: 50px
+      font-weight: 900
+      margin-bottom: 15px
+      &.online
+        background: green
+        color: $base
+      &.offline
+        background: red
+        color: $main
+    .live
+      height: 50px
+      line-height: 50px
+      display: inline-block
+      position: relative
+      margin-bottom: 0.67em
+      > *
+        vertical-align: top
+      .label
+        display: inline-block
+      .switch
+        display: inline-block
+        margin-top: 8px
+        margin-left: 8px
+    .languages
+      .lang_container
+        width: 100%
+        &:not(:first-child)
+          margin-top: 15px
+      .language
+        background: white
+        color: $main
+        padding: 8px 0px
+        border-radius: 50px
+        width: 50%
+        margin: 0 auto
+        text-align: center
+        display: block
+        position: relative
+        .remove
+          position: absolute
+          right: 15px
+          top: 55%
+          transform: translateY(-50%)
+          &::before
+            content: "\f068"
+            font:
+              family: FontAwesome
+            +transition($s)
+          &:hover
+            &::before
+              color: $red
+              +transition($s)
+            cursor: pointer
+      h1
+        color: $base
+      form
+        margin: 0
+        margin-top: 35px
+        width: initial
+        display: none
+        text-align: center
+        select
+          height: 35px
+          border: none
+        input
+          height: 38px
+          padding: 0 5px
+          border: none
+          &:focus
+            outline: none
+        option
+          border: none
+        input[type="submit"],input[type="button"]
+          border: none
+          border-top-right-radius: 4px
+          border-bottom-right-radius: 4px
+          background: $lightblue
+          border: 2px solid $lightblue
+          color: white
+          padding: 10px 25px
+          font-size: 14px
+          font-weight: 600
+          line-height: 1
+          transition: 0.3s
+          -webkit-transition: 0.3s
+          &:hover
+            +transition($s)
+            background: none
+            color: $lightblue
+            cursor: pointer
+          &:active, &:focus
+            outline: none
+        input[type="button"]
+          float: left
+      .new
+        width: 100%
+        height: 50px
+        position: relative
+        display: inline-block
+        background: $main
+        margin-top: 25px
+        +transition($s)
+        &:hover
+          cursor: pointer
+          background: $clear
+          &::after
+            color: $lightblue
+            +transition($s)
+        &::after
+          position: absolute
+          left: 50%
+          top: 50%
+          height: 40px
+          width: 40px
+          line-height: 40px
+          color: $base
+          transform: translate(-50%,-50%)
+          font:
+            family: "FontAwesome"
+            size: 35px
+          content: "\f067"
+    .thankyou
+      width: 100%
+      height: 50px
+      line-height: 50px
+      text-align: left
+      font:
+        style: italic
+      b
+        font-weight: 900
+  .editor_text, .image_editor,.editor_line
+    width: 100%
+    height: 100%
+    position: absolute
+    top: 0
+    left: 0
+    z-index: 100
+    &:hover
+      cursor: pointer
+    .editor
+      z-index: 110
+      width: 70%
+      height: 60vh
+      background: $base
+      position: absolute
+      left: 50%
+      top: 50%
+      transform: translate(-50%,-50%)
+      .container
+        height: calc(100% - 42px)
+  .editor_line
+    .editor
+      height: 50px
+      width: 60%
+    input
+      width: 100%
+      height: 50px
+      padding: 0 35px
+      font-size: 25px
+      border: none
+      &:active,&:focus
+        outline: none
+  .image_editor
+    .editor
+      max-width: 40%
+      height: auto
+      max-height: 70vh
+      background: transparent
+      .box__file
+        width: 0.1px
+        height: 0.1px
+        opacity: 0
+        overflow: hidden
+        position: absolute
+        z-index: -1
+    .select-image
+      background: $base
+  .image_editor,.flat_image_editor
+    .editor
+      width: 100%
+      margin: 0 auto
+      height: auto
+      &.full
+        height: 100%
+        .select-image
+          padding: 0
+        .buttons
+          display: block
+      .buttons
+        display: none
+        margin-top: 53px
+        button
+          &:hover
+            color: $lightblue
+      .container
+        width: 100%
+    .jcrop-keymgr
+      opacity: 0
+    .jcrop-holder
+      margin: 0 auto
+      //box-shadow: 0px 0px 25px 8px rgba(255,255,255,0.6)
+    .jcrop-tracker
+      margin: 0 auto
+    .select-image
+      padding: 100px 20px
+      &.has-advanced-upload
+        background-color: white
+        outline: 2px dashed black
+        outline-offset: -10px
+        .box__dragndrop
+          display: inline
+      &.invisible
+        background: none
+        outline: none
+        outline-offset: initial
+      &.is-dragover
+        background: $lightblue
+      .box__file
+        width: 0.1px
+        height: 0.1px
+        opacity: 0
+        overflow: hidden
+        position: absolute
+        z-index: -1
+      .box__icon
+        width: 100%
+        margin-bottom: 15px
+      strong
+        font-weight: 900
+      label
+        background: none
+        color: $main
+        text-align: center
+        position: relative
+        display: block
+        top: 0
+        left: 0
+        margin: 0 auto
+        &:hover
+          cursor: pointer
+  section
+    .background
+      position: absolute
+      z-index: 90
+      width: 100%
+      height: 100%
+      left: 0
+      top: 0
+      background: rgba(0,0,0,0.9)
+  .top
+    width: 100%
+    height: 50px
+    position: relative
+    background: none
+    box-shadow: none
+    box-sizing: border-box
+    background: $blue
+    color: $base
+    z-index: 120
+    .edit_buttons
+      button
+        float: right
+        margin-left: 0
+        margin-right: 10px
+        margin-top: 10px
+    h1
+      height: 50px
+      line-height: 50px
+      font-size: 35px
+      width: auto
+      margin-left: 25px
+      text-align: left
+      display: inline-block
+      float: left
+    .basic
+      display: inline-block
+      float: right
+      width: auto
+      margin-right: 35px
+    .select-box
+      margin-top: 10px
+    .language
+      float: left
+      min-width: 150px
+      +transition($s)
+  iframe
+    width: 100%
+    height: calc(100vh - 95px)
+  .stats
+    width: 100%
+    height: auto
+    background: $main
+    margin-top: 35px
+    padding: 25px 0
+    box-shadow: 0px 0px 25px -8px black
+    &.head
+      padding-top: 0
+    &.no-margin
+      margin-top: 0
+    canvas
+      margin-bottom: 50px
+      height: 400px
+      width: 90%
+    h1
+      padding-top: 0 !important
+    hr
+      width: 80%
+    .graph
+      width: 400px
+      display: inline-block
+    table
+      width: 90%
+      margin: auto
+      color: $base
+      tr
+        height: 35px
+      td,th
+        width: 20%
+        text-align: center
+        font-weight: 900
+        border: 4px solid $base
+      th
+        border: none
+        text-align: left
+      td.clean,th.clean
+        border: none
+    &.agenda,&.news
+      table
+        tr
+          padding: 10px 0
+          box-sizing: border-box
+        td,th
+          width: auto
+          padding: 0 15px
+        td
+          border: none
+          font-weight: 100
+          &.align-left
+            text-align: left
+          button
+            background: $lightblue
+            border: none
+            color: white
+            height: 30px
+            padding: 0 15px
+            +transition($s)
+            &:hover
+              cursor: pointer
+              color: white
+              background: $blue
+              +transition($s)
+            &:active,&:focus
+              outline: none
+          .delete
+            background: $lightblue
+            color: white
+            width: 30px
+            height: 30px
+            line-height: 30px
+            text-align: center
+            position: relative
+            &:hover
+              cursor: pointer
+              color: white
+              background: $red
+              +transition($s)
+            &::before
+              content: "\f1f8"
+              font:
+                family: "FontAwesome"
+              height: 100%
+              width: 100%
+              top: 0
+              left: 0
+              position: absolute
+        th
+          border-bottom: 2px solid $base
+          text-align: center
+          &.clear
+            border: none
+
+.input-group
+  position: relative
+  margin-top: 40px
+  &.right
+    text-align: right
+    margin-top: 15px
+button:focus
+  outline: none
+button
+  border: none
+  border-radius: 4px
+  background: $lightblue
+  border: 2px solid $lightblue
+  color: white
+  padding: 10px 25px
+  line-height: 1
+  font-size: 14px
+  font-weight: 600
+  +transition($s)
+  &:hover
+    cursor: pointer
+    color: $main
+    background: none
+    +transition($s)
+  &.add
+    border-radius: 0px
+    border-top-right-radius: 4px
+    border-top-left-radius: 4px
+    position: absolute
+    right: 0
+    top: -38px
+    +transition($s)
+    &.tabs-above
+      top: -88px
+  &.black
+    background: $main
+    border-color: $main
+    &:hover
+      background: none
+      color: $main
+.multi-page
+  display: none
+.order-list,.transaction-list
+  a
+    color: $base
+    text-decoration: none
+  .order,.transaction
+    padding: 15px 30px
+    text-align: left
+    border-bottom: 1px solid $base
+    .id,.date,.amount,
+      display: inline-block
+      margin-right: 10px
+    .date,.amount
+      font-weight: bold
+    &:hover
+      color: $lightblue
+  .more
+    width: 100%
+    height: 50px
+    position: relative
+    display: inline-block
+    background: $main
+    +transition($s)
+    &:hover
+      cursor: pointer
+      background: $clear
+      &::after
+        color: $lightblue
+        +transition($s)
+    &::after
+      position: absolute
+      left: 50%
+      top: 50%
+      height: 40px
+      width: 40px
+      line-height: 40px
+      color: $base
+      transform: translate(-50%,-50%)
+      font:
+        family: "FontAwesome"
+        size: 35px
+      content: "\f067"
+form.agenda,form.news
+  margin: 50px auto
+  width: 560px
+  text-align: left
+  input,textarea
+    width: 100%
+    padding: 0 25px
+    box-sizing: border-box
+    height: 35px
+    background: #ccc
+    border: 1px solid #ccc
+    &:active,&:focus
+      outline: none
+    &[type="submit"],&[type="button"]
+      width: auto
+      display: inline-block
+      border: none
+      border-radius: 4px
+      background: $main
+      border: 2px solid $main
+      color: white
+      padding: 10px 25px
+      line-height: 0
+      font-size: 14px
+      font-weight: 600
+      transition: 0.3s
+      -webkit-transition: 0.3s
+      &:hover
+        +transition($s)
+        background: none
+        color: $main
+        cursor: pointer
+      &:active, &:focus
+        outline: none
+  textarea
+    min-width: 100%
+    max-width: 100%
+    padding: 10px 25px
+    font: 400 13.3333px Arial
+    height: 300px
+  .select-box
+    margin-top: 0
+  #editor,#update_editor
+    width: 100%
+    height: 500px
+    background: #ccc
+  label
+    position: absolute
+    top: -24px
+    left: 0
+    font-size: 18px
+    background: $blue
+    padding: 3px 25px
+    color: White
+.main.settings
+  section
+    width: 100%
+    margin: 0
+    padding: 35px 0
+    box-shadow: none
+    &.no-padding
+      padding: 0
+    &.hidden
+      display: none
+    form
+      width: 350px
+      margin: 0 auto
+      h1
+        padding: 35px 0
+    .break
+      height: 25px
+      width: 100%
+    .input-group
+      text-align: left
+      margin-top: 10px
+      width: 100%
+      display: inline-block
+      &.center
+        text-align: center
+      &.left
+        text-align: left
+      &.right
+        text-align: right
+    input
+      border: none
+      height: 35px
+      width: 100%
+      padding: 0 15px
+      &:after,&:focus
+        outline: none
+      &[type="submit"]
+        border: none
+        width: auto
+        border-radius: 4px
+        background: $lightblue
+        border: 2px solid $lightblue
+        color: white
+        padding: 10px 25px
+        font-size: 14px
+        font-weight: 600
+        line-height: 1
+        transition: 0.3s
+        -webkit-transition: 0.3s
+        float: right
+        &:hover
+          +transition($s)
+          background: none
+          color: $base
+          cursor: pointer
+        &:active, &:focus
+          outline: none
+    label
+      width: 100%
+      height: 25px
+      display: block
+      font:
+        size: 20px
+        weight: 600
+    .me
+      font-size: 25px
+      padding-bottom: 35px
+      .line
+        height: auto
+        display: inline-block
+        width: 40%
+        label
+          font-size: 25px
+          height: auto
+          display: inline-block
+    .user
+      width: 100%
+      height: 80px
+      line-height: 80px
+      border-bottom: 1px solid $main
+      display: flex
+      div
+        flex: 3
+        font-size: 20px
+        display: inline-block
+        line-height: 80px
+        &.id,&.delete
+          flex: 1
+      button
+        height: 50px
+        width: 50px
+        border: none
+        background: $lightblue
+        display: block
+        margin: 0 auto
+        margin-top: 15px
+        position: relative
+        &:hover
+          cursor: pointer
+          background: $red
+          +transition($s)
+        &::before
+          content: "\f1f8"
+          position: absolute
+          left: 0
+          top: 0
+          height: 100%
+          width: 100%
+          line-height: 50px
+          font-family: FontAwesome
+          font-size: 23px
+          color: white
+.list
+  width: 100%
+  height: auto
+  display: inline-block
+  .add
+    width: 100%
+    height: 50px
+    line-height: 50px
+    text-align: center
+    &::after
+      content: ""
+      font:
+        family: "FontAwesome"
+@media only screen and (max-width: 1300px)
+  .main
+    &.dashboard
+      width: calc(100% - 180px)
+      .thankyou
+        text-align: center
+@media all and (max-width: 993px)
+  .main .editor_text .editor .container
+    height: calc(100% - 65px)
+@media only screen and ( max-width: 760px )
+  .main
+    width: 100%
+    margin-left: 0
+    &.container
+      width: 100%
+    &.dashboard,&.settings
+      width: 100%
+    .top
+      h1
+        margin-left: 15px
+        font-size: 30px
+    .editor_line .editor
+      width: 90%
+      input
+        padding: 0 15px
+  .top
+    .listbutton
+      display: block
+    button
+      margin-left: 35px
+      margin-right: 10px
+      padding: 0 7px
+      float: right
+    .account
+      display: none
+  .left
+    transform: translate(-220px)
+    .bottom
+      .logout
+        display: block
+    img
+      display: none
+@media only screen and (max-width: 560px )
+  .main
+    h1
+      text-align: center
+    &.dashboard
+      h1
+        font-size: 50px
+        padding: 10px 0
+        text-align: left
+      section
+        width: 100%
+        margin: 15px 0
+      .hub,section,.stats
+        h1
+          text-align: center
+    .top .basic
+      margin-right: 25px
+  form
+    width: 100%
+@media all and (max-width: 431px)
+  .main .editor_text .editor .container
+    height: calc(100% - 89px)

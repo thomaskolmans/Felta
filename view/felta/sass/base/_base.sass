@@ -1,0 +1,369 @@
+@import "compass/reset"
+@import "_vars"
+
+body
+  background: $base
+  text-align: center
+  font-family: $font
+  overflow-x: none
+hr
+  margin: 0
+.spinner
+  font-size: 10px
+  margin: 100px auto
+  text-indent: -9999em
+  width: 100px
+  height: 100px
+  border-radius: 50%
+  background: $main
+  background: -moz-linear-gradient(left, $main 10%, rgba(255, 255, 255, 0) 42%)
+  background: -webkit-linear-gradient(left, $main 10%, rgba(255, 255, 255, 0) 42%)
+  background: -o-linear-gradient(left, $main 10%, rgba(255, 255, 255, 0) 42%)
+  background: -ms-linear-gradient(left, $main 10%, rgba(255, 255, 255, 0) 42%)
+  background: linear-gradient(to right, $main 10%, rgba(255, 255, 255, 0) 42%)
+  position: relative
+  +animation(load3 1.4s infinite linear)
+  -webkit-transform: translateZ(0)
+  -ms-transform: translateZ(0)
+  transform: translateZ(0)
+  &:before
+    width: 50%
+    height: 50%
+    background: $main
+    border-radius: 100% 0 0 0
+    position: absolute
+    top: 0
+    left: 0
+    content: ''
+  &:after
+    background: $base
+    width: 75%
+    height: 75%
+    border-radius: 50%
+    content: ''
+    margin: auto
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+.top
+  width: 100%
+  height: 45px
+  background: $main
+  display: block
+  position: fixed
+  z-index: 1000
+  top: 0
+  left: 0
+  .listbutton
+    float: left
+    width: 34px
+    height: 34px
+    line-height: 34px
+    margin-top: 7.5px
+    display: none
+    color: $base
+    position: relative
+    margin-left: 15px
+    &:hover
+      cursor: pointer
+      &::before
+        +transition($s)
+        color: $lightblue
+    &::before
+      +transition($s)
+      position: absolute
+      left: 0
+      color: $base
+      content: "\f0c9"
+      font:
+        family: "FontAwesome"
+        size: 25px
+  .account
+    width: auto
+    min-width: 250px
+    float: right
+    height: 45px
+    color: $base
+    text-align: center
+    +transition($s)
+    &:hover
+      +transition($s)
+      cursor: pointer
+      color: $lightblue
+      background: $clear
+      menu::before
+        color: $lightblue
+        +transition($s)
+      menu li
+        display: block
+    .name
+      line-height: 45px
+      margin-right: 40px
+      margin-left: 40px
+      position: relative
+    menu
+      width: 100%
+      display: inline-block
+      &:hover
+        cursor: pointer
+      &::before
+        +transition($s)
+        height: 45px
+        line-height: 40px
+        top: 0
+        color: $base
+        position: absolute
+        right: 20px
+        z-index: 20
+        content: "\f0dd"
+        font:
+          family: "FontAwesome"
+          size: 20px
+      a
+        text-decoration: none
+      li
+        list-style: none
+        display: none
+        background: $main
+        color: $base
+        text-decoration: none
+        height: 35px
+        padding: 0 40px
+        line-height: 35px
+        position: relative
+        text-align: center
+        i
+          float: left
+          line-height: 38px
+          position: absolute
+          left: 35px
+        &:hover
+          color: $lightblue
+  button
+    border: 2px solid $base
+    background: $base
+    color: $main
+    height: 30px
+    padding: 0 15px
+    margin-top: 7.5px
+    float: left
+    margin-left: 200px
+    font:
+      size: 15px
+      weight: 900
+      family: $font
+    border-radius: 50px
+    +transition($s)
+    &:hover
+      +transition($s)
+      background: none
+      color: $base
+      cursor: pointer
+    &:active, &:focus
+      outline: none
+.select-box
+  max-width: 100%
+  position: relative
+  display: inline-block
+  vertical-align: bottom
+  font-size: 1em
+  margin-top: 0.3em
+  background: $base
+  &.dark
+    select
+      background-color: $main
+      color: $base
+  select
+    max-width: 100%
+    background-color: $base
+    color: $main
+    font-size: inherit
+    padding: .33em
+    padding-right: 2.5em
+    border: 0
+    margin: 0
+    text-indent: 0.01px
+    text-overflow: ''
+    -moz-appearance: none
+    -webkit-appearance: none
+    appearance: none
+    &::-ms-expand
+      display: none
+    &:active,&:focus
+      outline: none
+  &::before
+    content: ""
+    position: absolute
+    pointer-events: none
+  &::after
+    content: ""
+    position: absolute
+    pointer-events: none
+    content: "\25BC"
+    color: $lightblue
+    height: 1em
+    font-size: .625em
+    line-height: 1
+    right: 1.2em
+    top: 50%
+    margin-top: -.5em
+  &::before
+    width: 2em
+    right: 0
+    top: 0
+    bottom: 0
+    background-color: $main
+  select[disabled]
+    color: rgba(0, 0, 0, 0.25)
+.left
+  position: fixed
+  height: 100vh
+  width: 180px
+  background: $main
+  box-shadow: 0px 0px 22px -5px black
+  z-index: 130
+  top: 0
+  left: 0
+  &.active
+    transform: translateX(0)
+    +transition($s)
+  img
+    width: 100px
+    margin-top: 35px
+  ul
+    margin-top: 35px
+    color: $base
+    text-align: left
+    list-style: none
+  a
+    color: $base
+    text-decoration: none
+    &.active,&:hover
+      li
+        cursor: pointer
+        background: $clear
+        color: $lightblue
+        +transition($s)
+  li
+    font:
+      family: $font
+      size: 20px
+      weight: 100
+    width: 100%
+    height: 50px
+    line-height: 50px
+    box-sizing: border-box
+    +transition($s)
+    &:hover, &.active
+      cursor: pointer
+      background: $clear
+      color: $lightblue
+      +transition($s)
+    i
+      padding-right: 10px
+      margin-left: 10px
+  .bottom
+    width: 180px
+    height: 35px
+    position: fixed
+    bottom: 0
+    left: 0
+    color: $base
+    line-height: 35px
+    .settings,.logout
+      color: $base
+      font-size: 20px
+      float: right
+      display: inline-block
+      line-height: 30px
+      margin-right: 10px
+      +transition($s)
+      i
+        font-size: 30px
+        padding-left: 10px
+      &:hover
+        +transition($s)
+        color: $lightblue
+    .logout
+      float: left
+      display: none
+em,i,cite
+  font-style: italic
+strong,b
+  font-weight: 900
+.relative
+  position: relative
+.switch
+  position: relative
+  display: inline-block
+  width: 60px !important
+  height: 34px !important
+  input[type="checkbox"].switcher
+    display: none
+.tabs
+  width: 100%
+  display: inline-block
+  text-align: center
+  background: $main
+  color: white
+  &.center
+    .tab
+      float: none
+      display: inline-block
+  .tab
+    width: auto
+    padding: 15px 25px
+    float: left
+    font-weight: 500
+    font-size: 20px
+    user-select: none
+    box-sizing: border-box
+    &.active
+      background: $clear
+      color: $lightblue
+      border-top: 2px solid $lightblue
+      padding-top: 13px
+    &:hover,&:active
+      cursor: pointer
+      background: $clear
+      color: $lightblue
+      +transition($s)
+.slider
+  position: absolute
+  cursor: pointer
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: #ccc
+  -webkit-transition: .4s
+  transition: .4s
+  border-radius: 34px
+  &:before
+    position: absolute
+    content: ""
+    height: 26px
+    width: 26px
+    left: 4px
+    bottom: 4px
+    background-color: white
+    -webkit-transition: .4s
+    transition: .4s
+    border-radius: 50%
+
+input[type="checkbox"].switcher
+  &:checked + .slider
+    background-color: green
+  &:focus + .slider
+    box-shadow: 0 0 1px green
+  &:checked + .slider:before
+    -webkit-transform: translateX(26px)
+    -ms-transform: translateX(26px)
+    transform: translateX(26px)
+@media only screen and ( max-width: 760px )
+  .left
+    box-shadow: none
+    ul
+      margin-top: 45px
