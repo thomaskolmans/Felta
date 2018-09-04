@@ -6,7 +6,7 @@ use lib\SimpelSQL;
 use lib\Database\Connection;
 use lib\Exception\InvalidInputException;
 
-class SQL{
+class SQL {
 
     private $config;
     private $settings;
@@ -38,6 +38,7 @@ class SQL{
         }
         return self::$instance;
     }
+
     public function get_calling_class() {
         $trace = debug_backtrace();
         $class = $trace[1]['class'];
@@ -48,9 +49,11 @@ class SQL{
         }
         return null;
     }
+
     public function getConnection(){
         return $this->connection;
     }
+
     public function where($whereequals){
         $wherestring = "";
         if(is_array($whereequals)){
@@ -75,6 +78,7 @@ class SQL{
         }
         return $query;
     }
+
     public function execute($query){
         $query = $this->connection->prepare($query);
         $query->execute();
@@ -153,11 +157,13 @@ class SQL{
             return false;
         }
     }
+
     public static function database($name){
         $sql = self::getInstance();
         $query = $sql->connection->prepare("CREATE DATABASE ".$name);
         $query->execute();
     }
+
     public static function create($table,array $values,$primarykey){
         $valuestring = "";
         $size = sizeof($values);
@@ -191,7 +197,7 @@ class SQL{
     }
     public static function exists($table,$whereequals){
         $sql = self::getInstance()->connection;
-        if(count($whereequals) > 0){
+        if($whereequals != null && count($whereequals) > 0){
             $query = $sql->prepare("SELECT * FROM ".$table."".self::getInstance()->where($whereequals));
             self::getInstance()->bind($query,$whereequals)->execute();
             if($query->rowCount() > 0){
