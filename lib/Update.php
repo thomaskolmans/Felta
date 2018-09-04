@@ -18,20 +18,25 @@ class Update{
     public function findUpdate(){
 
     }
+    
     protected function connect(){
         
     }
+
     public function setVersion(){
         $this->version = $version;
         return $this;
     }
+
     public function getVersion(){
         return $this->version;
     }
+
     public function setGit($url){
         $this->git = $url;
         return $this;
     }
+
     public function getGit(){
         return $this->git;
     }

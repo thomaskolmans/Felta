@@ -1,10 +1,10 @@
 <?php
 namespace lib\Helpers;
 
-class UUID{
+class UUID {
 
     public static function generate(){
-        
+        return uniqid();
     }
 }
 ?>
