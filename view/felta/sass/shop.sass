@@ -1,0 +1,565 @@
+@import "base/_base"
+.bank-options
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+  height: 210px
+  width: 520px
+  margin: 0 auto
+  .bank-option
+    width: 90px
+    height: 90px
+    overflow: hidden
+    display: flex
+    background: white
+    position: relative
+    &:hover
+      cursor: pointer
+    &.selected,&:focus
+      outline: 2px solid $lightblue
+      &::after
+        content: ""
+        position: absolute
+        width: 0
+        height: 0
+        left: 50%
+        top: 0
+        transform: translateX(-50%)
+        border-left: 10px solid transparent
+        border-right: 10px solid transparent
+        
+        border-top: 10px solid $lightblue
+        z-index: 100
+    img
+      justify-content: center
+      align-self: center
+      width: 90%
+      margin-left: 5%
+      height: auto
+.shoppingcart
+  width: 600px !important
+  input
+    height: 30px
+    border: none
+    font-size: 1.2em
+    &:focus
+      outline: none
+  input[type="text"]
+    width: 50px
+    text-align: center
+  input[type="button"]
+    border: none
+    background: $main
+    width: 30px
+    color: $base
+    &:hover
+      cursor: pointer
+  .delete
+    background: $lightblue
+    color: white
+    width: 30px
+    height: 30px
+    line-height: 30px
+    text-align: center
+    position: relative
+    &:hover
+      cursor: pointer
+      color: white
+      background: $red
+      +transition($s)
+    &::before
+      content: "\f1f8"
+      font:
+        family: "FontAwesome"
+      height: 100%
+      width: 100%
+      top: 0
+      left: 0
+      position: absolute
+  img
+    height: 75px
+    width: 75px
+  table
+    margin: 35px auto
+    th,td,tr
+      border: none
+    th,td
+      padding: 5px 0
+      padding-right: 35px
+      height: 75px
+.order
+  input,textarea,.input
+    border: none
+    border-bottom: 2px solid $main
+    background: none
+    height: 35px
+    width: 100%
+    font:
+      size: 1em
+      family: $font
+    color: $main
+    &:focus, &:active
+      outline: none
+    &:focus + label:not(.normal), &.has-value + label:not(.normal)
+      top: -10px
+      color: $lightblue
+      font-size: 12px
+      +transition($s)
+      & + .requirements
+        display: flex
+        +transition($s)
+    &.hidden
+      visibility: hidden
+      position: absolute
+      width: 1px
+      height: 1px
+      left: 0
+      top: 0
+    &[type="checkbox"]
+      height: 20px
+      width: 20px
+      float: left
+      margin-right: 100px
+    &.search
+      width: 100%
+      display: block
+      margin: 0 auto
+      padding: 0 10px
+      box-sizing: border-box
+    &[type="range"]
+      -webkit-appearance: none
+      width: 100%
+      margin: 0
+      border: none
+      background: transparent
+      &::-webkit-slider-thumb
+        -webkit-appearance: none
+        background-color: $main
+      &:focus
+        outline: none
+      &::-ms-track
+        width: 100%
+        cursor: pointer
+        background: $main
+        border-color: transparent
+        color: transparent
+      &::-webkit-slider-runnable-track
+        width: 100%
+        height: 2px
+        cursor: pointer
+        background: $main
+        border-radius: 2px
+      &:focus::-webkit-slider-runnable-track
+        background: $main
+      &::-moz-range-track
+        width: 100%
+        height: 2px
+        cursor: pointer
+        background: $main
+        border-radius: 2px
+      &::-ms-track
+        width: 100%
+        height: 2px
+        cursor: pointer
+        background: transparent
+        border-color: transparent
+        border-width: 16px 0
+        color: transparent
+      &::-ms-fill-lower
+        background: $main
+        border-radius: 2px
+      &:focus::-ms-fill-lower
+        background: $main
+      &::-ms-fill-upper
+        background: $main
+        border-radius: 4px
+      &:focus::-ms-fill-upper
+        background: $main
+      &::-webkit-slider-thumb
+        -webkit-appearance: none
+        height: 20px
+        width: 20px
+        border-radius: 50%
+        background: $blue
+        cursor: pointer
+        margin-top: -9px
+        box-shadow: none
+      &::-moz-range-thumb, &::-ms-thumb
+        box-shadow: none
+        height: 20px
+        width: 20px
+        border-radius: 50%
+        background: $blue
+        cursor: pointer
+    &[type="submit"]
+      border: none
+      color: $base
+      background: $lightblue
+      border: 2px solid $lightblue
+      width: auto
+      padding: 10px 25px
+      font-size: 13px
+      line-height: 1
+      height: auto
+      font-family: Montserrat
+      font-weight: bold
+      border-radius: 4px
+      display: inline-block
+      box-shadow: none
+      +transition($s)
+      &.round
+        border-radius: 50%
+      &:hover
+        cursor: pointer
+        color: $main
+        background: none
+        +transition($s)
+    &[type="checkbox"]
+      -webkit-appearance: none
+      background: none
+      border: 1px solid $main !important
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05)
+      padding: 9px
+      border-radius: 3px
+      display: inline-block
+      position: relative
+      &:active
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1)
+      &:checked
+        &:active
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1)
+        background-color: none
+        border: 1px solid $main
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1)
+        color: $main
+        &:after
+          content: '\2714'
+          font-size: 14px
+          position: absolute
+          top: 0px
+          left: 4px
+          color: $main
+
+  .input-container
+    max-width: 650px
+    width: 100%
+    margin: 0 auto
+    position: relative
+  form
+    width: 100%
+    padding: 35px 0
+    &.hidden
+      display: none
+    &.high
+      padding: 100px 0
+    &.nothing
+      padding: 0
+      margin: 0
+    .msg
+      float: left
+      width: 100%
+      text-align: center
+      margin-top: 10px
+      font-size: 13px
+      color: $main
+    h1,h2
+      margin-bottom: 0
+    .profile-image
+      width: 120px
+      height: 120px
+      border-radius: 50%
+      float: left
+      margin-right: 20px
+    .select
+      list-style: none
+      padding: 0
+    .box__file
+      width: 0.1px
+      height: 0.1px
+      opacity: 0
+      overflow: hidden
+      position: absolute
+      z-index: -1
+    .banner-image
+      width: 444px
+      height: 250px
+      background: $base
+      &:hover
+        cursor: pointer
+      img
+        width: 100%
+    .select-box
+      max-width: 100%
+      position: relative
+      display: inline-block
+      vertical-align: bottom
+      font-size: 1em
+      margin-top: 0.3em
+      background: $main
+      select
+        max-width: 100%
+        background-color: $main
+        color: $base
+        font-size: inherit
+        padding: .5em
+        padding-right: 2.5em
+        border: 0
+        margin: 0
+        border-radius: 3px
+        text-indent: 0.01px
+        text-overflow: ''
+        -moz-appearance: none
+        -webkit-appearance: none
+        appearance: none
+        &::-ms-expand
+          display: none
+        &:active,&:focus
+          outline: none
+      &::before
+        content: ""
+        position: absolute
+        pointer-events: none
+      &::after
+        content: ""
+        position: absolute
+        pointer-events: none
+        content: "\25BC"
+        color: $base
+        height: 1em
+        font-size: .625em
+        line-height: 1
+        right: 1.2em
+        top: 50%
+        margin-top: -.5em
+      &::before
+        width: 2em
+        right: 0
+        top: 0
+        bottom: 0
+        border-radius: 0 3px 3px 0
+        background-color: $blue
+      select[disabled]
+        color: rgba(0, 0, 0, 0.25)
+    textarea
+      min-height: 250px
+      height: auto
+      display: inline-block
+      padding: 10px 0
+      box-sizing: border-box
+      max-width: 100%
+      min-width: 100%
+    .input-group
+      position: relative
+      width: 100%
+      margin: 0 auto
+      margin-top: 18px
+      display: inline-block
+      user-select: none
+      &.no
+        margin-top: 0
+      &.more
+        margin-top: 50px
+      &.eighty
+        width: 80%
+      &.ninety
+        width: 90%
+      &.sixty
+        width: 60%
+      &.half
+        width: 50%
+      &.fourty
+        width: 40%
+      &.third
+        width: 33%
+      &.fourth
+        width: 25%
+      &.fifth
+        width: 20%
+      &.tenth
+        width: 10%
+      &.eighty,&.half,&.third,&.fourth,&.fifth,&.tenth,&.ninety,&.sixty,&.fourty
+        float: left
+      &.right
+        text-align: right
+      &.center
+        text-align: center
+      &.left
+        text-align: left
+      p
+        text-align: left
+        font-size: 12px
+        &.first-time
+          padding-left: 130px
+        &.no-padding
+          padding-left: 0
+      .text
+        text-align: left
+        font-size: 1em
+      h1
+        text-align: left
+        font:
+          size: 1em !important
+          weight: bold
+      .suggestions
+        width: 100%
+        height: auto
+        bottom: 0
+        left: 0
+        position: absolute
+        .suggestion
+          width: 100%
+          height: auto
+          line-height: 35px
+
+    label
+      position: absolute
+      left: 0
+      top: 8px
+      font:
+        family: $font
+        weight: 400
+      color: $main
+      pointer-events: none
+      +transition($s)
+      &.picture
+        pointer-events: all
+        position: static
+        float: none
+        border: none
+        color: $base
+        background: $main
+        border: 2px solid $main
+        margin-top: 25px
+        font-size: 15px !important
+        font-weight: bold
+        padding: 0 25px
+        height: 35px
+        box-sizing: border-box
+        color: $base
+        line-height: 31px
+        font-family: Montserrat
+        border-radius: 4px
+        display: inline-block
+        +transition($s)
+        &:hover
+          cursor: pointer
+          color: $main
+          background: none
+      &.normal
+        pointer-events: all
+        font-style: normal
+        margin-top: -15px
+        padding-left: 35px
+        float: left
+        text-align: left
+        color: $main
+        font-weight: normal
+        &.gray
+          color: $base
+      &.remember
+        pointer-events: all
+        font-style: normal
+        margin-top: -10px
+        width: 100%
+        display: inline-block
+        right: 0
+        float: right
+        text-align: right
+        color: $main
+        font-family: Montserrat,$font
+        &:hover
+          cursor: pointer
+.image_editor
+  position: fixed !important
+  width: calc(100% - 180px) !important
+  margin: 0 !important
+  left: 180px !important
+  background: none !important
+.image-selector
+  height: 100px
+  margin-top: 15px
+  span
+    display: inline-block
+    position: relative
+  .add,img
+    width: 100px
+    height: 100px
+    display: inline-block
+    background: $main
+    position: relative
+  .add
+    &:hover
+      cursor: pointer
+      &::before
+        font-size: 45px
+        +transition($s)
+    &::before
+      +psuedo()
+      content: "\f067"
+      width: 100px
+      height: 100px
+      text-align: center
+      line-height: 100px
+      color: $lightblue
+      font:
+        family: FontAwesome
+        size: 35px
+      +transition($s)
+  .delete
+    position: absolute
+    top: 0
+    right: 0
+    z-index: 100
+    width: 30px
+    height: 30px
+    background: $lightblue
+    +transition($s)
+    &:hover
+      cursor: pointer
+      background: $red
+      +transition($s)
+    &::before
+      +psuedo()
+      content: "\f1f8"
+      line-height: 30px
+      color: $base
+      text-align: center
+      width: 100%
+      font:
+        family: FontAwesome
+
+
+table.bill
+  margin: 35px 0 35px
+  &.center
+    margin: 35px auto
+  &.right
+    margin-right: 0
+    margin-left: auto
+  &.big
+    font-size: 1.3em
+  th,td,tr
+    border: none
+    height: auto
+  th,td
+    padding: 10px 0
+    padding-right: 35px
+    img
+      height: 75px
+  th
+    font-size: 1.2em
+    font-weight: bold
+@media only screen and (max-width: 600px)
+  .shoppingcart
+    width: 100% !important
+    table
+      td,th
+        display: inline-block
+        box-sizing: border-box
+        padding-right: 25px
+        height: auto
+        width: 33%
+@media only screen and (max-width: 550px)
+  .bank-options
+    height: 500px
+    width: 310px
