@@ -4,6 +4,8 @@ namespace lib\Shop;
 use lib\Felta;
 use lib\Helpers\UUID;
 
+namespace lib\Shop;
+
 class ShopItem{
 
     private $sql;
