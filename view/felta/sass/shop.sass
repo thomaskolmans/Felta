@@ -1,4 +1,153 @@
-@import "base/_base"
+
+$base: #f1f1f1
+$main: #000c0c
+
+$gray: #ccc
+$blue: #10446d
+$lightblue: #2196F3
+$red: #801010
+$clear: #151e23
+$font: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif
+
+$s : .3s
+
+@font-face
+  font-family: FontAwesome
+  src: url(../fonts/FontAwesome.otf)  
+
+=transition($s)
+  transition: $s
+  -webkit-transition: $s
+=psuedo()
+  content: " "
+  position: absolute
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+
+=animation($animate...)
+  $max: length($animate)
+  $animations: ""
+
+  @for $i from 1 through $max
+    $animations: #{$animations + nth($animate, $i)}
+
+    @if $i < $max
+      $animations: #{$animations + ", "}
+
+  -webkit-animation: $animations
+  -moz-animation: $animations
+  -o-animation: $animations
+  animation: $animations
+
+=keyframes($animationName)
+  @-webkit-keyframes #{$animationName}
+    @content
+
+  @-moz-keyframes #{$animationName}
+    @content
+
+  @-o-keyframes #{$animationName}
+    @content
+
+  @keyframes #{$animationName}
+    @content
++keyframes(load3)
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+body
+  background: $base
+  text-align: center
+  font-family: $font
+  overflow-x: none
+
+.window
+  width: 1034px
+  margin: 100px auto
+  background: $main
+  color: $base
+  padding: 25px
+  position: relative
+  box-sizing: border-box
+  &::before,&::after
+    content: ''
+    position: absolute
+    left: 0
+    top: -99px
+    width: 100%
+    height: 100px
+    background: linear-gradient(177deg, transparent 49%, $main 50%) no-repeat top/100% 100px, linear-gradient(-5deg, transparent 49%, transparent 50%) no-repeat bottom/100% 100px, transparent
+  &::after
+    top: auto
+    bottom: -99px
+    transform: rotate(-180deg)
+    background: linear-gradient(177deg, transparent 49%, $main 50%) no-repeat top/100% 100px, linear-gradient(-5deg, transparent 49%, transparent 50%) no-repeat bottom/100% 100px, transparent
+  a
+    color: $lightblue
+
+h1,h2,h3,h4,h5
+  font:
+    weight: 100
+    size: 2.5em
+
+section
+  padding: 50px 0
+  &.hidden
+    display: none
+  &#card
+    width: 520px
+    margin: 0 auto
+hr
+  border-color: $lightblue
+  border-width: 1px
+
+.spinner
+  font-size: 10px
+  margin: 100px auto
+  text-indent: -9999em
+  width: 100px
+  height: 100px
+  border-radius: 50%
+  background: $base
+  background: -moz-linear-gradient(left, $base 10%, rgba(255, 255, 255, 0) 42%)
+  background: -webkit-linear-gradient(left, $base 10%, rgba(255, 255, 255, 0) 42%)
+  background: -o-linear-gradient(left, $base 10%, rgba(255, 255, 255, 0) 42%)
+  background: -ms-linear-gradient(left, $base 10%, rgba(255, 255, 255, 0) 42%)
+  background: linear-gradient(to right, $base 10%, rgba(255, 255, 255, 0) 42%)
+  position: relative
+  +animation(load3 1.4s infinite linear)
+  -webkit-transform: translateZ(0)
+  -ms-transform: translateZ(0)
+  transform: translateZ(0)
+  &:before
+    width: 50%
+    height: 50%
+    background: $base
+    border-radius: 100% 0 0 0
+    position: absolute
+    top: 0
+    left: 0
+    content: ''
+  &:after
+    background: $main
+    width: 75%
+    height: 75%
+    border-radius: 50%
+    content: ''
+    margin: auto
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+
 .bank-options
   display: flex
   flex-wrap: wrap
@@ -36,8 +185,8 @@
       width: 90%
       margin-left: 5%
       height: auto
+
 .shoppingcart
-  width: 600px !important
   input
     height: 30px
     border: none
@@ -49,9 +198,9 @@
     text-align: center
   input[type="button"]
     border: none
-    background: $main
+    background: $base
     width: 30px
-    color: $base
+    color: $main
     &:hover
       cursor: pointer
   .delete
@@ -79,25 +228,89 @@
   img
     height: 75px
     width: 75px
+    display: block
+    margin: 0 auto
   table
     margin: 35px auto
+    color: $base
+    width: 100%
+    font:
+      size: 1.2em
+    &.bill
+      width: auto
     th,td,tr
       border: none
     th,td
       padding: 5px 0
       padding-right: 35px
       height: 75px
+.tabs
+  width: 100%
+  display: inline-block
+  text-align: center
+  background: $clear
+  color: white
+  &.center
+    .tab
+      float: none
+      display: inline-block
+  .tab
+    width: auto
+    padding: 15px 25px
+    float: left
+    font-weight: 500
+    font-size: 17px
+    user-select: none
+    box-sizing: border-box
+    &.active
+      background: $main
+      color: $lightblue
+      border-top: 2px solid $lightblue
+      padding-top: 13px
+    &:hover,&:active
+      cursor: pointer
+      background: $clear
+      color: $lightblue
+      +transition($s)
+.right-buttons
+  padding-right: 35px
+  margin-top: 25px
+
+button
+  border: 2px solid $base
+  background: $base
+  color: $main
+  height: 35px
+  padding: 0 25px
+  font:
+    size: 16px
+    weight: 900
+    family: $font
+  border-radius: 50px
+  +transition($s)
+  &.highlighted
+    background: $lightblue
+    border-color: $lightblue
+    color: $base
+  &:hover
+    +transition($s)
+    background: none
+    color: $base
+    cursor: pointer
+  &:active, &:focus
+    outline: none
 .order
+  color: $base
   input,textarea,.input
     border: none
-    border-bottom: 2px solid $main
+    border-bottom: 1px solid $base
     background: none
     height: 35px
     width: 100%
     font:
       size: 1em
       family: $font
-    color: $main
+    color: $base
     &:focus, &:active
       outline: none
     &:focus + label:not(.normal), &.has-value + label:not(.normal)
@@ -134,28 +347,28 @@
       background: transparent
       &::-webkit-slider-thumb
         -webkit-appearance: none
-        background-color: $main
+        background-color: $base
       &:focus
         outline: none
       &::-ms-track
         width: 100%
         cursor: pointer
-        background: $main
+        background: $base
         border-color: transparent
         color: transparent
       &::-webkit-slider-runnable-track
         width: 100%
         height: 2px
         cursor: pointer
-        background: $main
+        background: $base
         border-radius: 2px
       &:focus::-webkit-slider-runnable-track
-        background: $main
+        background: $base
       &::-moz-range-track
         width: 100%
         height: 2px
         cursor: pointer
-        background: $main
+        background: $base
         border-radius: 2px
       &::-ms-track
         width: 100%
@@ -166,15 +379,15 @@
         border-width: 16px 0
         color: transparent
       &::-ms-fill-lower
-        background: $main
+        background: $base
         border-radius: 2px
       &:focus::-ms-fill-lower
-        background: $main
+        background: $base
       &::-ms-fill-upper
-        background: $main
+        background: $base
         border-radius: 4px
       &:focus::-ms-fill-upper
-        background: $main
+        background: $base
       &::-webkit-slider-thumb
         -webkit-appearance: none
         height: 20px
@@ -192,32 +405,31 @@
         background: $blue
         cursor: pointer
     &[type="submit"]
-      border: none
+      border: 2px solid $base
+      background: $base
       color: $base
-      background: $lightblue
-      border: 2px solid $lightblue
       width: auto
-      padding: 10px 25px
-      font-size: 13px
-      line-height: 1
-      height: auto
-      font-family: Montserrat
-      font-weight: bold
-      border-radius: 4px
-      display: inline-block
-      box-shadow: none
+      height: 35px
+      padding: 0 25px
+      font:
+        size: 16px
+        weight: 900
+        family: $font
+      border-radius: 50px
       +transition($s)
-      &.round
-        border-radius: 50%
+      background: $lightblue
+      border-color: $lightblue
       &:hover
-        cursor: pointer
-        color: $main
-        background: none
         +transition($s)
+        background: none
+        color: $base
+        cursor: pointer
+      &:active, &:focus
+        outline: none
     &[type="checkbox"]
       -webkit-appearance: none
       background: none
-      border: 1px solid $main !important
+      border: 1px solid $base !important
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05)
       padding: 9px
       border-radius: 3px
@@ -229,9 +441,9 @@
         &:active
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1)
         background-color: none
-        border: 1px solid $main
+        border: 1px solid $base
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1)
-        color: $main
+        color: $base
         &:after
           content: '\2714'
           font-size: 14px
@@ -258,10 +470,10 @@
     .msg
       float: left
       width: 100%
-      text-align: center
+      text-align: left
       margin-top: 10px
       font-size: 13px
-      color: $main
+      color: $base
     h1,h2
       margin-bottom: 0
     .profile-image
@@ -298,8 +510,8 @@
       background: $main
       select
         max-width: 100%
-        background-color: $main
-        color: $base
+        background-color: $base
+        color: $lightblue
         font-size: inherit
         padding: .5em
         padding-right: 2.5em
@@ -410,7 +622,6 @@
           width: 100%
           height: auto
           line-height: 35px
-
     label
       position: absolute
       left: 0
@@ -418,7 +629,7 @@
       font:
         family: $font
         weight: 400
-      color: $main
+      color: $base
       pointer-events: none
       +transition($s)
       &.picture
@@ -469,6 +680,7 @@
         font-family: Montserrat,$font
         &:hover
           cursor: pointer
+
 .image_editor
   position: fixed !important
   width: calc(100% - 180px) !important
@@ -528,16 +740,20 @@
       font:
         family: FontAwesome
 
+.right-buttons
+  text-align: right
 
 table.bill
   margin: 35px 0 35px
+  color: $base
   &.center
     margin: 35px auto
   &.right
     margin-right: 0
     margin-left: auto
   &.big
-    font-size: 1.3em
+    width: 100%
+    font-size: 1.2em
   th,td,tr
     border: none
     height: auto
@@ -545,10 +761,14 @@ table.bill
     padding: 10px 0
     padding-right: 35px
     img
-      height: 75px
+      width: 75px
   th
-    font-size: 1.2em
     font-weight: bold
+    text-align: left
+
+@media only screen and (max-width: 1034px)
+  .window
+    width: 100%
 @media only screen and (max-width: 600px)
   .shoppingcart
     width: 100% !important
@@ -563,3 +783,21 @@ table.bill
   .bank-options
     height: 500px
     width: 310px
+
+@media print
+  body
+    color: black !important
+    background: none
+  .window
+    background: none
+    color: black !important
+    h1
+      display: none
+  button
+    display: none !important
+  table
+    background: none
+    color: black
+    &.bill
+      background: none
+      color: black

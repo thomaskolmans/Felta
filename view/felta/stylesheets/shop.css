@@ -1,69 +1,4 @@
 @charset "UTF-8";
-/* line 5, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-
-/* line 22, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html {
-  line-height: 1;
-}
-
-/* line 24, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-
-/* line 26, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-/* line 32, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
-}
-
-/* line 116, ../../../../../../Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-  display: block;
-}
-
 @font-face {
   font-family: FontAwesome;
   src: url(../fonts/FontAwesome.otf);
@@ -108,7 +43,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     transform: rotate(360deg);
   }
 }
-/* line 4, ../sass/base/_base.sass */
+/* line 65, ../sass/shop.sass */
 body {
   background: #f1f1f1;
   text-align: center;
@@ -116,12 +51,65 @@ body {
   overflow-x: none;
 }
 
-/* line 9, ../sass/base/_base.sass */
-hr {
-  margin: 0;
+/* line 71, ../sass/shop.sass */
+.window {
+  width: 1034px;
+  margin: 100px auto;
+  background: #000c0c;
+  color: #f1f1f1;
+  padding: 25px;
+  position: relative;
+  box-sizing: border-box;
+}
+/* line 79, ../sass/shop.sass */
+.window::before, .window::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -99px;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(177deg, transparent 49%, #000c0c 50%) no-repeat top/100% 100px, linear-gradient(-5deg, transparent 49%, transparent 50%) no-repeat bottom/100% 100px, transparent;
+}
+/* line 87, ../sass/shop.sass */
+.window::after {
+  top: auto;
+  bottom: -99px;
+  transform: rotate(-180deg);
+  background: linear-gradient(177deg, transparent 49%, #000c0c 50%) no-repeat top/100% 100px, linear-gradient(-5deg, transparent 49%, transparent 50%) no-repeat bottom/100% 100px, transparent;
+}
+/* line 92, ../sass/shop.sass */
+.window a {
+  color: #2196F3;
 }
 
-/* line 11, ../sass/base/_base.sass */
+/* line 95, ../sass/shop.sass */
+h1, h2, h3, h4, h5 {
+  font-weight: 100;
+  font-size: 2.5em;
+}
+
+/* line 100, ../sass/shop.sass */
+section {
+  padding: 50px 0;
+}
+/* line 102, ../sass/shop.sass */
+section.hidden {
+  display: none;
+}
+/* line 104, ../sass/shop.sass */
+section#card {
+  width: 520px;
+  margin: 0 auto;
+}
+
+/* line 107, ../sass/shop.sass */
+hr {
+  border-color: #2196F3;
+  border-width: 1px;
+}
+
+/* line 111, ../sass/shop.sass */
 .spinner {
   font-size: 10px;
   margin: 100px auto;
@@ -129,12 +117,12 @@ hr {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: #000c0c;
-  background: -moz-linear-gradient(left, #000c0c 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, #000c0c 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, #000c0c 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #000c0c 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #000c0c 10%, rgba(255, 255, 255, 0) 42%);
+  background: #f1f1f1;
+  background: -moz-linear-gradient(left, #f1f1f1 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, #f1f1f1 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, #f1f1f1 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #f1f1f1 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #f1f1f1 10%, rgba(255, 255, 255, 0) 42%);
   position: relative;
   -webkit-animation: load3 1.4s infinite linear;
   -moz-animation: load3 1.4s infinite linear;
@@ -144,20 +132,20 @@ hr {
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
-/* line 29, ../sass/base/_base.sass */
+/* line 129, ../sass/shop.sass */
 .spinner:before {
   width: 50%;
   height: 50%;
-  background: #000c0c;
+  background: #f1f1f1;
   border-radius: 100% 0 0 0;
   position: absolute;
   top: 0;
   left: 0;
   content: "";
 }
-/* line 38, ../sass/base/_base.sass */
+/* line 138, ../sass/shop.sass */
 .spinner:after {
-  background: #f1f1f1;
+  background: #000c0c;
   width: 75%;
   height: 75%;
   border-radius: 50%;
@@ -170,464 +158,7 @@ hr {
   right: 0;
 }
 
-/* line 50, ../sass/base/_base.sass */
-.top {
-  width: 100%;
-  height: 45px;
-  background: #000c0c;
-  display: block;
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-}
-/* line 59, ../sass/base/_base.sass */
-.top .listbutton {
-  float: left;
-  width: 34px;
-  height: 34px;
-  line-height: 34px;
-  margin-top: 7.5px;
-  display: none;
-  color: #f1f1f1;
-  position: relative;
-  margin-left: 15px;
-}
-/* line 69, ../sass/base/_base.sass */
-.top .listbutton:hover {
-  cursor: pointer;
-}
-/* line 71, ../sass/base/_base.sass */
-.top .listbutton:hover::before {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  color: #2196F3;
-}
-/* line 74, ../sass/base/_base.sass */
-.top .listbutton::before {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  position: absolute;
-  left: 0;
-  color: #f1f1f1;
-  content: "";
-  font-family: "FontAwesome";
-  font-size: 25px;
-}
-/* line 83, ../sass/base/_base.sass */
-.top .account {
-  width: auto;
-  min-width: 250px;
-  float: right;
-  height: 45px;
-  color: #f1f1f1;
-  text-align: center;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 91, ../sass/base/_base.sass */
-.top .account:hover {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  cursor: pointer;
-  color: #2196F3;
-  background: #151e23;
-}
-/* line 96, ../sass/base/_base.sass */
-.top .account:hover menu::before {
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 99, ../sass/base/_base.sass */
-.top .account:hover menu li {
-  display: block;
-}
-/* line 101, ../sass/base/_base.sass */
-.top .account .name {
-  line-height: 45px;
-  margin-right: 40px;
-  margin-left: 40px;
-  position: relative;
-}
-/* line 106, ../sass/base/_base.sass */
-.top .account menu {
-  width: 100%;
-  display: inline-block;
-}
-/* line 109, ../sass/base/_base.sass */
-.top .account menu:hover {
-  cursor: pointer;
-}
-/* line 111, ../sass/base/_base.sass */
-.top .account menu::before {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  height: 45px;
-  line-height: 40px;
-  top: 0;
-  color: #f1f1f1;
-  position: absolute;
-  right: 20px;
-  z-index: 20;
-  content: "";
-  font-family: "FontAwesome";
-  font-size: 20px;
-}
-/* line 124, ../sass/base/_base.sass */
-.top .account menu a {
-  text-decoration: none;
-}
-/* line 126, ../sass/base/_base.sass */
-.top .account menu li {
-  list-style: none;
-  display: none;
-  background: #000c0c;
-  color: #f1f1f1;
-  text-decoration: none;
-  height: 35px;
-  padding: 0 40px;
-  line-height: 35px;
-  position: relative;
-  text-align: center;
-}
-/* line 137, ../sass/base/_base.sass */
-.top .account menu li i {
-  float: left;
-  line-height: 38px;
-  position: absolute;
-  left: 35px;
-}
-/* line 142, ../sass/base/_base.sass */
-.top .account menu li:hover {
-  color: #2196F3;
-}
-/* line 144, ../sass/base/_base.sass */
-.top button {
-  border: 2px solid #f1f1f1;
-  background: #f1f1f1;
-  color: #000c0c;
-  height: 30px;
-  padding: 0 15px;
-  margin-top: 7.5px;
-  float: left;
-  margin-left: 200px;
-  font-size: 15px;
-  font-weight: 900;
-  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  border-radius: 50px;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 159, ../sass/base/_base.sass */
-.top button:hover {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  background: none;
-  color: #f1f1f1;
-  cursor: pointer;
-}
-/* line 164, ../sass/base/_base.sass */
-.top button:active, .top button:focus {
-  outline: none;
-}
-
-/* line 166, ../sass/base/_base.sass */
-.select-box {
-  max-width: 100%;
-  position: relative;
-  display: inline-block;
-  vertical-align: bottom;
-  font-size: 1em;
-  margin-top: 0.3em;
-  background: #f1f1f1;
-}
-/* line 175, ../sass/base/_base.sass */
-.select-box.dark select {
-  background-color: #000c0c;
-  color: #f1f1f1;
-}
-/* line 178, ../sass/base/_base.sass */
-.select-box select {
-  max-width: 100%;
-  background-color: #f1f1f1;
-  color: #000c0c;
-  font-size: inherit;
-  padding: 0.33em;
-  padding-right: 2.5em;
-  border: 0;
-  margin: 0;
-  text-indent: 0.01px;
-  text-overflow: "";
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-}
-/* line 192, ../sass/base/_base.sass */
-.select-box select::-ms-expand {
-  display: none;
-}
-/* line 194, ../sass/base/_base.sass */
-.select-box select:active, .select-box select:focus {
-  outline: none;
-}
-/* line 196, ../sass/base/_base.sass */
-.select-box::before {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-/* line 200, ../sass/base/_base.sass */
-.select-box::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  content: "▼";
-  color: #2196F3;
-  height: 1em;
-  font-size: 0.625em;
-  line-height: 1;
-  right: 1.2em;
-  top: 50%;
-  margin-top: -0.5em;
-}
-/* line 212, ../sass/base/_base.sass */
-.select-box::before {
-  width: 2em;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #000c0c;
-}
-/* line 218, ../sass/base/_base.sass */
-.select-box select[disabled] {
-  color: rgba(0, 0, 0, 0.25);
-}
-
-/* line 220, ../sass/base/_base.sass */
-.left {
-  position: fixed;
-  height: 100vh;
-  width: 180px;
-  background: #000c0c;
-  box-shadow: 0px 0px 22px -5px black;
-  z-index: 130;
-  top: 0;
-  left: 0;
-}
-/* line 229, ../sass/base/_base.sass */
-.left.active {
-  transform: translateX(0);
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 232, ../sass/base/_base.sass */
-.left img {
-  width: 100px;
-  margin-top: 35px;
-}
-/* line 235, ../sass/base/_base.sass */
-.left ul {
-  margin-top: 35px;
-  color: #f1f1f1;
-  text-align: left;
-  list-style: none;
-}
-/* line 240, ../sass/base/_base.sass */
-.left a {
-  color: #f1f1f1;
-  text-decoration: none;
-}
-/* line 244, ../sass/base/_base.sass */
-.left a.active li, .left a:hover li {
-  cursor: pointer;
-  background: #151e23;
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 249, ../sass/base/_base.sass */
-.left li {
-  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 100;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  box-sizing: border-box;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 259, ../sass/base/_base.sass */
-.left li:hover, .left li.active {
-  cursor: pointer;
-  background: #151e23;
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 264, ../sass/base/_base.sass */
-.left li i {
-  padding-right: 10px;
-  margin-left: 10px;
-}
-/* line 267, ../sass/base/_base.sass */
-.left .bottom {
-  width: 180px;
-  height: 35px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  color: #f1f1f1;
-  line-height: 35px;
-}
-/* line 275, ../sass/base/_base.sass */
-.left .bottom .settings, .left .bottom .logout {
-  color: #f1f1f1;
-  font-size: 20px;
-  float: right;
-  display: inline-block;
-  line-height: 30px;
-  margin-right: 10px;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 283, ../sass/base/_base.sass */
-.left .bottom .settings i, .left .bottom .logout i {
-  font-size: 30px;
-  padding-left: 10px;
-}
-/* line 286, ../sass/base/_base.sass */
-.left .bottom .settings:hover, .left .bottom .logout:hover {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  color: #2196F3;
-}
-/* line 289, ../sass/base/_base.sass */
-.left .bottom .logout {
-  float: left;
-  display: none;
-}
-
-/* line 292, ../sass/base/_base.sass */
-em, i, cite {
-  font-style: italic;
-}
-
-/* line 294, ../sass/base/_base.sass */
-strong, b {
-  font-weight: 900;
-}
-
-/* line 296, ../sass/base/_base.sass */
-.relative {
-  position: relative;
-}
-
-/* line 298, ../sass/base/_base.sass */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px !important;
-  height: 34px !important;
-}
-/* line 303, ../sass/base/_base.sass */
-.switch input[type="checkbox"].switcher {
-  display: none;
-}
-
-/* line 305, ../sass/base/_base.sass */
-.tabs {
-  width: 100%;
-  display: inline-block;
-  text-align: center;
-  background: #000c0c;
-  color: white;
-}
-/* line 312, ../sass/base/_base.sass */
-.tabs.center .tab {
-  float: none;
-  display: inline-block;
-}
-/* line 315, ../sass/base/_base.sass */
-.tabs .tab {
-  width: auto;
-  padding: 15px 25px;
-  float: left;
-  font-weight: 500;
-  font-size: 20px;
-  user-select: none;
-  box-sizing: border-box;
-}
-/* line 323, ../sass/base/_base.sass */
-.tabs .tab.active {
-  background: #151e23;
-  color: #2196F3;
-  border-top: 2px solid #2196F3;
-  padding-top: 13px;
-}
-/* line 328, ../sass/base/_base.sass */
-.tabs .tab:hover, .tabs .tab:active {
-  cursor: pointer;
-  background: #151e23;
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-
-/* line 333, ../sass/base/_base.sass */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-/* line 344, ../sass/base/_base.sass */
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-/* line 357, ../sass/base/_base.sass */
-input[type="checkbox"].switcher:checked + .slider {
-  background-color: green;
-}
-/* line 359, ../sass/base/_base.sass */
-input[type="checkbox"].switcher:focus + .slider {
-  box-shadow: 0 0 1px green;
-}
-/* line 361, ../sass/base/_base.sass */
-input[type="checkbox"].switcher:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-@media only screen and (max-width: 760px) {
-  /* line 366, ../sass/base/_base.sass */
-  .left {
-    box-shadow: none;
-  }
-  /* line 368, ../sass/base/_base.sass */
-  .left ul {
-    margin-top: 45px;
-  }
-}
-/* line 2, ../sass/shop.sass */
+/* line 151, ../sass/shop.sass */
 .bank-options {
   display: flex;
   flex-wrap: wrap;
@@ -636,7 +167,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   width: 520px;
   margin: 0 auto;
 }
-/* line 9, ../sass/shop.sass */
+/* line 158, ../sass/shop.sass */
 .bank-options .bank-option {
   width: 90px;
   height: 90px;
@@ -645,15 +176,15 @@ input[type="checkbox"].switcher:checked + .slider:before {
   background: white;
   position: relative;
 }
-/* line 16, ../sass/shop.sass */
+/* line 165, ../sass/shop.sass */
 .bank-options .bank-option:hover {
   cursor: pointer;
 }
-/* line 18, ../sass/shop.sass */
+/* line 167, ../sass/shop.sass */
 .bank-options .bank-option.selected, .bank-options .bank-option:focus {
   outline: 2px solid #2196F3;
 }
-/* line 20, ../sass/shop.sass */
+/* line 169, ../sass/shop.sass */
 .bank-options .bank-option.selected::after, .bank-options .bank-option:focus::after {
   content: "";
   position: absolute;
@@ -667,7 +198,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   border-top: 10px solid #2196F3;
   z-index: 100;
 }
-/* line 33, ../sass/shop.sass */
+/* line 182, ../sass/shop.sass */
 .bank-options .bank-option img {
   justify-content: center;
   align-self: center;
@@ -676,37 +207,33 @@ input[type="checkbox"].switcher:checked + .slider:before {
   height: auto;
 }
 
-/* line 39, ../sass/shop.sass */
-.shoppingcart {
-  width: 600px !important;
-}
-/* line 41, ../sass/shop.sass */
+/* line 190, ../sass/shop.sass */
 .shoppingcart input {
   height: 30px;
   border: none;
   font-size: 1.2em;
 }
-/* line 45, ../sass/shop.sass */
+/* line 194, ../sass/shop.sass */
 .shoppingcart input:focus {
   outline: none;
 }
-/* line 47, ../sass/shop.sass */
+/* line 196, ../sass/shop.sass */
 .shoppingcart input[type="text"] {
   width: 50px;
   text-align: center;
 }
-/* line 50, ../sass/shop.sass */
+/* line 199, ../sass/shop.sass */
 .shoppingcart input[type="button"] {
   border: none;
-  background: #000c0c;
+  background: #f1f1f1;
   width: 30px;
-  color: #f1f1f1;
+  color: #000c0c;
 }
-/* line 55, ../sass/shop.sass */
+/* line 204, ../sass/shop.sass */
 .shoppingcart input[type="button"]:hover {
   cursor: pointer;
 }
-/* line 57, ../sass/shop.sass */
+/* line 206, ../sass/shop.sass */
 .shoppingcart .delete {
   background: #2196F3;
   color: white;
@@ -716,7 +243,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   text-align: center;
   position: relative;
 }
-/* line 65, ../sass/shop.sass */
+/* line 214, ../sass/shop.sass */
 .shoppingcart .delete:hover {
   cursor: pointer;
   color: white;
@@ -724,7 +251,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 70, ../sass/shop.sass */
+/* line 219, ../sass/shop.sass */
 .shoppingcart .delete::before {
   content: "";
   font-family: "FontAwesome";
@@ -734,42 +261,133 @@ input[type="checkbox"].switcher:checked + .slider:before {
   left: 0;
   position: absolute;
 }
-/* line 79, ../sass/shop.sass */
+/* line 228, ../sass/shop.sass */
 .shoppingcart img {
   height: 75px;
   width: 75px;
+  display: block;
+  margin: 0 auto;
 }
-/* line 82, ../sass/shop.sass */
+/* line 233, ../sass/shop.sass */
 .shoppingcart table {
   margin: 35px auto;
+  color: #f1f1f1;
+  width: 100%;
+  font-size: 1.2em;
 }
-/* line 84, ../sass/shop.sass */
+/* line 239, ../sass/shop.sass */
+.shoppingcart table.bill {
+  width: auto;
+}
+/* line 241, ../sass/shop.sass */
 .shoppingcart table th, .shoppingcart table td, .shoppingcart table tr {
   border: none;
 }
-/* line 86, ../sass/shop.sass */
+/* line 243, ../sass/shop.sass */
 .shoppingcart table th, .shoppingcart table td {
   padding: 5px 0;
   padding-right: 35px;
   height: 75px;
 }
 
-/* line 91, ../sass/shop.sass */
+/* line 247, ../sass/shop.sass */
+.tabs {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  background: #151e23;
+  color: white;
+}
+/* line 254, ../sass/shop.sass */
+.tabs.center .tab {
+  float: none;
+  display: inline-block;
+}
+/* line 257, ../sass/shop.sass */
+.tabs .tab {
+  width: auto;
+  padding: 15px 25px;
+  float: left;
+  font-weight: 500;
+  font-size: 17px;
+  user-select: none;
+  box-sizing: border-box;
+}
+/* line 265, ../sass/shop.sass */
+.tabs .tab.active {
+  background: #000c0c;
+  color: #2196F3;
+  border-top: 2px solid #2196F3;
+  padding-top: 13px;
+}
+/* line 270, ../sass/shop.sass */
+.tabs .tab:hover, .tabs .tab:active {
+  cursor: pointer;
+  background: #151e23;
+  color: #2196F3;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+
+/* line 275, ../sass/shop.sass */
+.right-buttons {
+  padding-right: 35px;
+  margin-top: 25px;
+}
+
+/* line 279, ../sass/shop.sass */
+button {
+  border: 2px solid #f1f1f1;
+  background: #f1f1f1;
+  color: #000c0c;
+  height: 35px;
+  padding: 0 25px;
+  font-size: 16px;
+  font-weight: 900;
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  border-radius: 50px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+}
+/* line 291, ../sass/shop.sass */
+button.highlighted {
+  background: #2196F3;
+  border-color: #2196F3;
+  color: #f1f1f1;
+}
+/* line 295, ../sass/shop.sass */
+button:hover {
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  background: none;
+  color: #f1f1f1;
+  cursor: pointer;
+}
+/* line 300, ../sass/shop.sass */
+button:active, button:focus {
+  outline: none;
+}
+
+/* line 302, ../sass/shop.sass */
+.order {
+  color: #f1f1f1;
+}
+/* line 304, ../sass/shop.sass */
 .order input, .order textarea, .order .input {
   border: none;
-  border-bottom: 2px solid #000c0c;
+  border-bottom: 1px solid #f1f1f1;
   background: none;
   height: 35px;
   width: 100%;
   font-size: 1em;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  color: #000c0c;
+  color: #f1f1f1;
 }
-/* line 101, ../sass/shop.sass */
+/* line 314, ../sass/shop.sass */
 .order input:focus, .order input:active, .order textarea:focus, .order textarea:active, .order .input:focus, .order .input:active {
   outline: none;
 }
-/* line 103, ../sass/shop.sass */
+/* line 316, ../sass/shop.sass */
 .order input:focus + label:not(.normal), .order input.has-value + label:not(.normal), .order textarea:focus + label:not(.normal), .order textarea.has-value + label:not(.normal), .order .input:focus + label:not(.normal), .order .input.has-value + label:not(.normal) {
   top: -10px;
   color: #2196F3;
@@ -777,13 +395,13 @@ input[type="checkbox"].switcher:checked + .slider:before {
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 108, ../sass/shop.sass */
+/* line 321, ../sass/shop.sass */
 .order input:focus + label:not(.normal) + .requirements, .order input.has-value + label:not(.normal) + .requirements, .order textarea:focus + label:not(.normal) + .requirements, .order textarea.has-value + label:not(.normal) + .requirements, .order .input:focus + label:not(.normal) + .requirements, .order .input.has-value + label:not(.normal) + .requirements {
   display: flex;
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 111, ../sass/shop.sass */
+/* line 324, ../sass/shop.sass */
 .order input.hidden, .order textarea.hidden, .order .input.hidden {
   visibility: hidden;
   position: absolute;
@@ -792,14 +410,14 @@ input[type="checkbox"].switcher:checked + .slider:before {
   left: 0;
   top: 0;
 }
-/* line 118, ../sass/shop.sass */
+/* line 331, ../sass/shop.sass */
 .order input[type="checkbox"], .order textarea[type="checkbox"], .order .input[type="checkbox"] {
   height: 20px;
   width: 20px;
   float: left;
   margin-right: 100px;
 }
-/* line 123, ../sass/shop.sass */
+/* line 336, ../sass/shop.sass */
 .order input.search, .order textarea.search, .order .input.search {
   width: 100%;
   display: block;
@@ -807,7 +425,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   padding: 0 10px;
   box-sizing: border-box;
 }
-/* line 129, ../sass/shop.sass */
+/* line 342, ../sass/shop.sass */
 .order input[type="range"], .order textarea[type="range"], .order .input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
@@ -815,44 +433,44 @@ input[type="checkbox"].switcher:checked + .slider:before {
   border: none;
   background: transparent;
 }
-/* line 135, ../sass/shop.sass */
+/* line 348, ../sass/shop.sass */
 .order input[type="range"]::-webkit-slider-thumb, .order textarea[type="range"]::-webkit-slider-thumb, .order .input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  background-color: #000c0c;
+  background-color: #f1f1f1;
 }
-/* line 138, ../sass/shop.sass */
+/* line 351, ../sass/shop.sass */
 .order input[type="range"]:focus, .order textarea[type="range"]:focus, .order .input[type="range"]:focus {
   outline: none;
 }
-/* line 140, ../sass/shop.sass */
+/* line 353, ../sass/shop.sass */
 .order input[type="range"]::-ms-track, .order textarea[type="range"]::-ms-track, .order .input[type="range"]::-ms-track {
   width: 100%;
   cursor: pointer;
-  background: #000c0c;
+  background: #f1f1f1;
   border-color: transparent;
   color: transparent;
 }
-/* line 146, ../sass/shop.sass */
+/* line 359, ../sass/shop.sass */
 .order input[type="range"]::-webkit-slider-runnable-track, .order textarea[type="range"]::-webkit-slider-runnable-track, .order .input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #000c0c;
+  background: #f1f1f1;
   border-radius: 2px;
 }
-/* line 152, ../sass/shop.sass */
+/* line 365, ../sass/shop.sass */
 .order input[type="range"]:focus::-webkit-slider-runnable-track, .order textarea[type="range"]:focus::-webkit-slider-runnable-track, .order .input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #000c0c;
+  background: #f1f1f1;
 }
-/* line 154, ../sass/shop.sass */
+/* line 367, ../sass/shop.sass */
 .order input[type="range"]::-moz-range-track, .order textarea[type="range"]::-moz-range-track, .order .input[type="range"]::-moz-range-track {
   width: 100%;
   height: 2px;
   cursor: pointer;
-  background: #000c0c;
+  background: #f1f1f1;
   border-radius: 2px;
 }
-/* line 160, ../sass/shop.sass */
+/* line 373, ../sass/shop.sass */
 .order input[type="range"]::-ms-track, .order textarea[type="range"]::-ms-track, .order .input[type="range"]::-ms-track {
   width: 100%;
   height: 2px;
@@ -862,25 +480,25 @@ input[type="checkbox"].switcher:checked + .slider:before {
   border-width: 16px 0;
   color: transparent;
 }
-/* line 168, ../sass/shop.sass */
+/* line 381, ../sass/shop.sass */
 .order input[type="range"]::-ms-fill-lower, .order textarea[type="range"]::-ms-fill-lower, .order .input[type="range"]::-ms-fill-lower {
-  background: #000c0c;
+  background: #f1f1f1;
   border-radius: 2px;
 }
-/* line 171, ../sass/shop.sass */
+/* line 384, ../sass/shop.sass */
 .order input[type="range"]:focus::-ms-fill-lower, .order textarea[type="range"]:focus::-ms-fill-lower, .order .input[type="range"]:focus::-ms-fill-lower {
-  background: #000c0c;
+  background: #f1f1f1;
 }
-/* line 173, ../sass/shop.sass */
+/* line 386, ../sass/shop.sass */
 .order input[type="range"]::-ms-fill-upper, .order textarea[type="range"]::-ms-fill-upper, .order .input[type="range"]::-ms-fill-upper {
-  background: #000c0c;
+  background: #f1f1f1;
   border-radius: 4px;
 }
-/* line 176, ../sass/shop.sass */
+/* line 389, ../sass/shop.sass */
 .order input[type="range"]:focus::-ms-fill-upper, .order textarea[type="range"]:focus::-ms-fill-upper, .order .input[type="range"]:focus::-ms-fill-upper {
-  background: #000c0c;
+  background: #f1f1f1;
 }
-/* line 178, ../sass/shop.sass */
+/* line 391, ../sass/shop.sass */
 .order input[type="range"]::-webkit-slider-thumb, .order textarea[type="range"]::-webkit-slider-thumb, .order .input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 20px;
@@ -891,7 +509,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   margin-top: -9px;
   box-shadow: none;
 }
-/* line 187, ../sass/shop.sass */
+/* line 400, ../sass/shop.sass */
 .order input[type="range"]::-moz-range-thumb, .order input[type="range"]::-ms-thumb, .order textarea[type="range"]::-moz-range-thumb, .order textarea[type="range"]::-ms-thumb, .order .input[type="range"]::-moz-range-thumb, .order .input[type="range"]::-ms-thumb {
   box-shadow: none;
   height: 20px;
@@ -900,64 +518,62 @@ input[type="checkbox"].switcher:checked + .slider:before {
   background: #10446d;
   cursor: pointer;
 }
-/* line 194, ../sass/shop.sass */
+/* line 407, ../sass/shop.sass */
 .order input[type="submit"], .order textarea[type="submit"], .order .input[type="submit"] {
-  border: none;
+  border: 2px solid #f1f1f1;
+  background: #f1f1f1;
   color: #f1f1f1;
-  background: #2196F3;
-  border: 2px solid #2196F3;
   width: auto;
-  padding: 10px 25px;
-  font-size: 13px;
-  line-height: 1;
-  height: auto;
-  font-family: Montserrat;
-  font-weight: bold;
-  border-radius: 4px;
-  display: inline-block;
-  box-shadow: none;
+  height: 35px;
+  padding: 0 25px;
+  font-size: 16px;
+  font-weight: 900;
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  border-radius: 50px;
   transition: 0.3s;
   -webkit-transition: 0.3s;
+  background: #2196F3;
+  border-color: #2196F3;
 }
-/* line 210, ../sass/shop.sass */
-.order input[type="submit"].round, .order textarea[type="submit"].round, .order .input[type="submit"].round {
-  border-radius: 50%;
-}
-/* line 212, ../sass/shop.sass */
+/* line 422, ../sass/shop.sass */
 .order input[type="submit"]:hover, .order textarea[type="submit"]:hover, .order .input[type="submit"]:hover {
-  cursor: pointer;
-  color: #000c0c;
-  background: none;
   transition: 0.3s;
   -webkit-transition: 0.3s;
+  background: none;
+  color: #f1f1f1;
+  cursor: pointer;
 }
-/* line 217, ../sass/shop.sass */
+/* line 427, ../sass/shop.sass */
+.order input[type="submit"]:active, .order input[type="submit"]:focus, .order textarea[type="submit"]:active, .order textarea[type="submit"]:focus, .order .input[type="submit"]:active, .order .input[type="submit"]:focus {
+  outline: none;
+}
+/* line 429, ../sass/shop.sass */
 .order input[type="checkbox"], .order textarea[type="checkbox"], .order .input[type="checkbox"] {
   -webkit-appearance: none;
   background: none;
-  border: 1px solid #000c0c !important;
+  border: 1px solid #f1f1f1 !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
   padding: 9px;
   border-radius: 3px;
   display: inline-block;
   position: relative;
 }
-/* line 226, ../sass/shop.sass */
+/* line 438, ../sass/shop.sass */
 .order input[type="checkbox"]:active, .order textarea[type="checkbox"]:active, .order .input[type="checkbox"]:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
-/* line 228, ../sass/shop.sass */
+/* line 440, ../sass/shop.sass */
 .order input[type="checkbox"]:checked, .order textarea[type="checkbox"]:checked, .order .input[type="checkbox"]:checked {
   background-color: none;
-  border: 1px solid #000c0c;
+  border: 1px solid #f1f1f1;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
-  color: #000c0c;
+  color: #f1f1f1;
 }
-/* line 229, ../sass/shop.sass */
+/* line 441, ../sass/shop.sass */
 .order input[type="checkbox"]:checked:active, .order textarea[type="checkbox"]:checked:active, .order .input[type="checkbox"]:checked:active {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
-/* line 235, ../sass/shop.sass */
+/* line 447, ../sass/shop.sass */
 .order input[type="checkbox"]:checked:after, .order textarea[type="checkbox"]:checked:after, .order .input[type="checkbox"]:checked:after {
   content: "✔";
   font-size: 14px;
@@ -966,45 +582,45 @@ input[type="checkbox"].switcher:checked + .slider:before {
   left: 4px;
   color: #000c0c;
 }
-/* line 243, ../sass/shop.sass */
+/* line 455, ../sass/shop.sass */
 .order .input-container {
   max-width: 650px;
   width: 100%;
   margin: 0 auto;
   position: relative;
 }
-/* line 248, ../sass/shop.sass */
+/* line 460, ../sass/shop.sass */
 .order form {
   width: 100%;
   padding: 35px 0;
 }
-/* line 251, ../sass/shop.sass */
+/* line 463, ../sass/shop.sass */
 .order form.hidden {
   display: none;
 }
-/* line 253, ../sass/shop.sass */
+/* line 465, ../sass/shop.sass */
 .order form.high {
   padding: 100px 0;
 }
-/* line 255, ../sass/shop.sass */
+/* line 467, ../sass/shop.sass */
 .order form.nothing {
   padding: 0;
   margin: 0;
 }
-/* line 258, ../sass/shop.sass */
+/* line 470, ../sass/shop.sass */
 .order form .msg {
   float: left;
   width: 100%;
-  text-align: center;
+  text-align: left;
   margin-top: 10px;
   font-size: 13px;
-  color: #000c0c;
+  color: #f1f1f1;
 }
-/* line 265, ../sass/shop.sass */
+/* line 477, ../sass/shop.sass */
 .order form h1, .order form h2 {
   margin-bottom: 0;
 }
-/* line 267, ../sass/shop.sass */
+/* line 479, ../sass/shop.sass */
 .order form .profile-image {
   width: 120px;
   height: 120px;
@@ -1012,12 +628,12 @@ input[type="checkbox"].switcher:checked + .slider:before {
   float: left;
   margin-right: 20px;
 }
-/* line 273, ../sass/shop.sass */
+/* line 485, ../sass/shop.sass */
 .order form .select {
   list-style: none;
   padding: 0;
 }
-/* line 276, ../sass/shop.sass */
+/* line 488, ../sass/shop.sass */
 .order form .box__file {
   width: 0.1px;
   height: 0.1px;
@@ -1026,21 +642,21 @@ input[type="checkbox"].switcher:checked + .slider:before {
   position: absolute;
   z-index: -1;
 }
-/* line 283, ../sass/shop.sass */
+/* line 495, ../sass/shop.sass */
 .order form .banner-image {
   width: 444px;
   height: 250px;
   background: #f1f1f1;
 }
-/* line 287, ../sass/shop.sass */
+/* line 499, ../sass/shop.sass */
 .order form .banner-image:hover {
   cursor: pointer;
 }
-/* line 289, ../sass/shop.sass */
+/* line 501, ../sass/shop.sass */
 .order form .banner-image img {
   width: 100%;
 }
-/* line 291, ../sass/shop.sass */
+/* line 503, ../sass/shop.sass */
 .order form .select-box {
   max-width: 100%;
   position: relative;
@@ -1050,11 +666,11 @@ input[type="checkbox"].switcher:checked + .slider:before {
   margin-top: 0.3em;
   background: #000c0c;
 }
-/* line 299, ../sass/shop.sass */
+/* line 511, ../sass/shop.sass */
 .order form .select-box select {
   max-width: 100%;
-  background-color: #000c0c;
-  color: #f1f1f1;
+  background-color: #f1f1f1;
+  color: #2196F3;
   font-size: inherit;
   padding: 0.5em;
   padding-right: 2.5em;
@@ -1067,21 +683,21 @@ input[type="checkbox"].switcher:checked + .slider:before {
   -webkit-appearance: none;
   appearance: none;
 }
-/* line 314, ../sass/shop.sass */
+/* line 526, ../sass/shop.sass */
 .order form .select-box select::-ms-expand {
   display: none;
 }
-/* line 316, ../sass/shop.sass */
+/* line 528, ../sass/shop.sass */
 .order form .select-box select:active, .order form .select-box select:focus {
   outline: none;
 }
-/* line 318, ../sass/shop.sass */
+/* line 530, ../sass/shop.sass */
 .order form .select-box::before {
   content: "";
   position: absolute;
   pointer-events: none;
 }
-/* line 322, ../sass/shop.sass */
+/* line 534, ../sass/shop.sass */
 .order form .select-box::after {
   content: "";
   position: absolute;
@@ -1095,7 +711,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   top: 50%;
   margin-top: -0.5em;
 }
-/* line 334, ../sass/shop.sass */
+/* line 546, ../sass/shop.sass */
 .order form .select-box::before {
   width: 2em;
   right: 0;
@@ -1104,11 +720,11 @@ input[type="checkbox"].switcher:checked + .slider:before {
   border-radius: 0 3px 3px 0;
   background-color: #10446d;
 }
-/* line 341, ../sass/shop.sass */
+/* line 553, ../sass/shop.sass */
 .order form .select-box select[disabled] {
   color: rgba(0, 0, 0, 0.25);
 }
-/* line 343, ../sass/shop.sass */
+/* line 555, ../sass/shop.sass */
 .order form textarea {
   min-height: 250px;
   height: auto;
@@ -1118,7 +734,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   max-width: 100%;
   min-width: 100%;
 }
-/* line 351, ../sass/shop.sass */
+/* line 563, ../sass/shop.sass */
 .order form .input-group {
   position: relative;
   width: 100%;
@@ -1127,91 +743,91 @@ input[type="checkbox"].switcher:checked + .slider:before {
   display: inline-block;
   user-select: none;
 }
-/* line 358, ../sass/shop.sass */
+/* line 570, ../sass/shop.sass */
 .order form .input-group.no {
   margin-top: 0;
 }
-/* line 360, ../sass/shop.sass */
+/* line 572, ../sass/shop.sass */
 .order form .input-group.more {
   margin-top: 50px;
 }
-/* line 362, ../sass/shop.sass */
+/* line 574, ../sass/shop.sass */
 .order form .input-group.eighty {
   width: 80%;
 }
-/* line 364, ../sass/shop.sass */
+/* line 576, ../sass/shop.sass */
 .order form .input-group.ninety {
   width: 90%;
 }
-/* line 366, ../sass/shop.sass */
+/* line 578, ../sass/shop.sass */
 .order form .input-group.sixty {
   width: 60%;
 }
-/* line 368, ../sass/shop.sass */
+/* line 580, ../sass/shop.sass */
 .order form .input-group.half {
   width: 50%;
 }
-/* line 370, ../sass/shop.sass */
+/* line 582, ../sass/shop.sass */
 .order form .input-group.fourty {
   width: 40%;
 }
-/* line 372, ../sass/shop.sass */
+/* line 584, ../sass/shop.sass */
 .order form .input-group.third {
   width: 33%;
 }
-/* line 374, ../sass/shop.sass */
+/* line 586, ../sass/shop.sass */
 .order form .input-group.fourth {
   width: 25%;
 }
-/* line 376, ../sass/shop.sass */
+/* line 588, ../sass/shop.sass */
 .order form .input-group.fifth {
   width: 20%;
 }
-/* line 378, ../sass/shop.sass */
+/* line 590, ../sass/shop.sass */
 .order form .input-group.tenth {
   width: 10%;
 }
-/* line 380, ../sass/shop.sass */
+/* line 592, ../sass/shop.sass */
 .order form .input-group.eighty, .order form .input-group.half, .order form .input-group.third, .order form .input-group.fourth, .order form .input-group.fifth, .order form .input-group.tenth, .order form .input-group.ninety, .order form .input-group.sixty, .order form .input-group.fourty {
   float: left;
 }
-/* line 382, ../sass/shop.sass */
+/* line 594, ../sass/shop.sass */
 .order form .input-group.right {
   text-align: right;
 }
-/* line 384, ../sass/shop.sass */
+/* line 596, ../sass/shop.sass */
 .order form .input-group.center {
   text-align: center;
 }
-/* line 386, ../sass/shop.sass */
+/* line 598, ../sass/shop.sass */
 .order form .input-group.left {
   text-align: left;
 }
-/* line 388, ../sass/shop.sass */
+/* line 600, ../sass/shop.sass */
 .order form .input-group p {
   text-align: left;
   font-size: 12px;
 }
-/* line 391, ../sass/shop.sass */
+/* line 603, ../sass/shop.sass */
 .order form .input-group p.first-time {
   padding-left: 130px;
 }
-/* line 393, ../sass/shop.sass */
+/* line 605, ../sass/shop.sass */
 .order form .input-group p.no-padding {
   padding-left: 0;
 }
-/* line 395, ../sass/shop.sass */
+/* line 607, ../sass/shop.sass */
 .order form .input-group .text {
   text-align: left;
   font-size: 1em;
 }
-/* line 398, ../sass/shop.sass */
+/* line 610, ../sass/shop.sass */
 .order form .input-group h1 {
   text-align: left;
   font-size: 1em !important;
   font-weight: bold;
 }
-/* line 403, ../sass/shop.sass */
+/* line 615, ../sass/shop.sass */
 .order form .input-group .suggestions {
   width: 100%;
   height: auto;
@@ -1219,25 +835,25 @@ input[type="checkbox"].switcher:checked + .slider:before {
   left: 0;
   position: absolute;
 }
-/* line 409, ../sass/shop.sass */
+/* line 621, ../sass/shop.sass */
 .order form .input-group .suggestions .suggestion {
   width: 100%;
   height: auto;
   line-height: 35px;
 }
-/* line 414, ../sass/shop.sass */
+/* line 625, ../sass/shop.sass */
 .order form label {
   position: absolute;
   left: 0;
   top: 8px;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   font-weight: 400;
-  color: #000c0c;
+  color: #f1f1f1;
   pointer-events: none;
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 424, ../sass/shop.sass */
+/* line 635, ../sass/shop.sass */
 .order form label.picture {
   pointer-events: all;
   position: static;
@@ -1260,13 +876,13 @@ input[type="checkbox"].switcher:checked + .slider:before {
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 444, ../sass/shop.sass */
+/* line 655, ../sass/shop.sass */
 .order form label.picture:hover {
   cursor: pointer;
   color: #000c0c;
   background: none;
 }
-/* line 448, ../sass/shop.sass */
+/* line 659, ../sass/shop.sass */
 .order form label.normal {
   pointer-events: all;
   font-style: normal;
@@ -1277,11 +893,11 @@ input[type="checkbox"].switcher:checked + .slider:before {
   color: #000c0c;
   font-weight: normal;
 }
-/* line 457, ../sass/shop.sass */
+/* line 668, ../sass/shop.sass */
 .order form label.normal.gray {
   color: #f1f1f1;
 }
-/* line 459, ../sass/shop.sass */
+/* line 670, ../sass/shop.sass */
 .order form label.remember {
   pointer-events: all;
   font-style: normal;
@@ -1294,12 +910,12 @@ input[type="checkbox"].switcher:checked + .slider:before {
   color: #000c0c;
   font-family: Montserrat, "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
 }
-/* line 470, ../sass/shop.sass */
+/* line 681, ../sass/shop.sass */
 .order form label.remember:hover {
   cursor: pointer;
 }
 
-/* line 472, ../sass/shop.sass */
+/* line 684, ../sass/shop.sass */
 .image_editor {
   position: fixed !important;
   width: calc(100% - 180px) !important;
@@ -1308,17 +924,17 @@ input[type="checkbox"].switcher:checked + .slider:before {
   background: none !important;
 }
 
-/* line 478, ../sass/shop.sass */
+/* line 690, ../sass/shop.sass */
 .image-selector {
   height: 100px;
   margin-top: 15px;
 }
-/* line 481, ../sass/shop.sass */
+/* line 693, ../sass/shop.sass */
 .image-selector span {
   display: inline-block;
   position: relative;
 }
-/* line 484, ../sass/shop.sass */
+/* line 696, ../sass/shop.sass */
 .image-selector .add, .image-selector img {
   width: 100px;
   height: 100px;
@@ -1326,17 +942,17 @@ input[type="checkbox"].switcher:checked + .slider:before {
   background: #000c0c;
   position: relative;
 }
-/* line 491, ../sass/shop.sass */
+/* line 703, ../sass/shop.sass */
 .image-selector .add:hover {
   cursor: pointer;
 }
-/* line 493, ../sass/shop.sass */
+/* line 705, ../sass/shop.sass */
 .image-selector .add:hover::before {
   font-size: 45px;
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 496, ../sass/shop.sass */
+/* line 708, ../sass/shop.sass */
 .image-selector .add::before {
   content: " ";
   position: absolute;
@@ -1355,7 +971,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 508, ../sass/shop.sass */
+/* line 720, ../sass/shop.sass */
 .image-selector .delete {
   position: absolute;
   top: 0;
@@ -1367,14 +983,14 @@ input[type="checkbox"].switcher:checked + .slider:before {
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 517, ../sass/shop.sass */
+/* line 729, ../sass/shop.sass */
 .image-selector .delete:hover {
   cursor: pointer;
   background: #801010;
   transition: 0.3s;
   -webkit-transition: 0.3s;
 }
-/* line 521, ../sass/shop.sass */
+/* line 733, ../sass/shop.sass */
 .image-selector .delete::before {
   content: " ";
   position: absolute;
@@ -1390,49 +1006,62 @@ input[type="checkbox"].switcher:checked + .slider:before {
   font-family: FontAwesome;
 }
 
-/* line 532, ../sass/shop.sass */
+/* line 743, ../sass/shop.sass */
+.right-buttons {
+  text-align: right;
+}
+
+/* line 746, ../sass/shop.sass */
 table.bill {
   margin: 35px 0 35px;
+  color: #f1f1f1;
 }
-/* line 534, ../sass/shop.sass */
+/* line 749, ../sass/shop.sass */
 table.bill.center {
   margin: 35px auto;
 }
-/* line 536, ../sass/shop.sass */
+/* line 751, ../sass/shop.sass */
 table.bill.right {
   margin-right: 0;
   margin-left: auto;
 }
-/* line 539, ../sass/shop.sass */
+/* line 754, ../sass/shop.sass */
 table.bill.big {
-  font-size: 1.3em;
+  width: 100%;
+  font-size: 1.2em;
 }
-/* line 541, ../sass/shop.sass */
+/* line 757, ../sass/shop.sass */
 table.bill th, table.bill td, table.bill tr {
   border: none;
   height: auto;
 }
-/* line 544, ../sass/shop.sass */
+/* line 760, ../sass/shop.sass */
 table.bill th, table.bill td {
   padding: 10px 0;
   padding-right: 35px;
 }
-/* line 547, ../sass/shop.sass */
+/* line 763, ../sass/shop.sass */
 table.bill th img, table.bill td img {
-  height: 75px;
+  width: 75px;
 }
-/* line 549, ../sass/shop.sass */
+/* line 765, ../sass/shop.sass */
 table.bill th {
-  font-size: 1.2em;
   font-weight: bold;
+  text-align: left;
 }
 
+@media only screen and (max-width: 1034px) {
+  /* line 770, ../sass/shop.sass */
+  .window {
+    width: 100%;
+  }
+}
 @media only screen and (max-width: 600px) {
-  /* line 553, ../sass/shop.sass */
+  /* line 773, ../sass/shop.sass */
   .shoppingcart {
     width: 100% !important;
   }
-  /* line 556, ../sass/shop.sass */
+  /* line 776, ../sass/shop.sass */
   .shoppingcart table td, .shoppingcart table th {
     display: inline-block;
     box-sizing: border-box;
@@ -1442,9 +1071,38 @@ table.bill th {
   }
 }
 @media only screen and (max-width: 550px) {
-  /* line 563, ../sass/shop.sass */
+  /* line 783, ../sass/shop.sass */
   .bank-options {
     height: 500px;
     width: 310px;
+  }
+}
+@media print {
+  /* line 788, ../sass/shop.sass */
+  body {
+    color: black !important;
+    background: none;
+  }
+
+  /* line 791, ../sass/shop.sass */
+  .window {
+    background: none;
+    color: black !important;
+  }
+
+  /* line 794, ../sass/shop.sass */
+  button {
+    display: none !important;
+  }
+
+  /* line 796, ../sass/shop.sass */
+  table {
+    background: none;
+    color: black;
+  }
+  /* line 799, ../sass/shop.sass */
+  table.bill {
+    background: none;
+    color: black;
   }
 }

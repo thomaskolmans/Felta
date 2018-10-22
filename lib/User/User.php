@@ -11,13 +11,15 @@ class User extends Felta{
     public $verify_needed = true;
 
     public $sql;
-    public $csrf;
+    private $csrf;
 
-    public $id;
-    public $username;
-    public $dname;
-    public $email;
-    public $online;
+    private $id;
+    private $username;
+    private $dname;
+    private $email;
+    private $online;
+
+    private $permission;
 
     private $password;
     private $session_key;

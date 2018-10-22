@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"ali",
+				"text-align"
+			],
+			[
+				"data",
+				"dataset"
+			],
+			[
+				"Order",
+				"OrderStatus"
+			],
+			[
+				"orderS",
+				"orderstatus"
+			],
+			[
+				"stripe",
+				"stripePublicKey"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"where",
+				"whereequals"
+			],
+			[
 				"sub",
 				"submitMain"
 			],
@@ -20,37 +48,82 @@
 	"buffers":
 	[
 		{
-			"file": "view/index.tpl",
+			"file": "view/felta/sass/front.sass",
 			"settings":
 			{
-				"buffer_size": 85,
+				"buffer_size": 1981,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "lib/Post/Statistics.php",
+			"file": "view/felta/shop/updateShopItem.tpl",
 			"settings":
 			{
-				"buffer_size": 1724,
+				"buffer_size": 8531,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "routes/web.php",
+			"file": "view/felta/shop/transaction.tpl",
 			"settings":
 			{
-				"buffer_size": 77,
+				"buffer_size": 2867,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "lib/Helpers/UUID.php",
+			"file": "view/felta/shop/thankyou.tpl",
 			"settings":
 			{
-				"buffer_size": 118,
+				"buffer_size": 911,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "view/felta/sass/shop.sass",
+			"settings":
+			{
+				"buffer_size": 17156,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "view/felta/shop/order.tpl",
+			"settings":
+			{
+				"buffer_size": 14882,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "view/felta/shop/return.tpl",
+			"settings":
+			{
+				"buffer_size": 1715,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "view/felta/shop/settings.tpl",
+			"settings":
+			{
+				"buffer_size": 7738,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "routes/felta.php",
+			"settings":
+			{
+				"buffer_size": 9132,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -67,6 +140,14 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
 		],
 		"width": 0.0
 	},
@@ -90,16 +171,59 @@
 	[
 		"/C/Users/Thomas/Documents/Felta",
 		"/C/Users/Thomas/Documents/Felta/lib",
-		"/C/Users/Thomas/Documents/Felta/lib/Helpers",
-		"/C/Users/Thomas/Documents/Felta/lib/SimpelSQL",
-		"/C/Users/Thomas/Documents/Felta/lib/SimpelSQL/lib",
-		"/C/Users/Thomas/Documents/Felta/lib/SimpelSQL/lib/Database",
-		"/C/Users/Thomas/Documents/Felta/lib/SimpelSQL/lib/Exception",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop",
+		"/C/Users/Thomas/Documents/Felta/lib/User",
+		"/C/Users/Thomas/Documents/Felta/routes",
 		"/C/Users/Thomas/Documents/Felta/view",
-		"/C/Users/Thomas/Documents/Felta/view/felta"
+		"/C/Users/Thomas/Documents/Felta/view/felta",
+		"/C/Users/Thomas/Documents/Felta/view/felta/sass",
+		"/C/Users/Thomas/Documents/Felta/view/felta/sass/base",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop"
 	],
 	"file_history":
 	[
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/error.tpl",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/pay.tpl",
+		"/C/Users/Thomas/Documents/Felta/view/felta/sass/base/_base.sass",
+		"/C/Users/Thomas/Documents/Felta/view/felta/sass/shop.sass",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/Shop.php",
+		"/C/Users/Thomas/Documents/Felta/routes/felta.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/js/dashboard.js",
+		"/C/Users/Thomas/Documents/Felta/view/felta/js/shop.js",
+		"/C/Users/Thomas/Documents/Felta/index.php",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/Order.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/order.tpl",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/Transaction.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/transaction.tpl",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/ShopItem.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/js/edit.js",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/dashboard.tpl",
+		"/C/Users/Thomas/Documents/Felta/lib/User/User.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/sass/main.sass",
+		"/C/Users/Thomas/Documents/Felta/lib/Post/Message.php",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/Payment.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/return.tpl",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/Promotion.php",
+		"/C/Users/Thomas/Documents/Felta/emails/forgot.html",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/Shoppingcart.php",
+		"/C/Users/Thomas/Documents/Felta/lib/Post/Statistics.php",
+		"/C/Users/Thomas/Documents/Felta/lib/Controllers/ShopController.php",
+		"/C/Users/Thomas/Documents/Felta/emails/message.html",
+		"/C/Users/Thomas/Documents/Felta/view/felta/shop/addShopItem.tpl",
+		"/C/Users/Thomas/Documents/Felta/view/index.tpl",
+		"/C/Users/Thomas/Documents/felta/lib/Post/Message.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/maintenance.tpl",
+		"/C/Users/Thomas/Documents/Felta/view/felta/dashboard.tpl",
+		"/C/Users/Thomas/Documents/Felta/lib/Shop/OrderStatus.php",
+		"/C/Users/Thomas/Documents/felta/emails/shop/thankyou.html",
+		"/C/Users/Thomas/Documents/Felta/lib/Felta.php",
+		"/C/Users/Thomas/Documents/Felta/view/felta/agenda.tpl",
+		"/C/Users/Thomas/Documents/Felta/view/felta/news.tpl",
+		"/C/Users/Thomas/Documents/Felta/lib/SimpleSQL/lib/SQL/SQL.php",
+		"/C/Users/Thomas/Documents/Felta/lib/Helpers/UUID.php",
+		"/C/Users/Thomas/Documents/Felta/routes/web.php",
+		"/C/Users/Thomas/Documents/felta/lib/Controllers/ShopController.php",
+		"/C/Users/Thomas/Documents/Felta/lib/SimpelSQL/lib/Database/SQL.php",
 		"/C/Users/Thomas/Documents/Felta/lib/Update.php",
 		"/C/Users/Thomas/Documents/vynwork-web/public/sass/base/_base.sass",
 		"/C/Users/Thomas/Documents/vynwork-web/public/sass/parts/_form.sass",
@@ -129,13 +253,14 @@
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
 		"height": 104.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -143,6 +268,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".tabs",
+			"button",
+			"h1",
+			"$main",
+			"color:",
+			"previous",
+			"label",
+			"dname",
+			"pk_live_PQTNxYxgUk6Uo0l6DSjf9MlN",
+			"hours",
+			"PAID",
+			"/create/order",
+			"font-size: 60px",
+			"h1",
+			"PAYED",
+			"PAID",
+			".top",
+			"div",
+			"half"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -150,6 +294,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"member"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -160,58 +305,120 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "view/index.tpl",
+					"file": "view/felta/sass/front.sass",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 85,
+						"buffer_size": 1981,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								45,
-								45
+								1478,
+								1478
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/Sass/Syntaxes/Sass.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 754.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "view/felta/shop/updateShopItem.tpl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1544,
+								1544
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "lib/Post/Statistics.php",
+					"buffer": 2,
+					"file": "view/felta/shop/transaction.tpl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1724,
+						"buffer_size": 2867,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1010,
-								1010
+								102,
+								102
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
 							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "view/felta/shop/thankyou.tpl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 911,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								527,
+								527
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -222,25 +429,87 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "routes/web.php",
+					"buffer": 4,
+					"file": "view/felta/sass/shop.sass",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 77,
+						"buffer_size": 17156,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								77,
-								77
+								17156,
+								17156
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/Sass/Syntaxes/Sass.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14381.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "view/felta/shop/order.tpl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14882,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9152,
+								9152
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "view/felta/shop/return.tpl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1715,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								91,
+								91
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -250,31 +519,63 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "lib/Helpers/UUID.php",
+					"buffer": 7,
+					"file": "view/felta/shop/settings.tpl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 118,
+						"buffer_size": 7738,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								107,
-								107
+								7712,
+								7712
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2052.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "routes/felta.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9132,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4461.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -319,7 +620,7 @@
 	"project": "felta.sublime-project",
 	"replace":
 	{
-		"height": 72.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -338,8 +639,32 @@
 		"selected_items":
 		[
 			[
+				"t",
+				"C:\\Users\\Thomas\\Documents\\Torryd\\torryd.sublime-workspace"
+			],
+			[
 				"",
+				"C:\\Users\\Thomas\\Documents\\Torryd\\torryd.sublime-project"
+			],
+			[
+				"Torr",
+				"C:\\Users\\Thomas\\Documents\\Torryd\\torryd.sublime-project"
+			],
+			[
+				"Q",
 				"C:\\Users\\Thomas\\Documents\\quickscan\\quickscan.sublime-project"
+			],
+			[
+				"Ko",
+				"C:\\Users\\Thomas\\Documents\\kolmans\\kolmans.sublime-project"
+			],
+			[
+				"Cleverload",
+				"C:\\Users\\Thomas\\Documents\\Cleverload\\cleverload.sublime-project"
+			],
+			[
+				"torryd",
+				"C:\\Users\\Thomas\\Documents\\Torryd\\torryd.sublime-project"
 			],
 			[
 				"vyn",

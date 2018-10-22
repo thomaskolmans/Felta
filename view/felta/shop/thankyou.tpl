@@ -1,7 +1,7 @@
 <html>
     <head>
        <title>Felta | Thank you</title>
-       <link href="/felta/stylesheets/all.css" rel="stylesheet">
+       <link href="/felta/stylesheets/shop.css" rel="stylesheet">
        <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
        <link rel="icon" href="/felta/images/black.png" type="image/png" />
        <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
@@ -12,9 +12,9 @@
        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>          
-        <div class="main container no-top settings">
-            <h1>Thank you</h1>
-            <h2>Your order has been placed.</h2>
+        <div class="window">
+            <h1>Thank you!</h1>
+            <p>The transaction was succesfull and your order has been placed.</p>
             <br><br>
             <a href="/"><button>Home</button>
         </div>
