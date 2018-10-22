@@ -188,7 +188,7 @@
               ";
             }
           }else{
-            echo "<tr> <td colspan='5'><h3>No agenda items</h3></td></tr>";
+            echo "<tr> <td colspan='7'><h3>No agenda items</h3></td></tr>";
           }
       ?>
       </table>

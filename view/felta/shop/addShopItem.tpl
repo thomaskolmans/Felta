@@ -47,7 +47,7 @@
       </div>
       <div class="input-group">
         <label>Description</label>
-        <textarea  placeholder="Describe your product...." name="description">
+        <textarea  placeholder="Describe your product...." name="description"></textarea>
       </div>
       <input type="hidden" id="variants" />
       <div class="tabs" style="margin-top: 50px">

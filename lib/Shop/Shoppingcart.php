@@ -88,6 +88,32 @@ class Shoppingcart{
     public function getItems(){
         return $this->items;
     }
+
+    public function getSubTotal(){
+        $amount = 0;
+        $settings = Shop::getInstance()->getSettings();
+        if(boolval($settings["exclbtw"])){
+            foreach($this->items as $item => $quantity){
+                $itemv = ShopItemVariant::get($item);
+                $amount += intval($itemv->getPrice()) * $quantity;
+            }
+            if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
+                $amount += $this->getShippingCost();
+            }
+        } else {
+            foreach($this->items as $item => $quantity){
+                $itemv = ShopItemVariant::get($item);
+                $amount += intval($itemv->getPrice()) * $quantity;
+            }
+            if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
+                $amount += $this->getShippingCost();
+            }
+            $amount -= $this->getBtw($amount, true); 
+        }
+
+        return $amount;
+    }
+
     public function getTotalAmount(){
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
@@ -99,21 +125,20 @@ class Shoppingcart{
             $amount += $this->getShippingCost();
         }
         if(boolval($settings["exclbtw"])){
-            $amount += $this->getBtw($amount);
+            $amount += $this->getBtw($amount, true);
         }
         return $amount;
     }
+
     public function getBtw($amount,$excl = false){
         $exclBtw = boolval(Shop::getInstance()->getSettings()["exclbtw"]);
-        if($excl){
+        if($excl || !$exclBtw){
             return $amount - Shop::doubleToInt(round(Shop::intToDouble($amount) / ((Shop::getInstance()->getSettings()["btw"] / 100) + 1), 2));
-        }
-        if($exclBtw){
-            return Shop::doubleToInt(round(Shop::intToDouble($amount) * (Shop::getInstance()->getSettings()["btw"] / 100),2));
         }else{
-            return $amount - Shop::doubleToInt(round(Shop::intToDouble($amount) / ((Shop::getInstance()->getSettings()["btw"] / 100) + 1), 2));
+            return Shop::doubleToInt(round(Shop::intToDouble($amount) * (Shop::getInstance()->getSettings()["btw"] / 100),2));
         }
     }
+    
     public function getShippingCost(){
         $items = count($this->items);
         $settings = Shop::getInstance()->getShipping();

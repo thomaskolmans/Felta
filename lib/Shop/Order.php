@@ -2,6 +2,7 @@
 namespace lib\Shop;
 
 use lib\Felta;
+use lib\Post\Message;
 use lib\Helpers\UUID;
 
 class Order{
@@ -46,18 +47,22 @@ class Order{
     public static function exists($id){
         return Felta::getInstance()->getSQL()->exists("shop_order",["id" => $id]);
     }
+
     public static function createFromShoppingcart($cart,$customer){
         $items = $cart->pull()->getItems();
         return Order::create($customer,OrderStatus::ACTIVE,null,$items);
     }
+
     public static function create($customer,$orderstatus,$promotion,$shopitems){
         $id = UUID::generate(8);
         $date = new \DateTime();
         return new Order($id,$customer,$orderstatus,$promotion,$date,$shopitems);
     }
+
     public static function getLatest($from,$until){
-        return array_slice(Felta::getInstance()->getSQL()->query()->select()->from("shop_order")->orderBy("order")->desc()->limit($until)->execute(),$from);
+        return array_slice(Felta::getInstance()->getSQL()->query()->select()->from("shop_order")->where(["orderstatus" => 1])->orderBy("order")->desc()->limit($until)->execute(),$from);
     }
+
     public function save(){
         $this->sql->insert("shop_order",[
             $this->id,
@@ -77,6 +82,14 @@ class Order{
         }
     }
 
+    public function paid(){
+        $message = new Message();
+        $url = Felta::getInstance()->settings->get("website_url")."/felta/shop/order/".$this->id;
+        $message->put("You've recieved a new order", "Yes! You've recieved a new order from your webshop. It has been succesfully paid.", $url);
+        $this->orderstatus = OrderStatus::PAID;
+        $this->update();
+    }
+
     public function update(){
         $this->sql->update("customer","shop_order",["id" => $this->id],$this->customer);
         $this->sql->update("orderstatus","shop_order",["id" => $this->id],$this->orderstatus);
@@ -84,21 +97,30 @@ class Order{
         $this->sql->update("order","shop_order",["id" => $this->id],$this->date->format("Y-m-d H:i:s"));
     }
 
-    public function addItem(array $item){
-        $shopitems[] = $item;
-    }
-
-    public function removeItem($id){
-        unset($shopitems[$id]);
-    }
-
-    public function getItems(){
-        return $this->shoptitems;
-    }
 
     public function pay($method,$currency){
         $amount = $this->getTotalAmount();
     }
+
+    public function getSubTotal(){
+        $amount = 0;
+        $settings = Shop::getInstance()->getSettings();
+        if(boolval($settings["exclbtw"])){
+            foreach($this->shopitems as $item => $quantity){
+                $itemv = ShopItemVariant::get($item);
+                $amount += intval($itemv->getPrice()) * $quantity;
+            }
+        } else {
+            foreach($this->shopitems as $item => $quantity){
+                $itemv = ShopItemVariant::get($item);
+                $amount += intval($itemv->getPrice()) * $quantity;
+            }
+            $amount -= $this->getBtw($amount, true); 
+        }
+
+        return $amount;
+    }
+
     public function getTotalAmount(){
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
@@ -110,21 +132,20 @@ class Order{
             $amount += $this->getShippingCost();
         }
         if(boolval($settings["exclbtw"])){
-            $amount += $this->getBtw($amount);
+            $amount += $this->getBtw($amount, true);
         }
         return $amount;
     }
+
     public function getBtw($amount,$excl = false){
         $exclBtw = boolval(Shop::getInstance()->getSettings()["exclbtw"]);
-        if($excl){
+        if($excl || !$exclBtw){
             return $amount - Shop::doubleToInt(round(Shop::intToDouble($amount) / ((Shop::getInstance()->getSettings()["btw"] / 100) + 1), 2));
-        }
-        if($exclBtw){
+        }else {
             return Shop::doubleToInt(round(Shop::intToDouble($amount) * (Shop::getInstance()->getSettings()["btw"] / 100),2));
-        }else{
-            return $amount - Shop::doubleToInt(round(Shop::intToDouble($amount) / ((Shop::getInstance()->getSettings()["btw"] / 100) + 1), 2));
         }
     }
+
     public function getShippingCost(){
         $items = count($this->shopitems);
         $settings = Shop::getInstance()->getShipping();
@@ -142,7 +163,19 @@ class Order{
         }
         return $amount;
     }
-    
+
+    public function toSource($method,$currency,$return_url,$other = array()){
+        $default = array(
+        'type' => $method,
+        'amount' => $this->getTotalAmount(),
+        'currency' => $currency,
+        'redirect' => array('return_url' => $return_url),
+        );
+        $total = array_merge($default,$other);
+        $source = \Stripe\Source::create($total);
+        return $source;
+    }
+
     public function toPaypal(){
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
@@ -196,6 +229,8 @@ class Order{
         }
         $approvalUrl = $payment->getApprovalLink();
     }
+
+    
     public function getId(){
         return $this->id;
     }
@@ -216,6 +251,17 @@ class Order{
     public function setOrderstatus($orderstatus){
         $this->orderstatus = $orderstatus;
         return $this;
+    }
+    public function addItem(array $item){
+        $shopitems[] = $item;
+    }
+
+    public function removeItem($id){
+        unset($shopitems[$id]);
+    }
+
+    public function getItems(){
+        return $this->shoptitems;
     }
     public function getDate(){
         return $this->date;

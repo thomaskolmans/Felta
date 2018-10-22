@@ -54,7 +54,7 @@ $(document).ready(function(){
                     var upcomingvalue = 0;
                     var upcomingvalue2 = 0;
                     for(var i = 0; i <= hours; i++) {
-                        var d = new Date(date2.getTime() + ONE_HOUR * i);
+                        var d = new Date(date2.getTime() + (ONE_HOUR ) * i);
                         labels.push(d.getHours()+":00");
 
                         if(values[upcomingvalue] != undefined){

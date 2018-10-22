@@ -21,6 +21,10 @@ class Payment{
         $this->description = $description;
     }
 
+    public static function webhook($id){
+        self::chargeFromSource($id);
+    }
+
     public function pay(){
         switch($this->method){
             case "paypal":
@@ -29,9 +33,9 @@ class Payment{
             case "creditcard":
             case "card":
                 $order = Order::get($this->oid);
-                $c = Customer::get($order->getCustomer());
+                $orderCustomer = Customer::get($order->getCustomer());
                 $customer = \Stripe\Customer::create(array(
-                  "email" => "test@gmail.com",
+                  "email" => $orderCustomer->email,
                   "source" => $this->source["id"],
                 ));
                 $transaction = new Transaction(
@@ -54,10 +58,6 @@ class Payment{
         }
     }
 
-    public static function webhook($id){
-        self::createChargeFromSource($id);
-    }
-
     public function charge($customer = null){
         $transaction = Transaction::getFromSource($this->source);
         if($transaction->state < TransactionState::COMMITTED){
@@ -76,8 +76,7 @@ class Payment{
                 ]);
             }
             $order = Order::get($transaction->order);
-            $order->orderstatus = OrderStatus::PAYED;
-            $order->update();
+            $order->paid();
             $transaction->state = TransactionState::COMMITTED;
             $transaction->update();
             $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
@@ -86,9 +85,11 @@ class Payment{
         }
         return null;
     }
+
     public static function getSource($source){
         return \Stripe\Source::retrieve($source);
     }
+
     public static function chargeFromSource($source){
         $transaction = Transaction::getFromSource($source);   
         if($transaction !== null){

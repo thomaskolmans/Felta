@@ -134,73 +134,73 @@
     </section>
     <?php }?>
 
-  </div>
-  <script src="/felta/js/shop.js" type="text/javascript"></script>
-  <script>
-      var variants = 1;
-      var images = 0;
-      var active = "variant1";
-      var last = "variant1";
-      $("#"+active).removeClass("hidden");
-      $("#"+active+"-tab").addClass("active");
-      $(".tab").on("click",function(e){
-          last = active;
-          $("#"+last).addClass("hidden");
-          $("#"+last+"-tab").removeClass("active");
-          active = $(this).attr("column");
+      </div>
+      <script src="/felta/js/shop.js" type="text/javascript"></script>
+      <script>
+          var variants = 1;
+          var images = 0;
+          var active = "variant1";
+          var last = "variant1";
           $("#"+active).removeClass("hidden");
           $("#"+active+"-tab").addClass("active");
-      });
-      $("#image_edit_cancel, #image_editor_background").click(function(){
-        closeImageEditor();
-      });
-      $("#cancelphoto").on("click",function(){
-        closeImageEditor();
-      });
-      $("#addphoto").on("click",function(){
-          $('#imageid').croppie('result', {
-            type: 'canvas',
-            size: 'viewport'
-          }).then(function (resp) {
-              uploadImage(
-                base64ToBlob(
-                  resp.replace(/^data:image\/(png|jpg);base64,/, ""),'image/png')
-                  ).then((response) => {
-                    json = JSON.parse(response);
-
-                    $("#image-selector").prepend("<span image-id='"+json.uid+"'><span class='delete' onclick='deleteImage(this,\""+json.url+"\")' /><input type='hidden' name='images[]' value='"+json.url+"' /> <img src='"+json.url+"' /></span>");
-                    closeImageEditor();
-                    images++;
-                  });
+          $(".tab").on("click",function(e){
+              last = active;
+              $("#"+last).addClass("hidden");
+              $("#"+last+"-tab").removeClass("active");
+              active = $(this).attr("column");
+              $("#"+active).removeClass("hidden");
+              $("#"+active+"-tab").addClass("active");
           });
-      });
-      document.getElementById("amount").onblur =function (){    
-          this.value = parseFloat(this.value.replace(/,/g, ""))
-                          .toFixed(2)
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, "");
-      }
-      function deleteImage(e,url){
-        $.ajax({
-          url: "/felta/shop/delete/image",
-          type: "POST",
-          data: {
-            url: url
-          },
-          success: function(response){
-          }
-        });
-        $(e).parent().remove();
-      }
-      function addVariant(){
-        variants++;
-      }
-  </script>
-        <?php
-        }
-      }
+          $("#image_edit_cancel, #image_editor_background").click(function(){
+            closeImageEditor();
+          });
+          $("#cancelphoto").on("click",function(){
+            closeImageEditor();
+          });
+          $("#addphoto").on("click",function(){
+              $('#imageid').croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+              }).then(function (resp) {
+                  uploadImage(
+                    base64ToBlob(
+                      resp.replace(/^data:image\/(png|jpg);base64,/, ""),'image/png')
+                      ).then((response) => {
+                        json = JSON.parse(response);
 
-    ?>
+                        $("#image-selector").prepend("<span image-id='"+json.uid+"'><span class='delete' onclick='deleteImage(this,\""+json.url+"\")' /><input type='hidden' name='images[]' value='"+json.url+"' /> <img src='"+json.url+"' /></span>");
+                        closeImageEditor();
+                        images++;
+                      });
+              });
+          });
+          document.getElementById("amount").onblur =function (){    
+              this.value = parseFloat(this.value.replace(/,/g, ""))
+                              .toFixed(2)
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, "");
+          }
+          function deleteImage(e,url){
+            $.ajax({
+              url: "/felta/shop/delete/image",
+              type: "POST",
+              data: {
+                url: url
+              },
+              success: function(response){
+              }
+            });
+            $(e).parent().remove();
+          }
+          function addVariant(){
+            variants++;
+          }
+      </script>
+  <?php
+      }
+    }
+
+  ?>
   
 </body>
 </html>
