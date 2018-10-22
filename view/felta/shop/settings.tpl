@@ -151,6 +151,21 @@
             </div> 
           </form>
       </section>
+      <section class="hidden" id="methods">
+          <form method="post" action="/felta/shop/shipping" id="general">
+            <div class="input-group">
+              <label>Amount</label>
+              <?php echo '<input type="text" name="amount" id="amount" value="'.$amount.'" />'; ?>
+            </div>
+            <div class="input-group">
+              <label>Items per package</label>
+              <?php echo '<input type="text" name="ipp" id="ipp" value="'.$ipp.'" />'; ?>
+            </div>
+            <div class='input-group right'>
+              <input type="submit" name="add-user" value="Save"/>
+            </div> 
+          </form>
+      </section>
    </div>
 </body>
 </html>

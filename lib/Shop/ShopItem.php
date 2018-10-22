@@ -21,7 +21,7 @@ class ShopItem{
     private $itemVariants = [];
 
     public function __construct($id,$name,$catagory,$description,$image,$date,$active = false){
-        $this->sql = Felta::getInstance()->getSQL();
+        $this->sql = \lib\Felta::getInstance()->getSQL();
 
         $this->id = $id;
         $this->name = $name;
@@ -70,12 +70,14 @@ class ShopItem{
         $date = new \DateTime();
         return new ShopItem($id,$name,$catagory,$description,$image,$date,$active = false);
     }
+
     public static function exists($id){
-        return Felta::getInstance()->getSQL()->exists("shop_item",["id" => $id]);
+        return \lib\Felta::getInstance()->getSQL()->exists("shop_item",["id" => $id]);
     }
+
     public static function get($id){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_item",["id" => $id])[0];
-        $variants = Felta::getInstance()->getSQL()->select("id","shop_item_variant",["sid" => $id]);
+        $result = \lib\Felta::getInstance()->getSQL()->select("*","shop_item",["id" => $id])[0];
+        $variants = \lib\Felta::getInstance()->getSQL()->select("id","shop_item_variant",["sid" => $id]);
         $shopitem = new ShopItem(
             $id,
             $result["name"],
@@ -97,8 +99,9 @@ class ShopItem{
         }
         return $shopitem;
     }
+    
     public static function getSolo($id){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_item",["id" => $id])[0];
+        $result = \lib\Felta::getInstance()->getSQL()->select("*","shop_item",["id" => $id])[0];
         $shopitem = new ShopItem(
             $id,
             $result["name"],

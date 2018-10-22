@@ -9,7 +9,7 @@ class Response{
     public $body;
 
     public function __construct(){
-        //ob_start("ob_gzhandler");
+        ob_start("ob_gzhandler");
     }
     public static function redirect($path){
         return new Redirect();

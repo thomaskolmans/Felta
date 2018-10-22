@@ -1,7 +1,7 @@
 <html>
     <head>
        <title>Felta | Transaction</title>
-       <link href="/felta/stylesheets/all.css" rel="stylesheet">
+       <link href="/felta/stylesheets/shop.css" rel="stylesheet">
        <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
        <link rel="icon" href="/felta/images/black.png" type="image/png" />
        <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
@@ -40,6 +40,18 @@
                             <tr>
                                 <th>Method:</th>
                                 <td><?php echo $transaction->method; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Status:</th>
+                                <td><?php 
+                                    switch($transaction->state){
+                                        case 0: echo "Active"; break;
+                                        case 1: echo "In progress"; break;
+                                        case 2: echo "Failed"; break;
+                                        case 3: echo "Aborted"; break;
+                                        case 4: echo "Successfull"; break;
+                                    } 
+                                    ?></td>
                             </tr>
                         </table>
                     </div>

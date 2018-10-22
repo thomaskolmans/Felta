@@ -61,6 +61,7 @@ class Transaction{
         return null;
 
     }
+
     public static function create($transactionid,$order,$method,$state,$date){
         $id = UUID::generate(15);
         $source = Payment::getSource($transactionid);
@@ -68,9 +69,15 @@ class Transaction{
         $currency = $source["currency"];
         return new Transaction($id,$transactionid,$order,$method,$amount,$currency,$state,$date);
     }
+
     public static function exists($id){
         return Felta::getInstance()->getSQL()->exists("shop_transaction",["id" => $id]);
     }
+
+    public static function getWeekTransactions(){
+        return Felta::getInstance()->getSQL()->execute("SELECT SUM(amount),date FROM shop_transaction WHERE date >= NOW() - INTERVAL 7 DAY GROUP BY day(date) ORDER BY date");
+    }
+
     public function save(){
         $this->sql->insert("shop_transaction",[
             $this->id,
@@ -99,7 +106,7 @@ class Transaction{
     }
 
     public static function getLatest($from,$until){
-        return array_slice(Felta::getInstance()->getSQL()->query()->select()->from("shop_transaction")->orderBy("date")->desc()->limit($until)->execute(),$from);
+        return array_slice(Felta::getInstance()->getSQL()->query()->select()->from("shop_transaction")->where(["state" => 4])->orderBy("date")->desc()->limit($until)->execute(),$from);
     }
 }
 
