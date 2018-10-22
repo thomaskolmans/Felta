@@ -1,7 +1,8 @@
 <html>
     <head>
        <title>Felta | Checkout</title>
-       <link href="/felta/stylesheets/all.css" rel="stylesheet">
+       <meta http-equiv="Cache-Control" content="no-store" />
+       <link href="/felta/stylesheets/shop.css" rel="stylesheet">
        <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
        <link rel="icon" href="/felta/images/black.png" type="image/png" />
        <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
@@ -25,12 +26,12 @@
                     $customer = Customer::get($order->getCustomer());
                     $name = $customer->firstname." ".$customer->lastname;
         ?>              
-        <div class="main container no-top settings">
+        <div class="window">
             <h1>Checkout</h1>
             <table class="bill big">
                 <tr>
                     <td>Order:</td>
-                    <td>#<?php echo '<a href="/felta/shop/order/'.$oid.'">'.$oid; ?></a></td>
+                    <td><?php echo '<a href="/felta/shop/order/'.$oid.'">#'.$oid; ?></a></td>
                 </tr>
                 <tr>
                     <td>Customer:</td>
@@ -42,7 +43,6 @@
                 </tr>
             </table>
             <div class="relative">
-                <?php echo '<a href="/felta/shop/order/'.$oid.'"><button class="add" id="order">Bekijk order</button></a>'; ?>
                 <div>
                     <div class="tabs center">
                         <div class="tab" id="card-tab" column="card">Creditcard</div>
@@ -70,8 +70,9 @@
                             <div class="bank-option" value="van_lanschot"><img src="/felta/images/banks/van_lancshot.jpg"/></div>
                         </div>
                     </section>
-                    <div class="input-group right">
-                        <button id="next">Checkout</button>
+                    <div class="input-group right right-buttons">
+                        <?php echo '<a href="/felta/shop/order/'.$oid.'"><button class="add" id="order">See order</button></a>'; ?>
+                        <button class="highlighted" id="next">Checkout</button>
                     </div>
                 </div>
             </div>
@@ -105,21 +106,18 @@
               },
             };
             var oid = window.location.pathname.split("/").pop();
-            var c = elements.create('card', {style});
-            c.mount('#card-element');
+            var card = elements.create('card', {style});
+            card.mount('#card-element');
 
             $("#next").on("click",function(e){
                 e.preventDefault();
                 var bank = $(".bank-option.selected").attr("value");
-                var currency = "eur";
-                var amount = parseInt($("#amount").html().replace(/\.|\,/g,""));
-
                 switch(active){
                     case "card":
-                        card(oid,c);
+                        card(oid,card);
                     break;
                     case "ideal":
-                        ideal(oid,amount,currency,bank);
+                        ideal(oid,bank);
                     break;
                     case "paypal":
                         paypal(oid);
@@ -131,7 +129,7 @@
         <?php
                 }else if(Shoppingcart::exists($oid)){
                     ?>
-                    <div class="main container no-top settings order">
+                    <div class="window order">
                         <h1>Checkout</h1>
                           <form method="post" id="user" action="/felta/shop/create/order">
                             <div class="input-container">

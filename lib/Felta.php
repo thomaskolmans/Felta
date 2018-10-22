@@ -17,6 +17,9 @@ class Felta{
     public $statistics;
     public $settings;
 
+    public $shop;
+    public $blog;
+
     public static $instance;
 
     public function __construct(SimpleSQL $sql){

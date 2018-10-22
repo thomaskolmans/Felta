@@ -17,6 +17,7 @@ class Shop{
 
     private $paypalKey;
     private $stripeKey;
+    private $stripePublicKey;
 
     private $paypal;
     private $stripe;
@@ -44,6 +45,7 @@ class Shop{
         }
         return null;
     }
+
     public static function create($name,$stripe,$paypal){
         $sql = Felta::getInstance()->getSQL();
         if($sql->exists("shop",[])){
@@ -57,6 +59,7 @@ class Shop{
         }
 
     }
+
     public static function generate($name,$stripe,$paypal){
         $id = UUID::generate(10);
         $shop = new Shop($id,$name,new \DateTime());
@@ -65,6 +68,7 @@ class Shop{
         $shop->save();
         return $shop;
     }
+
     public static function get($name,$stripe,$paypal){
         $result = Felta::getInstance()->getSQL()->select("*","shop",["name" => $name])[0];
         $shop = new Shop($result["id"],$result["name"],$result["created"]);
@@ -72,24 +76,30 @@ class Shop{
         $shop->setPaypalKey($paypal);
         return $shop;
     }
+
     public static function getImage($id){
         return Felta::getInstance()->getSQL()->select("*","shop_item_variant_image",["sid" => $id]);
     }
+
     public static function deleteImage($url){
         $result = Felta::getInstance()->getSQL()->select("*","shop_item_variant_image",["url" => $url])[0];
         $url = $result["url"];
         Felta::getInstance()->getSQL()->delete("shop_item_variant_image",["id" => $result["id"]]);
         unset($url);
     }
+
     public static function getItems(){
         return Felta::getInstance()->getSQL()->select("*", "shop_item",[]);
     }
+
     public static function getItemsByCatagory($catagory){
         return Felta::getInstance()->getSQL()->select("*", "shop_item",["catagory" => $catagory]);
     }
+
     public static function getVariants($sid){
         return Felta::getInstance()->getSQL()->select("*","shop_item_variant",["sid" => $sid]);
     }
+
     public function save(){
         if(!$this->sql->exists("shop",["id" => $this->id])){
             $this->sql->insert("shop",[$this->id,$this->name,$this->created->format("Y-m-d H:i:s")]);
@@ -106,7 +116,8 @@ class Shop{
             $this->sql->delete("shop_catagories",["id" => $catagory]);
         }
     }
-    public function getCatagories(){
+
+    public static function getCatagories(){
         return Felta::getInstance()->getSQL()->select("*","shop_catagories",[]);
     }
 
@@ -121,10 +132,12 @@ class Shop{
             $this->setShopAddress($street,$number,$zipcode,$city,$country);
         }
     }
+
     public function setShopAddress($street,$number,$zipcode,$city,$country){
         $this->sql->insert("shop_address",[$this->id, $street,$number,$zipcode,$city,$country]);
         return $this;
     }
+
     public function getShopAddress(){
         return $this->sql->select("*","shop_address",["id" => $this->id])[0];
     }
@@ -140,10 +153,12 @@ class Shop{
             $this->setSettings($url,$btw,$exclbtw,$shipping,$freeshipping);
         }
     }
+
     public function setSettings($url,$btw,$exclbtw,$shipping,$freeshipping){
         $this->sql->insert("shop_settings",[$this->id,$url,$btw,$exclbtw,$shipping,$freeshipping]);
         return $this;
     }
+
     public function getSettings(){
         return $this->sql->select("*","shop_settings",["id" => $this->id])[0];
     }
@@ -156,10 +171,12 @@ class Shop{
             $this->setShipping($amount,$ipp);
         }
     }
+
     public function setShipping($amount,$ipp){
         $this->sql->insert("shop_shipping",[$this->id,$amount,$ipp]);
         return $this;
     }
+    
     public function getShipping(){
         return $this->sql->select("*","shop_shipping",["id" => $this->id])[0];
     }
@@ -176,21 +193,29 @@ class Shop{
     public static function intToDouble($int){
         $behind = substr($int, (strlen($int)  -2),2);
         $front = substr($int, 0,(strlen($int) -2));
-        return $front."," .$behind;
+        return doubleval($front."." .$behind);
     }
+
     public static function doubleToInt($double){
         return str_replace([",","."], ["",""], $double);
     }
+
     public static function intToDoubleSeperator($int,$seperator){
         $behind = substr($int, (strlen($int)  -2),2);
         $front = substr($int, 0,(strlen($int) -2));
         return $front.$seperator.$behind;
     }
+
     public function getId(){
         return $this->id;
     }
+
     public function getName(){
         return $this->name;
+    }
+
+    public function getStripePublicKey(){
+        return $this->stripePublicKey;
     }
 
     private function createTables(){

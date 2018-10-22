@@ -44,12 +44,15 @@ class Statistics{
             }
         }
     }
+    
     public function getUniqueVisitors(){
         $this->sql->count("visitors_unique");
     }
+
     public function getTotalVisitors(){
         return $this->sql->count("visit_total");
     }
+
     public function createTables(){
         if(!$this->sql->exists("visitors_total",[])){
             $this->sql->create("visitors_total",[

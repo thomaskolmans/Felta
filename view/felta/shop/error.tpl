@@ -1,7 +1,7 @@
 <html>
     <head>
        <title>Felta | Error</title>
-       <link href="/felta/stylesheets/all.css" rel="stylesheet">
+       <link href="/felta/stylesheets/shop.css" rel="stylesheet">
        <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
        <link rel="icon" href="/felta/images/black.png" type="image/png" />
        <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
@@ -12,10 +12,11 @@
        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>        
-        <div class="main container no-top settings">
-            <h1>Something went wrong</h1>
-            <h2>Sorry something has gone wrong, please try again or contact at info@nytrix.net</h2>
-            <a href="/"><button>Home</button>
+        <div class="window">
+            <h1>Something went wrong!</h1>
+            <p>Sorry something has gone wrong, please try again or contact at info@nytrix.net</p>
+            <br><br>
+            <a href="/felta/shop/shoppingcart"><button>Try again</button>
         </div>
     </body>
 </html>

@@ -139,6 +139,7 @@ function editor(id){
     var doc = iframe.contentDocument || iframe.contentWindow.document;
     var lastloc = null;
     var id = null;
+    var previous = null;
     doc.loadScript = loadScript;
     doc.e = e;
     doc.save = save;
@@ -226,10 +227,15 @@ function editor(id){
             break;
             default:
               id = atr.attr("edit");
-              if(atr != ""){
+              var ck = document.getElementById('iframe').contentWindow.CKEDITOR;
+              if(atr != "" && id != previous || ck.instances.length == 0){
+                  for(name in ck.instances){
+                      ck.instances[name].destroy(true);
+                  }
                   atr.attr("contenteditable","true");
                   atr.attr("name",id);
                   atr.attr("id",id);
+                  previous = id;
                   $.ajax({ 
                       url: '/felta/edit/id/'+id+'/lang/'+$("#active_language").val(),
                       type: "GET",
@@ -237,15 +243,20 @@ function editor(id){
                           isLoading = true;
                       },
                       success: function(output) {
-                        document.getElementById('iframe').contentWindow.CKEDITOR.disableAutoInline = true;
-                        var ckeditor = document.getElementById('iframe').contentWindow.CKEDITOR.inline(atr[0]);
+                        var ckeditor = ck.inline(id);
+                        ckeditor.on('change',function(e){
+                          if (e.editor.checkDirty()) {
+                            var language = getLanguage();
+                            save(id,e.editor.getData(),language);
+                          }
+                        });
                         ckeditor.on('blur', function(e){
                           if (e.editor.checkDirty()) {
                             var language = getLanguage();
                             save(id,e.editor.getData(),language);
-                            e.editor.destroy();
+                            e.editor.destroy(true);
                           } else {
-                            e.editor.destroy();
+                            e.editor.destroy(true);
                           }
                         });
                       }
