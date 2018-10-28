@@ -14,23 +14,28 @@ class PostController {
      */
     public static function ADD_NEWS(){
         $news = new News();
-        $news->put($_POST['title'],$_POST['description'],null,new \DateTime($_POST['date']));
+        $news->put(
+            htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'),
+            null,
+            new \DateTime($_POST['date'])
+        );
         echo json_encode(["success" => "News has been succesfully added"]);
     }
 
     public static function UPDATE_NEWS(){
         $news = new News();
         $id = $_POST['id'];
-        $news->update('title',['id' => $id],$_POST['title']);
-        $news->update('description',['id' => $id],$_POST['description']);
+        $news->update('title',['id' => $id], htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'));
+        $news->update('description',['id' => $id], htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'));
         $date = new \DateTime($_POST['date']);
-        $news->update('date',['id' => $id],$date->format("Y-m-d H:i:s"));
+        $news->update('date',['id' => $id], $date->format("Y-m-d H:i:s"));
         echo json_encode(["success" => "News has been succesfully updated"]);
     }
 
     public static function DELETE_NEWS($id){
         $news = new News();
-        $news->delete(["id"=>$id]);
+        $news->delete(["id" => $id]);
         echo json_encode(["success" => "News has been succesfully deleted"]);
     }
 
@@ -40,10 +45,10 @@ class PostController {
     public static function ADD_AGENDA(){
         $agenda = new Agenda();
         $agenda->put(
-            $_POST['title'],
-            $_POST['description'],
+            htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'),
             null,
-            $_POST['location'],
+            htmlspecialchars($_POST["location"], ENT_QUOTES, 'UTF-8'),
             new \DateTime($_POST['from']),
             new \DateTime($_POST['until'])
         );
@@ -53,9 +58,9 @@ class PostController {
     public static function UPDATE_AGENDA(){
         $agenda = new Agenda();
         $id = $_POST['id'];
-        $agenda->update('title',['id' => $id],$_POST['title']);
-        $agenda->update('description',['id' => $id],$_POST['description']);
-        $agenda->update('location',['id' => $id],$_POST['location']);
+        $agenda->update('title',['id' => $id],htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'));
+        $agenda->update('description',['id' => $id], htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'));
+        $agenda->update('location',['id' => $id], htmlspecialchars($_POST["location"], ENT_QUOTES, 'UTF-8'));
         $from = new \DateTime($_POST['from']);
         $until = new \DateTime($_POST['until']);
         $agenda->update('from',['id' => $id],$from->format("Y-m-d H:i:s"));

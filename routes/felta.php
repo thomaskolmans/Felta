@@ -72,11 +72,11 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         /**
          * Edit
          */
-        Route::get("/edit/id/{id}/lang/{language}",function($id,$language){ PostController::GET_TEXT($id,$language); });
         Route::delete("/language/{language}",function($language){ POST_CONTROLLER::DELETE_LANGUAGE($language); });
+        Route::get("/edit/id/{id}/lang/{language}",function($id,$language){ PostController::GET_TEXT($id,$language); });
+        Route::get("/edit/history/{id}", function($id){ /*  Has to implemented */ });
         Route::post("/edit",function(){ PostController::SET_TEKST(); });
         Route::post("/edit/image",function(){ PostController::SET_IMAGE(); });
-        Route::get("/edit/history/{id}", function($id){ /*  Has to implemented */ });
 
         /**
          * Statistics
@@ -84,8 +84,8 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         Route::group(["namespace" => "/statistics"],function(){
             Route::get("/","felta/statistics.tpl");
             Route::get("/unique",function() { echo json_encode(Felta::getInstance()->getSQL()->execute("select count(*) from visitors_unique")); });
-            Route::get("/unique/today",function(){ echo json_encode(Felta::getInstance()->getSQL()->execute("SELECT date,count(*) FROM visitors_unique WHERE date >= NOW() - INTERVAL 1 DAY GROUP BY hour( date ) , day( date ) ORDER BY date")); });
             Route::get("/total",function() { echo json_encode(Felta::getInstance()->getSQL()->execute("select count(*) from visitors_total")); });
+            Route::get("/unique/today",function(){ echo json_encode(Felta::getInstance()->getSQL()->execute("SELECT date,count(*) FROM visitors_unique WHERE date >= NOW() - INTERVAL 1 DAY GROUP BY hour( date ) , day( date ) ORDER BY date")); });
             Route::get("/total/today",function(){ echo json_encode(Felta::getInstance()->getSQL()->execute("SELECT date,count(*) FROM visitors_total WHERE date >= NOW() - INTERVAL 1 DAY GROUP BY hour( date ) , day( date ) ORDER BY date")); });  
         });
 
@@ -146,13 +146,10 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         /**
          * Login, register and recover
          */
+        Route::get("/user/verify/{key}",function($key){ UserController::VERIFY_EMAIL($key); });
+
         Route::post("/login",function(){ UserController::LOGIN(); });
-        Route::post("/register", function(){ userController::REGISTER(); });
-        Route::get("/user/verify/{key}",function($key) use ($felta){
-            $user = $felta->user;
-            $user->verifyVerification($key);
-            header("Location: /felta");
-        });
+        Route::post("/register", function(){ UserController::REGISTER(); });
     }
 
     Route::group(["namespace" => "/shop"],function(){
@@ -187,14 +184,14 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         /**
          * Wishlist
          */
-        Route::get("/create/shoppingcart", function(){ ShopController::CREATE_WISHLIST(); });
-        Route::post("/add/shoppingcart", function(){ ShopController::ADD_ITEM_WISHLIST(); });
-        Route::post("/update/shoppingcart", function(){ ShopController::UPDATE_ITEM_WISHLIST(); });
-        Route::post("/delete/shoppingcart", function(){ ShopController::DELETE_ITEM_WISHLIST(); });
-
-
+        Route::get("/create/wishlist", function(){ ShopController::CREATE_WISHLIST(); });
+        Route::post("/add/wishlist", function(){ ShopController::ADD_ITEM_WISHLIST(); });
+        Route::post("/update/wishlist", function(){ ShopController::UPDATE_ITEM_WISHLIST(); });
+        Route::post("/delete/wishlist", function(){ ShopController::DELETE_ITEM_WISHLIST(); });
         
-        /* Default UI for website flow */
+        /**
+         *  Default UI for website flow 
+         */
         Route::get(["/pay/{oid}","/checkout/{oid}"],"felta/shop/pay.tpl");
         Route::get("/thankyou/{oid}","felta/shop/thankyou.tpl");
         Route::get("/error","felta/shop/error.tpl");

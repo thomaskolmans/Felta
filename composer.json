@@ -1,0 +1,6 @@
+{
+    "require": {
+        "nytrix/SimpleSQL": "dev-master",
+        "nytrix/Cleverload": "dev-master"
+    }
+}
