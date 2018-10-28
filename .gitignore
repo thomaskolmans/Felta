@@ -48,3 +48,5 @@ Temporary Items
 
 data
 .sass-cache
+vendor
+composer.lock

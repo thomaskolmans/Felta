@@ -27,7 +27,7 @@ class User extends Felta{
     public $session;
     public $fb;
 
-    public function __construct($sql,$verify_needed = true,$table = null){
+    public function __construct($sql, $verify_needed = true, $table = null){
         $this->sql = $sql;
         $this->createTables();
         $this->verify_needed = $verify_needed;
@@ -41,6 +41,7 @@ class User extends Felta{
         }
         $this->admin();
     }
+
     public function admin(){
         if($this->sql->count($this->table,[]) <= 0){
             $email = \lib\Felta::getConfig("email");
@@ -49,12 +50,14 @@ class User extends Felta{
             return $this;
         }
     }
+
     public function exists($username,$email){
         if($this->usernameExists($username) && $this->emailExists($email)){
             return true;
         }
         return false;
     }
+
     public function create($username,$dname,$password,$email,$active = false){
         $sql = $this->sql;
         if(!$this->exists($username,$email)){
@@ -67,6 +70,7 @@ class User extends Felta{
         }
         return false;
     }
+
     public function createWithPassword($username,$email){
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!';
         $pass = array();
@@ -83,6 +87,7 @@ class User extends Felta{
         }
         return false;
     }
+
     public function forgot($input,$time = 1800000){
         if($this->isEmail($input)){
             $id = $this->sql->select("id",$this->table,array("email" => $input));

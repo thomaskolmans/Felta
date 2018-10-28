@@ -269,7 +269,7 @@ class ShopController {
         $orderid = $_POST["oid"];
         $order = Order::get($orderid);
         $amount = $order->getTotalAmount();
-        $method = $_POST["method"];
+        $method = htmlspecialchars($_POST["method"], ENT_QUOTES, 'UTF-8');
         $currency = "eur";
         $payment = new Payment($orderid,$source,$method,$amount,$currency,"");
         $payment->pay();
