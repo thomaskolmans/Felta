@@ -6,11 +6,10 @@ use lib\Http\Request;
 use lib\Routing\Router;
 use lib\Shop\Shop;
 
-require_once("autoloader.php");
-require_once("lib/Cleverload/autoloader.php");
-require_once("lib/SimpleSQL/autoloader.php");
-require_once('lib/Shop/stripe/init.php');
-require_once('lib/Shop/paypal/autoload.php');
+require_once("./autoloader.php");
+require_once('./vendor/nytrix/cleverload/autoloader.php');
+require_once('./vendor/nytrix/simplesql/autoloader.php');
+require_once('./vendor/autoload.php');
 
 $sql = new SimpleSQL();
 $felta = new Felta($sql);
