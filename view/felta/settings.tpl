@@ -34,7 +34,7 @@
             $("#user-add").on("submit",function(e){
                 e.preventDefault();
                 $.ajax({
-                  url: "/Felta/settings",
+                  url: "/felta/settings",
                   type: "POST",
                   data: {'addition': "true", 'username': $("#user-username").val(), 'email': $("#user-email").val()},
                   success: function(data){
@@ -46,7 +46,7 @@
             $("#changepassword").on("submit",function(e){
                 e.preventDefault();
                 $.ajax({
-                  url: "/Felta/settings",
+                  url: "/felta/settings",
                   type: "POST",
                   data: {'changepassword': "true", 'old_password': $("#old_password").val(), 'new_password': $("#new_password").val(),'repeat_new_password':$('#repeat_new_password').val()},
                   success: function(data){
@@ -59,7 +59,7 @@
               e.preventDefault();
               var id = $(this).attr('user-id');
               $.ajax({
-                url: "/Felta/settings/delete/user",
+                url: "/felta/settings/delete/user",
                 type: "POST",
                 data: {id: id}
               });
@@ -68,7 +68,7 @@
             $("#general").on("submit",function(e){
               e.preventDefault();
               $.ajax({
-                url: "/Felta/settings",
+                url: "/felta/settings",
                 type: "POST",
                 data: {'general': 'true','website_url': $("#website_url").val(),'website_name': $("#website_name").val(),'default_dir': $("#default_dir").val()}
               });

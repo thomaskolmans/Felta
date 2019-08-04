@@ -101,6 +101,7 @@ class User extends Felta{
             $email = new Email();
             $email->html(true);
             $email->setTo($adress);
+            $email->setFrom(Felta::getConfig("smtp")['username']);
             $email->setSubject("Account recovery");
             $email->setMessage(str_replace("{url}", $url, $email->load("emails/forgot.html")));
             $email->send();
@@ -117,6 +118,7 @@ class User extends Felta{
             $this->sql->insert($this->table."_forgot",[$id,$key,$now,$until]);
         }
     }
+
     public function verifyForgot($key){
         $now = new \DateTime();
         if($this->sql->exists($this->table."_forgot",["key" => $key])){
@@ -127,6 +129,7 @@ class User extends Felta{
         }
         return false;
     }
+
     public function delete($id = null){
         if($id === null)
             $this->id = $id;
@@ -135,6 +138,7 @@ class User extends Felta{
         $this->sql->delete($this->table."_verification",array("id" => $id));
         return $this;
     }
+
     public function login($input,$password,$remember = false){
         $this->password = $password;
         if($this->isEmail($input)){
@@ -182,21 +186,25 @@ class User extends Felta{
         }
         return $this;
     }
+
     public function logout(){
         $this->sql->delete($this->table."_remember",array("id" => $_SESSION["user"][0]));
         unset($_SESSION["user"]);
         setcookie("session_key","",time() - 10,"/");
         return $this;
     }
+
     public function sendVerification($time = null,$adress,$id,$password){
         if(!$this->sql->exists($this->table."_verification", ["id" => $id])){
             $verifycode = $this->uuid();
             $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/felta/user/verify/".$verifycode;
             $username = $this->sql->select("username",$this->table,["id" => $id]);
+
             $email = new Email();
             $email->html(true);
             $email->setTo($adress);
-            $email->setSubject("Welcome, your website is ready.");
+            $email->setFrom(Felta::getConfig("smtp")['username']);
+            $email->setSubject("Your ".Felta::getConfig("website_name"). " account");
             $email->setMessage(str_replace(["{url}","{password}","{username}"], [$url,$password,$username], $email->load("emails/welcome.html")));
             $email->send();
 
@@ -339,25 +347,25 @@ class User extends Felta{
                 "email" => "varchar(255)",
                 "online" => "boolean",
                 "active" => "boolean"
-                ),"id");
+            ),"id");
             $this->sql->create($this->table."_remember",array(
                 "id" => "int",
                 "key" => "varchar(255)",
                 "start" => "DateTime",
                 "expire" => "DateTime"
-                ),"id");
+            ),"id");
             $this->sql->create($this->table."_history",[
                 "id" => "int",
                 "uuid" => "int",
                 "from" => "DateTime",
                 "until" => "DateTime"
-                ],"id");
+            ],"id");
             $this->sql->create($this->table."_statistics",[
                 "id" => "int",
                 "sign_date" => "DateTime",
                 "sign_place" => "varchar(100)",
                 "sign_ip" => "varchar(50)"
-                ],"id");
+            ],"id");
             $this->sql->create($this->table."_permission",[
                 "id" => "int",
                 "permission" => "int"

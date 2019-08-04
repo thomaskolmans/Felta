@@ -442,7 +442,7 @@
                     $language = $_POST["language"];
                     $lang->createTable();
                     $lang->add($language);
-                    header("Location: /Felta/dashboard");
+                    header("Location: /felta/dashboard");
                }
              ?>
                     </form>

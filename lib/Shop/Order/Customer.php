@@ -1,5 +1,5 @@
 <?php
-namespace lib\Shop;
+namespace lib\Shop\Order;
 
 use lib\Felta;
 use lib\Helpers\UUID;
@@ -10,6 +10,7 @@ class Customer{
 
     public $id;
 
+    public $email;
     public $firstname;
     public $lastname;
 
@@ -19,7 +20,6 @@ class Customer{
     public $bName;
     public $account = false;
 
-    public $email;
     private $password;
     private $created;
 

@@ -1,13 +1,13 @@
 </html>
 <head>
    <title>Felta | Update Item</title>
-   <link href="/Felta/stylesheets/all.css" rel="stylesheet">
-   <link href="/Felta/js/croppie/croppie.css" rel="stylesheet">
-   <link href="/Felta/js/quill/quill.snow.css" rel="stylesheet">
-   <link rel="stylesheet" type="text/css" href="/Felta/js/datepicker/jquery.datetimepicker.css">
-   <link rel="icon" href="/Felta/images/black.png" type="image/png" />
-   <link rel="stylesheet" href="/Felta/fonts/font-awesome.min.css" />
-   <link rel="stylesheet" href="/Felta/fonts/font-awesome.css" />
+   <link href="/felta/stylesheets/all.css" rel="stylesheet">
+   <link href="/felta/js/croppie/croppie.css" rel="stylesheet">
+   <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/felta/js/datepicker/jquery.datetimepicker.css">
+   <link rel="icon" href="/felta/images/black.png" type="image/png" />
+   <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
+   <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
    <script src="/felta/js/jquery-1.11.3.min.js"></script>
    <script src="/felta/js/croppie/croppie.min.js" type="text/javascript"></script>
    <meta name="viewport" content="width=device-width, initial-scale=1">

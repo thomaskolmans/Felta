@@ -7,7 +7,7 @@ use lib\User\User;
 use lib\Post\Statistics;
 use lib\Post\Settings;
 
-class Felta{
+class Felta {
     
     public $sql;
     public $user;
@@ -26,12 +26,15 @@ class Felta{
         $this->sql = $sql;
         $this->user = new User($sql);
         self::$instance = $this;
-        $this->update = new Update("http://github.com/thomaskolmans/Kolmans");
         $this->statistics = new Statistics();
         $this->settings = new Settings();
         $this->createTables();
     }
     public static function getConfig($item, $key = false){
+        $sqlResult = Felta::getInstance()->getSQL()->select("value", "settings", ["name" => $item]);
+        if ($sqlResult) {
+            return $sqlResult;
+        }
         $config = include(__DIR__."/../config.php");  
         foreach($config as $keys => $value){
             if($keys == $item){

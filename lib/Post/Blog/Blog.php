@@ -38,6 +38,11 @@ class Blog{
                 "comment" => "longtext",
                 "posted" => "DateTime"
             ], "id");
+            $this->sql->create("blog_like", [
+                "id" => "int auto_increment",
+                "article_id" => "int",
+                "user_id" => "int"
+            ]);
         }
     }  
 }

@@ -3,7 +3,7 @@ namespace lib\Template;
 
 use lib\Post\Edit;
 use lib\Helpers\Language;
-use lib\Database\SQL;
+use lib\database\SQL;
 use \DateTime;
 use lib\Felta;
 

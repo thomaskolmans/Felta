@@ -14,6 +14,7 @@ class ShopItemVariant{
 
     private $price;
     private $currency;
+    private $shipsFrom;
 
     private $images = [];
 

@@ -22,7 +22,7 @@
                <label class="remember" for="remember" >Remember me</label>
                <input class="remember" type="checkbox" id="remember" name="remember">
             </div>
-             <a href="/Felta/forgot">Forgot your password?</a>
+             <a href="/felta/forgot">Forgot your password?</a>
              <input type="submit" name="login" value="login">
         </form>
     </body>

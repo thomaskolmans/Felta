@@ -1,27 +1,27 @@
 <?php
-namespace lib\Shop;
+namespace lib\Shop\Order;
 
 use lib\Felta;
 use lib\Post\Message;
 use lib\Helpers\UUID;
 
-class Order{
+class Order {
 
     private $sql;
 
     public $id;
     public $customer;
-    public $orderstatus;
+    public $orderStatus;
     public $promotion;
     public $date;
 
     private $shopitems = [];
     
-    public function __construct($id,$customer,$orderstatus,$promotion,$date,$shopitems){
+    public function __construct($id,$customer,$orderStatus,$promotion,$date,$shopitems){
         $this->sql = Felta::getInstance()->getSQL();
         $this->id = $id;
         $this->customer = $customer;
-        $this->orderstatus = $orderstatus;
+        $this->orderStatus = $orderStatus;
         $this->shopitems = $shopitems;
         $this->promotion = $promotion;
         $this->date = $date;
@@ -37,7 +37,7 @@ class Order{
         return new Order(
             $id,
             $sorder["customer"],
-            $sorder["orderstatus"],
+            $sorder["orderStatus"],
             null,
             new \DateTime($sorder["order"]),
             $shopitems
@@ -50,24 +50,24 @@ class Order{
 
     public static function createFromShoppingcart($cart,$customer){
         $items = $cart->pull()->getItems();
-        return Order::create($customer,OrderStatus::ACTIVE,null,$items);
+        return Order::create($customer,orderStatus::ACTIVE,null,$items);
     }
 
-    public static function create($customer,$orderstatus,$promotion,$shopitems){
+    public static function create($customer,$orderStatus,$promotion,$shopitems){
         $id = UUID::generate(8);
         $date = new \DateTime();
-        return new Order($id,$customer,$orderstatus,$promotion,$date,$shopitems);
+        return new Order($id,$customer,$orderStatus,$promotion,$date,$shopitems);
     }
 
     public static function getLatest($from,$until){
-        return array_slice(Felta::getInstance()->getSQL()->query()->select()->from("shop_order")->where(["orderstatus" => 1])->orderBy("order")->desc()->limit($until)->execute(),$from);
+        return Felta::getInstance()->getSQL()->query()->select()->from("shop_order")->where("orderStatus", 1)->orderBy("order")->desc()->limit($from, $until)->execute();
     }
 
     public function save(){
         $this->sql->insert("shop_order",[
             $this->id,
             $this->customer,
-            $this->orderstatus,
+            $this->orderStatus,
             $this->promotion,
             $this->date->format("Y-m-d H:i:s")
         ]);
@@ -86,13 +86,13 @@ class Order{
         $message = new Message();
         $url = Felta::getInstance()->settings->get("website_url")."/felta/shop/order/".$this->id;
         $message->put("You've recieved a new order", "Yes! You've recieved a new order from your webshop. It has been succesfully paid.", $url);
-        $this->orderstatus = OrderStatus::PAID;
+        $this->orderStatus = orderStatus::PAID;
         $this->update();
     }
 
     public function update(){
         $this->sql->update("customer","shop_order",["id" => $this->id],$this->customer);
-        $this->sql->update("orderstatus","shop_order",["id" => $this->id],$this->orderstatus);
+        $this->sql->update("orderStatus","shop_order",["id" => $this->id],$this->orderStatus);
         $this->sql->update("promotion","shop_order",["id" => $this->id],$this->promotion);
         $this->sql->update("order","shop_order",["id" => $this->id],$this->date->format("Y-m-d H:i:s"));
     }
@@ -166,10 +166,10 @@ class Order{
 
     public function toSource($method,$currency,$return_url,$other = array()){
         $default = array(
-        'type' => $method,
-        'amount' => $this->getTotalAmount(),
-        'currency' => $currency,
-        'redirect' => array('return_url' => $return_url),
+            'type' => $method,
+            'amount' => $this->getTotalAmount(),
+            'currency' => $currency,
+            'redirect' => array('return_url' => $return_url)
         );
         $total = array_merge($default,$other);
         $source = \Stripe\Source::create($total);
@@ -245,11 +245,11 @@ class Order{
         $this->customer = $customer;
         return $this;
     }
-    public function getOrderstatus(){
-        return $this->orderstatus;
+    public function getorderStatus(){
+        return $this->orderStatus;
     }
-    public function setOrderstatus($orderstatus){
-        $this->orderstatus = $orderstatus;
+    public function setorderStatus($orderStatus){
+        $this->orderStatus = $orderStatus;
         return $this;
     }
     public function addItem(array $item){

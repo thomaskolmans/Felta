@@ -163,7 +163,7 @@ section
     margin-left: 200px
     font:
       size: 14px
-      weight: 900
+      weight: bold
       family: $font
     border-radius: 50px
     +transition($s)
@@ -302,7 +302,7 @@ section
 em,i,cite
   font-style: italic
 strong,b
-  font-weight: 900
+  font-weight: bold
 .relative
   position: relative
 .switch
@@ -363,15 +363,6 @@ strong,b
     transition: .4s
     border-radius: 50%
 
-input[type="checkbox"].switcher
-  &:checked + .slider
-    background-color: green
-  &:focus + .slider
-    box-shadow: 0 0 1px green
-  &:checked + .slider:before
-    -webkit-transform: translateX(26px)
-    -ms-transform: translateX(26px)
-    transform: translateX(26px)
 @media only screen and ( max-width: 760px )
   .left
     box-shadow: none

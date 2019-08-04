@@ -18,7 +18,7 @@ $(document).ready(function(){
     var domain = getDomain();
     document.domain = domain;
     $iframe = $("#iframe");
-    $iframe.attr('src',document.location.protocol+'//' + domain);
+    $iframe.attr('src', document.location.protocol+'//' + domain);
     $iframe.on("load",function(){
         editor();
         var iframe = document.getElementById("iframe");
@@ -182,12 +182,13 @@ function editor(id){
               atr = $(e.target);
           }else if ($(e.target).parents("[edit]").length){
               atr = $(e.target).parents("[edit]");
+          } else {
+            return;
           }
+
           www = $(e.target).width();
           hhh = $(e.target).height();
-          if(atr[0]["tagName"] === null){
-              return;
-          }
+
           switch(atr[0]["tagName"]){
             case "IMG":
               openImageEditor();
@@ -245,19 +246,13 @@ function editor(id){
                       success: function(output) {
                         var ckeditor = ck.inline(id);
                         ckeditor.on('change',function(e){
-                          if (e.editor.checkDirty()) {
-                            var language = getLanguage();
-                            save(id,e.editor.getData(),language);
-                          }
+                          var language = getLanguage();
+                          save(id,e.editor.getData(),language);
                         });
                         ckeditor.on('blur', function(e){
-                          if (e.editor.checkDirty()) {
-                            var language = getLanguage();
-                            save(id,e.editor.getData(),language);
-                            e.editor.destroy(true);
-                          } else {
-                            e.editor.destroy(true);
-                          }
+                          var language = getLanguage();
+                          save(id,e.editor.getData(),language);
+                          e.editor.destroy(true);
                         });
                       }
                   });
@@ -273,6 +268,7 @@ function editor(id){
     }
   
 }
+
 function image(input,width,height, id){
     var result = "";
     $image = $(".imageid");
@@ -318,18 +314,6 @@ function destroy(img){
     document.getElementsByClassName("select-image")[0].reset();
     JcropAPI = $image.data('Jcrop');
     JcropAPI.destroy();
-}
-
-function getDomain(){
-    if(document.domain.length){
-        var parts = document.domain.replace(/^(www\.)/,"").split('.');
-        while(parts.length > 2){
-            var subdomain = parts.shift();
-        }
-        var domain = parts.join('.');
-        return domain.replace(/(^\.*)|(\.*$)/g, "");
-    }
-    return '';
 }
 
 function save(id,text,language){

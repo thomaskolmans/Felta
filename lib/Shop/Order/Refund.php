@@ -1,7 +1,7 @@
 <?php
 
-namespace lib\Shop;
+namespace lib\Shop\Order;
 
-class Refund{
+class Refund {
     
 }

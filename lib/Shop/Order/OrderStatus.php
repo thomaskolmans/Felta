@@ -1,5 +1,5 @@
 <?php
-namespace lib\Shop;
+namespace lib\Shop\Order;
 
 abstract class OrderStatus{
 
