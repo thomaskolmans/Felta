@@ -1,4 +1,8 @@
+Options +FollowSymLinks -Indexes
 RewriteEngine On
+
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 RewriteCond %{DOCUMENT_ROOT}/view/%{REQUEST_URI} -f
 RewriteRule (.*) /view/$1 [R=301,L]

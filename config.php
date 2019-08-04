@@ -11,14 +11,18 @@ return array(
     "website_name" => "test",
 
     "default_dir" => "/data//",
-    /*
-        default user
-     */
+
+    //Default user
     "username" => "admin",
-    "email" => "thomas@nytrix.net",
+    "email" => "thomaskolmans@gmail.com",
     
+    // Shop keys
+    "stripe" => "",
+    "paypal" => "",
+    "mollie" => "",
+
     "primary" => [ 
-        "host"          => "localhost",
+        "host"          => "127.0.0.1",
         "databasename"  => "test",
         "username"      => "root",
         "password"      => ""
