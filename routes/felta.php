@@ -16,7 +16,7 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
     if($felta->user->hasSession()){
         
         /* Views */
-        Route::any("/dashboard","felta/dashboard.tpl")->primary();
+        Route::any("/","felta/dashboard.tpl")->primary();
         Route::get("/editor","felta/editor.tpl");
         Route::get("/social","felta/social.tpl");
         Route::get("/settings","felta/settings.tpl");
@@ -139,7 +139,7 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         /**
          * Views
          */
-        Route::get("/login","felta/login.tpl")->primary();
+        Route::get("/","felta/login.tpl")->primary();
         Route::any("/forgot","felta/reset.tpl");
         Route::get("/forgot/code/{code}","felta/reset.tpl");
 

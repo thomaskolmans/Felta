@@ -1,141 +1,54 @@
 @charset "UTF-8";
-/* line 5, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-
-/* line 22, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-html {
-  line-height: 1;
-}
-
-/* line 24, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-
-/* line 26, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-/* line 32, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
-}
-
-/* line 116, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-  display: block;
-}
-
 @font-face {
   font-family: FontAwesome;
-  src: url(../fonts/FontAwesome.otf);
-}
+  src: url(../fonts/FontAwesome.otf); }
 @-webkit-keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    transform: rotate(0deg); }
   100% {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+    transform: rotate(360deg); } }
 @-moz-keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    transform: rotate(0deg); }
   100% {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+    transform: rotate(360deg); } }
 @-o-keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    transform: rotate(0deg); }
   100% {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+    transform: rotate(360deg); } }
 @keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    transform: rotate(0deg); }
   100% {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-/* line 4, ../sass/base/_base.sass */
+    transform: rotate(360deg); } }
 body {
   background: #f1f1f1;
-  text-align: center;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  overflow-x: none;
-}
+  overflow-x: none; }
 
-/* line 9, ../sass/base/_base.sass */
+* {
+  box-sizing: border-box; }
+
 hr {
-  margin: 0;
-}
+  margin: 0; }
 
-/* line 13, ../sass/base/_base.sass */
 h1.align-left, h2.align-left, h3.align-left, h4.align-left, h5.align-left, h6.align-left {
-  text-align: left !important;
-}
-/* line 15, ../sass/base/_base.sass */
+  text-align: left !important; }
 h1.align-center, h2.align-center, h3.align-center, h4.align-center, h5.align-center, h6.align-center {
-  text-align: center !important;
-}
+  text-align: center !important; }
 
-/* line 19, ../sass/base/_base.sass */
 section.hidden {
-  display: none;
-}
+  display: none; }
 
-/* line 21, ../sass/base/_base.sass */
 .spinner {
   font-size: 10px;
   margin: 100px auto;
@@ -156,35 +69,29 @@ section.hidden {
   animation: load3 1.4s infinite linear;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
-  transform: translateZ(0);
-}
-/* line 39, ../sass/base/_base.sass */
-.spinner:before {
-  width: 50%;
-  height: 50%;
-  background: #000c0c;
-  border-radius: 100% 0 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-}
-/* line 48, ../sass/base/_base.sass */
-.spinner:after {
-  background: #f1f1f1;
-  width: 75%;
-  height: 75%;
-  border-radius: 50%;
-  content: "";
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
+  transform: translateZ(0); }
+  .spinner:before {
+    width: 50%;
+    height: 50%;
+    background: #000c0c;
+    border-radius: 100% 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: ""; }
+  .spinner:after {
+    background: #f1f1f1;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    content: "";
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; }
 
-/* line 61, ../sass/base/_base.sass */
 .top {
   width: 100%;
   height: 45px;
@@ -193,160 +100,120 @@ section.hidden {
   position: fixed;
   z-index: 1000;
   top: 0;
-  left: 0;
-}
-/* line 70, ../sass/base/_base.sass */
-.top .listbutton {
-  float: left;
-  width: 34px;
-  height: 34px;
-  line-height: 34px;
-  margin-top: 7.5px;
-  display: none;
-  color: #f1f1f1;
-  position: relative;
-  margin-left: 15px;
-}
-/* line 80, ../sass/base/_base.sass */
-.top .listbutton:hover {
-  cursor: pointer;
-}
-/* line 82, ../sass/base/_base.sass */
-.top .listbutton:hover::before {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  color: #2196F3;
-}
-/* line 85, ../sass/base/_base.sass */
-.top .listbutton::before {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  position: absolute;
-  left: 0;
-  color: #f1f1f1;
-  content: "";
-  font-family: "FontAwesome";
-  font-size: 25px;
-}
-/* line 94, ../sass/base/_base.sass */
-.top .account {
-  width: auto;
-  min-width: 250px;
-  float: right;
-  height: 45px;
-  color: #f1f1f1;
-  text-align: center;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 102, ../sass/base/_base.sass */
-.top .account:hover {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  cursor: pointer;
-  color: #2196F3;
-  background: #151e23;
-}
-/* line 107, ../sass/base/_base.sass */
-.top .account:hover menu::before {
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 110, ../sass/base/_base.sass */
-.top .account:hover menu li {
-  display: block;
-}
-/* line 112, ../sass/base/_base.sass */
-.top .account .name {
-  line-height: 45px;
-  margin-right: 40px;
-  margin-left: 40px;
-  position: relative;
-}
-/* line 117, ../sass/base/_base.sass */
-.top .account menu {
-  width: 100%;
-  display: inline-block;
-}
-/* line 120, ../sass/base/_base.sass */
-.top .account menu:hover {
-  cursor: pointer;
-}
-/* line 122, ../sass/base/_base.sass */
-.top .account menu::before {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  height: 45px;
-  line-height: 40px;
-  top: 0;
-  color: #f1f1f1;
-  position: absolute;
-  right: 20px;
-  z-index: 20;
-  content: "";
-  font-family: "FontAwesome";
-  font-size: 20px;
-}
-/* line 135, ../sass/base/_base.sass */
-.top .account menu a {
-  text-decoration: none;
-}
-/* line 137, ../sass/base/_base.sass */
-.top .account menu li {
-  list-style: none;
-  display: none;
-  background: #000c0c;
-  color: #f1f1f1;
-  text-decoration: none;
-  height: 35px;
-  padding: 0 40px;
-  line-height: 35px;
-  position: relative;
-  text-align: center;
-}
-/* line 148, ../sass/base/_base.sass */
-.top .account menu li i {
-  float: left;
-  line-height: 38px;
-  position: absolute;
-  left: 35px;
-}
-/* line 153, ../sass/base/_base.sass */
-.top .account menu li:hover {
-  color: #2196F3;
-}
-/* line 155, ../sass/base/_base.sass */
-.top button {
-  border: 2px solid #f1f1f1;
-  background: #f1f1f1;
-  color: #000c0c;
-  height: 28px;
-  padding: 0 15px;
-  margin-top: 8px;
-  float: left;
-  margin-left: 200px;
-  font-size: 14px;
-  font-weight: bold;
-  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  border-radius: 50px;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 170, ../sass/base/_base.sass */
-.top button:hover {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  background: none;
-  color: #f1f1f1;
-  cursor: pointer;
-}
-/* line 175, ../sass/base/_base.sass */
-.top button:active, .top button:focus {
-  outline: none;
-}
+  left: 0; }
+  .top .listbutton {
+    float: left;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    margin-top: 7.5px;
+    display: none;
+    color: #f1f1f1;
+    position: relative;
+    margin-left: 15px; }
+    .top .listbutton:hover {
+      cursor: pointer; }
+      .top .listbutton:hover::before {
+        transition: 0.3s;
+        -webkit-transition: 0.3s;
+        color: #2196F3; }
+    .top .listbutton::before {
+      transition: 0.3s;
+      -webkit-transition: 0.3s;
+      position: absolute;
+      left: 0;
+      color: #f1f1f1;
+      content: "";
+      font-family: "FontAwesome";
+      font-size: 25px; }
+  .top .account {
+    width: auto;
+    min-width: 250px;
+    float: right;
+    height: 45px;
+    color: #f1f1f1;
+    text-align: center;
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+    .top .account:hover {
+      transition: 0.3s;
+      -webkit-transition: 0.3s;
+      cursor: pointer;
+      color: #2196F3;
+      background: #151e23; }
+      .top .account:hover menu::before {
+        color: #2196F3;
+        transition: 0.3s;
+        -webkit-transition: 0.3s; }
+      .top .account:hover menu li {
+        display: block; }
+    .top .account .name {
+      line-height: 45px;
+      margin-right: 40px;
+      margin-left: 40px;
+      position: relative; }
+    .top .account menu {
+      width: 100%;
+      display: inline-block; }
+      .top .account menu:hover {
+        cursor: pointer; }
+      .top .account menu::before {
+        transition: 0.3s;
+        -webkit-transition: 0.3s;
+        height: 45px;
+        line-height: 40px;
+        top: 0;
+        color: #f1f1f1;
+        position: absolute;
+        right: 20px;
+        z-index: 20;
+        content: "";
+        font-family: "FontAwesome";
+        font-size: 20px; }
+      .top .account menu a {
+        text-decoration: none; }
+      .top .account menu li {
+        list-style: none;
+        display: none;
+        background: #000c0c;
+        color: #f1f1f1;
+        text-decoration: none;
+        height: 35px;
+        padding: 0 40px;
+        line-height: 35px;
+        position: relative;
+        text-align: center; }
+        .top .account menu li i {
+          float: left;
+          line-height: 38px;
+          position: absolute;
+          left: 35px; }
+        .top .account menu li:hover {
+          color: #2196F3; }
+  .top button {
+    border: 2px solid #f1f1f1;
+    background: #f1f1f1;
+    color: #000c0c;
+    height: 28px;
+    padding: 0 15px;
+    margin-top: 8px;
+    float: left;
+    margin-left: 200px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+    border-radius: 50px;
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+    .top button:hover {
+      transition: 0.3s;
+      -webkit-transition: 0.3s;
+      background: none;
+      color: #f1f1f1;
+      cursor: pointer; }
+    .top button:active, .top button:focus {
+      outline: none; }
 
-/* line 177, ../sass/base/_base.sass */
 .select-box {
   max-width: 100%;
   position: relative;
@@ -354,71 +221,53 @@ section.hidden {
   vertical-align: bottom;
   font-size: 1em;
   margin-top: 0.3em;
-  background: #f1f1f1;
-}
-/* line 186, ../sass/base/_base.sass */
-.select-box.dark select {
-  background-color: #000c0c;
-  color: #f1f1f1;
-}
-/* line 189, ../sass/base/_base.sass */
-.select-box select {
-  max-width: 100%;
-  background-color: #f1f1f1;
-  color: #000c0c;
-  font-size: inherit;
-  padding: 0.33em;
-  padding-right: 2.5em;
-  border: 0;
-  margin: 0;
-  text-indent: 0.01px;
-  text-overflow: "";
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-}
-/* line 203, ../sass/base/_base.sass */
-.select-box select::-ms-expand {
-  display: none;
-}
-/* line 205, ../sass/base/_base.sass */
-.select-box select:active, .select-box select:focus {
-  outline: none;
-}
-/* line 207, ../sass/base/_base.sass */
-.select-box::before {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-/* line 211, ../sass/base/_base.sass */
-.select-box::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  content: "▼";
-  color: #2196F3;
-  height: 1em;
-  font-size: 0.625em;
-  line-height: 1;
-  right: 1.2em;
-  top: 50%;
-  margin-top: -0.5em;
-}
-/* line 223, ../sass/base/_base.sass */
-.select-box::before {
-  width: 2em;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: #000c0c;
-}
-/* line 229, ../sass/base/_base.sass */
-.select-box select[disabled] {
-  color: rgba(0, 0, 0, 0.25);
-}
+  background: #f1f1f1; }
+  .select-box.dark select {
+    background-color: #000c0c;
+    color: #f1f1f1; }
+  .select-box select {
+    max-width: 100%;
+    background-color: #f1f1f1;
+    color: #000c0c;
+    font-size: inherit;
+    padding: 0.33em;
+    padding-right: 2.5em;
+    border: 0;
+    margin: 0;
+    text-indent: 0.01px;
+    text-overflow: "";
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none; }
+    .select-box select::-ms-expand {
+      display: none; }
+    .select-box select:active, .select-box select:focus {
+      outline: none; }
+  .select-box::before {
+    content: "";
+    position: absolute;
+    pointer-events: none; }
+  .select-box::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    content: "▼";
+    color: #2196F3;
+    height: 1em;
+    font-size: 0.625em;
+    line-height: 1;
+    right: 1.2em;
+    top: 50%;
+    margin-top: -0.5em; }
+  .select-box::before {
+    width: 2em;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #000c0c; }
+  .select-box select[disabled] {
+    color: rgba(0, 0, 0, 0.25); }
 
-/* line 231, ../sass/base/_base.sass */
 .left {
   position: fixed;
   height: 100vh;
@@ -427,168 +276,120 @@ section.hidden {
   box-shadow: 0px 0px 22px -5px black;
   z-index: 130;
   top: 0;
-  left: 0;
-}
-/* line 240, ../sass/base/_base.sass */
-.left.active {
-  transform: translateX(0);
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 243, ../sass/base/_base.sass */
-.left img {
-  width: 100px;
-  margin-top: 35px;
-}
-/* line 246, ../sass/base/_base.sass */
-.left ul {
-  margin-top: 35px;
-  color: #f1f1f1;
-  text-align: left;
-  list-style: none;
-}
-/* line 251, ../sass/base/_base.sass */
-.left a {
-  color: #f1f1f1;
-  text-decoration: none;
-}
-/* line 255, ../sass/base/_base.sass */
-.left a.active li, .left a:hover li {
-  cursor: pointer;
-  background: #151e23;
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 260, ../sass/base/_base.sass */
-.left li {
-  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  font-size: 17px;
-  font-weight: 100;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  box-sizing: border-box;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 270, ../sass/base/_base.sass */
-.left li:hover, .left li.active {
-  cursor: pointer;
-  background: #151e23;
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 275, ../sass/base/_base.sass */
-.left li i {
-  padding: 0 15px;
-}
-/* line 277, ../sass/base/_base.sass */
-.left .bottom {
-  width: 180px;
-  height: 35px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  color: #f1f1f1;
-  line-height: 35px;
-}
-/* line 285, ../sass/base/_base.sass */
-.left .bottom .settings, .left .bottom .logout {
-  color: #f1f1f1;
-  font-size: 20px;
-  float: right;
-  display: inline-block;
-  line-height: 30px;
-  margin-right: 10px;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
-/* line 293, ../sass/base/_base.sass */
-.left .bottom .settings i, .left .bottom .logout i {
-  font-size: 30px;
-  padding-left: 10px;
-}
-/* line 296, ../sass/base/_base.sass */
-.left .bottom .settings:hover, .left .bottom .logout:hover {
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  color: #2196F3;
-}
-/* line 299, ../sass/base/_base.sass */
-.left .bottom .logout {
-  float: left;
-  display: none;
-}
+  left: 0; }
+  .left.active {
+    transform: translateX(0);
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+  .left img {
+    width: 100px;
+    margin-top: 35px; }
+  .left ul {
+    margin-top: 35px;
+    color: #f1f1f1;
+    text-align: left;
+    list-style: none; }
+  .left a {
+    color: #f1f1f1;
+    text-decoration: none; }
+    .left a.active li, .left a:hover li {
+      cursor: pointer;
+      background: #151e23;
+      color: #2196F3;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
+  .left li {
+    font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 100;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    box-sizing: border-box;
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+    .left li:hover, .left li.active {
+      cursor: pointer;
+      background: #151e23;
+      color: #2196F3;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
+    .left li i {
+      padding: 0 15px; }
+  .left .bottom {
+    width: 180px;
+    height: 35px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    color: #f1f1f1;
+    line-height: 35px; }
+    .left .bottom .settings, .left .bottom .logout {
+      color: #f1f1f1;
+      font-size: 20px;
+      float: right;
+      display: inline-block;
+      line-height: 30px;
+      margin-right: 10px;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
+      .left .bottom .settings i, .left .bottom .logout i {
+        font-size: 30px;
+        padding-left: 10px; }
+      .left .bottom .settings:hover, .left .bottom .logout:hover {
+        transition: 0.3s;
+        -webkit-transition: 0.3s;
+        color: #2196F3; }
+    .left .bottom .logout {
+      float: left;
+      display: none; }
 
-/* line 302, ../sass/base/_base.sass */
 em, i, cite {
-  font-style: italic;
-}
+  font-style: italic; }
 
-/* line 304, ../sass/base/_base.sass */
 strong, b {
-  font-weight: bold;
-}
+  font-weight: bold; }
 
-/* line 306, ../sass/base/_base.sass */
 .relative {
-  position: relative;
-}
+  position: relative; }
 
-/* line 308, ../sass/base/_base.sass */
 .switch {
   position: relative;
   display: inline-block;
   width: 60px !important;
-  height: 34px !important;
-}
-/* line 313, ../sass/base/_base.sass */
-.switch input[type="checkbox"].switcher {
-  display: none;
-}
+  height: 34px !important; }
+  .switch input[type="checkbox"].switcher {
+    display: none; }
 
-/* line 315, ../sass/base/_base.sass */
 .tabs {
   width: 100%;
   display: inline-block;
   text-align: center;
   background: #000c0c;
-  color: white;
-}
-/* line 322, ../sass/base/_base.sass */
-.tabs.center .tab {
-  float: none;
-  display: inline-block;
-}
-/* line 325, ../sass/base/_base.sass */
-.tabs .tab {
-  width: auto;
-  padding: 15px 25px;
-  float: left;
-  font-weight: 500;
-  font-size: 17px;
-  user-select: none;
-  box-sizing: border-box;
-}
-/* line 333, ../sass/base/_base.sass */
-.tabs .tab.active {
-  background: #151e23;
-  color: #2196F3;
-  border-top: 2px solid #2196F3;
-  padding-top: 13px;
-}
-/* line 338, ../sass/base/_base.sass */
-.tabs .tab:hover, .tabs .tab:active {
-  cursor: pointer;
-  background: #151e23;
-  color: #2196F3;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-}
+  color: white; }
+  .tabs.center .tab {
+    float: none;
+    display: inline-block; }
+  .tabs .tab {
+    width: auto;
+    padding: 15px 25px;
+    float: left;
+    font-weight: 500;
+    font-size: 17px;
+    user-select: none;
+    box-sizing: border-box; }
+    .tabs .tab.active {
+      background: #151e23;
+      color: #2196F3;
+      border-top: 2px solid #2196F3;
+      padding-top: 13px; }
+    .tabs .tab:hover, .tabs .tab:active {
+      cursor: pointer;
+      background: #151e23;
+      color: #2196F3;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
 
-/* line 343, ../sass/base/_base.sass */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -599,35 +400,26 @@ strong, b {
   background-color: #ccc;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  border-radius: 34px;
-}
-/* line 354, ../sass/base/_base.sass */
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 50%;
-}
+  border-radius: 34px; }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%; }
 
 @media only screen and (max-width: 760px) {
-  /* line 367, ../sass/base/_base.sass */
   .left {
-    box-shadow: none;
-  }
-  /* line 369, ../sass/base/_base.sass */
-  .left ul {
-    margin-top: 45px;
-  }
-}
+    box-shadow: none; }
+    .left ul {
+      margin-top: 45px; } }
 @media print {
-  /* line 372, ../sass/base/_base.sass */
   button {
-    display: none;
-  }
-}
+    display: none; } }
+
+/*# sourceMappingURL=blog.css.map */

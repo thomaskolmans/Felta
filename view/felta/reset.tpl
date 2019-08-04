@@ -47,7 +47,7 @@
           <input type="text" name="email">
         </div>
         <input type="submit" name="reset" value="Recover">
-        <a href="/felta" class="button float_left">Back</a>
+        <a href="/felta" class="center">Back</a>
       </form>
     <?php } 
       if(isset($_POST['reset'])){

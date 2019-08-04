@@ -3,38 +3,36 @@
 .error
   color: white
   width: 100%
-  margin-top: 110px
+  margin: 0 25px 35px
 
 form
   position: absolute
   width: 320px
-  height: 450px
   background: $main
   transform: translate(-50%,-50%)
   left: 50%
   top: 50%
   display: inline-block
-  box-shadow: 0px 0px 42px -8px rgb(0,0,0)
-  &.reset
-    height: 350px
+  box-shadow: 0px 0px 30px -1px rgba(0,0,0, 0.3)
   .remember
     width: 125px
     height: 20px
     line-height: 20px
-    float: left
+    margin-right: auto
     margin-left: 35px
   img
     max-width: 100px
     height: 100px
-    margin: 15px
+    margin: 15px auto
+    display: block
   input
-    width: 250px
+    width: calc(100% - 50px)
     height: 35px
-    margin-top: 4px
+    margin: 0 25px
     border: none
     background: $base
-    box-sizing: border-box
     padding: 0 8px
+    display: block
     &:focus, &:active
       outline: none
     &[type="checkbox"]
@@ -42,17 +40,15 @@ form
       width: 50px
       margin-left: 15px
     &[type="submit"]
-      width: 125px
+      width: calc(100% - 50px)
       height: 35px
       color: $main
       font:
-        size: 18px
-        weight: bold
+        size: 16px
+        weight: normal
         family: $font
       border-radius: 50px
-      float: right
-      margin-right: 35px
-      margin-top: 25px
+      margin: 25px
       line-height: 25px
       border: 2px solid $base
       &:hover
@@ -61,25 +57,27 @@ form
         background: none
         color: $base
   a
-    margin-top: 25px
-    float: right
-    margin-right: 35px
+    margin: 25px
     color: $base
-    &.float_left
-      margin: 0
-      float: left
-      margin-left: 34px
-      margin-top: 25px
+    font:
+      size: 0.9em
+    display: block
+    &.center
+      margin: 25px auto
+      width: 100%
+      text-align: center
     &:hover
-      font-weight: 700
+      color: $lightblue
   .input-group:not(:first-child)
     margin-top: 15px
   label
-    width: 250px
+    width: calc(100% - 50px)
+    margin: 0px 25px 3px
     display: block
     text-align: left
-    margin: 3px auto
     color: $base
+    font:
+      size: .9em
   h1
     font: 
       family: $font
@@ -92,7 +90,7 @@ form
     border: none
     box-sizing: border-box
     padding: 0 8px
-    width: 100px
+    width: calc(100% - 50px)
     height: 35px
     background: $base
     color: $main
@@ -101,8 +99,7 @@ form
       weight: bold
       family: $font
     border-radius: 50px
-    float: right
-    margin-top: 25px
+    margin: 25px
     line-height: 30px
     text-decoration: none
     border: 2px solid $base

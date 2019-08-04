@@ -211,7 +211,9 @@ class Shop {
     }
 
     public function setMollieKey($mollieKey){
-        $this->molli
+        $this->mollieKey = $mollieKey;
+        $this->mollie = new \Mollie\Api\MollieApiClient();
+        $this->mollie->setApiKey($mollieKey);
     }
 
     public function getStripePublicKey(){
