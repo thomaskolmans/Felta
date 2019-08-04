@@ -1,8 +1,8 @@
 <?php
-namespace lib\Shop\Order;
+namespace lib\shop\order;
 
 use lib\Felta;
-use lib\Helpers\UUID;
+use lib\helpers\UUID;
 
 class Customer{
     

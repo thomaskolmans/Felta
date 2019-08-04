@@ -1,5 +1,5 @@
 <?php
-namespace lib\Helpers;
+namespace lib\helpers;
 
 class UUID {
 

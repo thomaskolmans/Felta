@@ -1,10 +1,9 @@
 <?php
-namespace lib\Helpers;
+namespace lib\helpers;
 
 use lib\Felta;
 
 class FormValidator extends Validator{
-
 
     public function __construct($items,$memory = false){
 
@@ -97,4 +96,5 @@ class FormValidator extends Validator{
     public function isPassed(){
         return $this->passed;
     }
+}
 ?>

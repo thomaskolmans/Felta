@@ -1,10 +1,9 @@
 <?php
-namespace lib\Controllers;
+namespace lib\controllers;
 
 use lib\Felta;
 
 class FeltaController {
-
 
 	public static function GET_STATUS(){
 		$felta = Felta::getInstance();

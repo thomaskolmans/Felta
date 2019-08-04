@@ -1,26 +1,25 @@
 <?php
-namespace lib\Controllers;
+namespace lib\controllers;
 
 use lib\Felta;
 
-use lib\Shop\Shop;
-use lib\Shop\Shoppingcart;
-use lib\Shop\Promotion;
-use lib\Shop\Order;
-use lib\Shop\OrderStatus;
-use lib\Shop\ShopItem;
-use lib\Shop\ShopItemVariant;
-use lib\Shop\Customer;
-use lib\Shop\CustomerAddress;
-use lib\Shop\Transaction;
-use lib\Shop\Payment;
+use lib\shop\Shop;
+use lib\shop\Shoppingcart;
+use lib\shop\Promotion;
+use lib\shop\Order;
+use lib\shop\OrderStatus;
+use lib\shop\ShopItem;
+use lib\shop\ShopItemVariant;
+use lib\shop\Customer;
+use lib\shop\CustomerAddress;
+use lib\shop\Transaction;
+use lib\shop\Payment;
 
 class ShopController {
 
 	public static function PUBLIC_KEY(){
 
 	}
-
 
     /**
      * Shop items

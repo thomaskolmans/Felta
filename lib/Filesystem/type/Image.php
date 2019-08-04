@@ -1,7 +1,7 @@
 <?php
-namespace lib\Filesystem\type;
+namespace lib\filesystem\type;
 
-use lib\Filesystem\File;
+use lib\filesystem\File;
 
 class Image extends File{
 

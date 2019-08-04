@@ -1,10 +1,10 @@
 <?php
-namespace lib\Shop;
+namespace lib\shop;
 
 use \DateTime;
 use \lib\Felta;
 use \Stripe\Stripe;
-use \lib\Helpers\UUID;
+use \lib\helpers\UUID;
 
 class Shop {
     
@@ -17,9 +17,11 @@ class Shop {
     private $paypalKey;
     private $stripeKey;
     private $stripePublicKey;
+    private $mollieKey;
 
     private $paypal;
     private $stripe;
+    private $mollie;
 
     public static $instance;
 
@@ -30,7 +32,6 @@ class Shop {
         $this->name = $name;
         $this->created = $created;
 
-        $this->createTables();
         self::$instance = $this;
         if(!isset($_COOKIE["SCID"])){
             $shoppingcart = Shoppingcart::create();
@@ -45,34 +46,29 @@ class Shop {
         return null;
     }
 
-    public static function create($name,$stripe,$paypal){
+    public static function create($name){
         $sql = Felta::getInstance()->getSQL();
         if($sql->exists("shop",[])){
             if($sql->exists("shop",["name" => $name])){
-                return Shop::get($name,$stripe,$paypal);
-            }else{
-                return Shop::generate($name,$stripe,$paypal);
+                return Shop::get($name);
+            } else {
+                return Shop::generate($name);
             }
         }else{
-            return Shop::generate($name,$stripe,$paypal);
+            return Shop::generate($name);
         }
-
     }
 
-    public static function generate($name,$stripe,$paypal){
+    public static function generate($name){
         $id = UUID::generate(10);
         $shop = new Shop($id,$name,new \DateTime());
-        $shop->setStripeKey($stripe);
-        $shop->setPaypalKey($paypal);
         $shop->save();
         return $shop;
     }
 
-    public static function get($name,$stripe,$paypal){
+    public static function get($name){
         $result = Felta::getInstance()->getSQL()->select("*","shop",["name" => $name])[0];
         $shop = new Shop($result["id"],$result["name"],$result["created"]);
-        $shop->setStripeKey($stripe);
-        $shop->setPaypalKey($paypal);
         return $shop;
     }
 
@@ -180,15 +176,6 @@ class Shop {
         return $this->sql->select("*","shop_shipping",["id" => $this->id])[0];
     }
     
-    public function setPaypalKey($paypal){
-        $this->paypal = $paypal;
-    }
-    public function setStripeKey($stripeKey){
-        $this->stripeKey = $stripeKey;
-        $this->stripe = Stripe::setAPIKey($this->stripeKey);
-        return $this;
-    }
-
     public static function intToDouble($int){
         $behind = substr($int, (strlen($int)  -2),2);
         $front = substr($int, 0,(strlen($int) -2));
@@ -213,129 +200,24 @@ class Shop {
         return $this->name;
     }
 
-    public function getStripePublicKey(){
-        return $this->stripePublicKey;
+    public function setPaypalKey($paypal){
+        $this->paypal = $paypal;
     }
 
-    private function createTables(){
-        if(!$this->sql->exists("shop",[])){
-            $this->sql->create("shop",[
-                "id" => "varchar(255)",
-                "name" => "varchar(255)",
-                "created" => "DateTime"
-            ],"id");
-            $this->sql->create("shop_settings",[
-                "id" => "varchar(255)",
-                "url" => "varchar(255)",
-                "btw" => "double",
-                "exclbtw" => "boolean",
-                "shipping" => "boolean",
-                "freeshipping" => "boolean"
-            ],"id");
-            $this->sql->create("shop_shipping",[
-                "id" => "varchar(255)",
-                "amount" => "int",
-                "ipp" => "int"
-            ],"id");
-            $this->sql->create("shop_address",[
-                "id" => "varchar(255)",
-                "street" => "varchar(512)",
-                "number" => "varchar(255)",
-                "zipcode" => "varchar(255)",
-                "city" => "varchar(512)",
-                "country" => "varchar(512)"
-            ],"id");
-            $this->sql->create("shop_cart",[
-                "n" => "int auto_increment",
-                "id" => "varchar(255)",
-                "iid" => "varchar(255)",
-                "quantity" => "int"
-            ],"n");
-            $this->sql->create("shop_catagories",[
-                "id" => "int auto_increment",
-                "name" => "varchar(512)"
-            ],"id");
-            $this->sql->create("shop_promotion",[
-                "id" => "varchar(255)",
-                "code" => "varchar(255)",
-                "percentage" => "int",
-                "from" => "DateTime",
-                "until" => "DateTime",
-                "all" => "boolean"
-            ],"id");
-            $this->sql->create("shop_promotion_items",[
-                "id" => "int auto_increment",
-                "iid" => "varchar(255)"
-            ],"id");
-            $this->sql->create("shop_item",[
-                "id" => "varchar(255)",
-                "name" => "varchar(560)",
-                "catagory" => "varchar(512)",
-                "description" => "longtext",
-                "image" => "int",
-                "date" => "DateTime",
-                "active" => "boolean"
-            ],"id");
-            $this->sql->create("shop_item_variant",[
-                "id" =>  "varchar(255)",
-                "sid" => "varchar(255)",
-                "price" => "int",
-                "currency" => "varchar(3)",
-                "quantity" => "int",
-                "variables" => "longtext"
-            ],"id");
-            $this->sql->create("shop_item_variant_image",[
-                "id" => "int auto_increment",
-                "sid" => "varchar(255)",
-                "url" => "varchar(255)"
-            ],"id");
-            $this->sql->create("shop_order",[
-                "id" => "varchar(255)",
-                "customer" => "varchar(255)",
-                "orderstatus" => "int",
-                "promotion" => "varchar(255)",
-                "order" => "DateTime"
-            ],"id");
-            $this->sql->create("shop_order_item",[
-                "id" => "varchar(255)",
-                "oid" => "varchar(255)",
-                "iid" => "varchar(255)",
-                "quantity" => "int"
-            ],"id");
-            $this->sql->create("shop_transaction",[
-                "id" => "varchar(255)",
-                "transactionid" => "varchar(255)",
-                "order" => "varchar(255)",
-                "method" => "varchar(255)",
-                "amount" => "int",
-                "currency" => "varchar(25)",
-                "state" => "int",
-                "date" => "DateTime"
-            ],"id");
-            $this->sql->create("shop_customer",[
-                "id" => "varchar(255)",
-                "firstname" => "varchar(255)",
-                "lastname" => "varchar(255)",
-                "email" => "varchar(512)",
-                "isBusiness" => "boolean",
-                "bName" => "varchar(255)",
-                "account" => "boolean"
-            ],"id");
-            $this->sql->create("shop_customer_address",[
-                "id" => "varchar(255)",
-                "street" => "varchar(512)",
-                "number" => "varchar(255)",
-                "zipcode" => "varchar(255)",
-                "city" => "varchar(512)",
-                "country" => "varchar(512)"
-            ],"id");
-            $this->sql->create("shop_customer_account",[
-                "id" => "varchar(255)",
-                "email" => "varchar(255)",
-                "password" => "varchar(565)",
-                "created" => "DateTime"
-            ],"id");
-        }
+    public function setStripeKey($stripeKey){
+        $this->stripeKey = $stripeKey;
+        $this->stripe = Stripe::setAPIKey($this->stripeKey);
+        return $this;
+    }
+
+    public function setMollieKey($mollieKey){
+        $this->mollieKey = $mollieKey;
+        $this->mollie = new \Mollie\Api\MollieApiClient();
+        $this->mollie->setApiKey($mollieKey);
+    }
+
+    public function getStripePublicKey(){
+        return $this->stripePublicKey;
     }
 }
 ?>

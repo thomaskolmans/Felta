@@ -1,5 +1,5 @@
 <?php
-namespace lib\Filesystem;
+namespace lib\filesystem;
 
 use lib\Cleverload;
 

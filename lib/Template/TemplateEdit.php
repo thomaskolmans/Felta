@@ -1,8 +1,8 @@
 <?php
 namespace lib\Template;
 
-use lib\Post\Edit;
-use lib\Helpers\Language;
+use lib\post\Edit;
+use lib\helpers\Language;
 use lib\database\SQL;
 use \DateTime;
 use lib\Felta;

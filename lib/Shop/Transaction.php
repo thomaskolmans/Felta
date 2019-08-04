@@ -1,7 +1,7 @@
 <?php
-namespace lib\Shop;
+namespace lib\shop;
 
-use lib\Helpers\UUID;
+use lib\helpers\UUID;
 use lib\Felta;
 
 class Transaction{

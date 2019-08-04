@@ -1,9 +1,9 @@
 <?php
-namespace lib\User;
+namespace lib\user;
 
 use lib\Felta;
-use lib\Helpers\Email;
-use lib\Helpers\Value;
+use lib\helpers\Email;
+use lib\helpers\Value;
 
 class User extends Felta{
 
@@ -36,7 +36,7 @@ class User extends Felta{
         }
         if(!isset($_SESSION["csrf"])){
             $this->csrf = base64_encode( openssl_random_pseudo_bytes(32));
-        }else{
+        } else {
             $this->csrf = $_SESSION["csrf"];
         }
         $this->admin();
@@ -389,6 +389,7 @@ class User extends Felta{
                 "start" => "DateTime",
                 "expire" =>  "DateTime"
                 ),"id");
+
             return true;
         }
         return false;

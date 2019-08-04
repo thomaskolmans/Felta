@@ -1,9 +1,9 @@
 <?php
-namespace lib\Shop\Order;
+namespace lib\shop\order;
 
 use lib\Felta;
-use lib\Post\Message;
-use lib\Helpers\UUID;
+use lib\post\Message;
+use lib\helpers\UUID;
 
 class Order {
 
@@ -60,7 +60,15 @@ class Order {
     }
 
     public static function getLatest($from,$until){
-        return Felta::getInstance()->getSQL()->query()->select()->from("shop_order")->where("orderStatus", 1)->orderBy("order")->desc()->limit($from, $until)->execute();
+        return Felta::getInstance()->getSQL()
+            ->query()
+            ->select()
+            ->from("shop_order")
+            ->where("orderStatus", 1)
+            ->orderBy("order")
+            ->desc()
+            ->limit($from, $until)
+            ->execute();
     }
 
     public function save(){

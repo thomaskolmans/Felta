@@ -1,6 +1,6 @@
 <?php
 
-namespace lib\Shop;
+namespace lib\shop;
 
 abstract class Currency{
 

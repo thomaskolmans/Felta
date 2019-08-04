@@ -1,5 +1,5 @@
 <?php
-namespace lib\Helpers;
+namespace lib\helpers;
 
 use lib\Helpers\Value;
 

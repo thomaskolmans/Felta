@@ -1,10 +1,10 @@
 <?php
-namespace lib\Controllers;
+namespace lib\controllers;
 
 use lib\Felta;
-use lib\Post\Edit;
-use lib\Post\Agenda;
-use lib\Post\News;
+use lib\post\Edit;
+use lib\post\Agenda;
+use lib\post\News;
 
 class PostController {
 

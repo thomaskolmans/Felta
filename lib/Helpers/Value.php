@@ -1,5 +1,5 @@
 <?php
-namespace lib\Helpers;
+namespace lib\helpers;
 
 class Value{
 
@@ -8,6 +8,7 @@ class Value{
     function __construct($value){
         $this->value = $value;
     }
+    
     public function is($type){
         switch(strtolower($type)){
             case "number":

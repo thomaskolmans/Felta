@@ -1,5 +1,5 @@
 <?php
-namespace lib\User;
+namespace lib\user;
 
 abstract class UserPermission{
 

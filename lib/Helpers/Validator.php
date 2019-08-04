@@ -1,6 +1,6 @@
 <?php
 
-namespace lib\Helpers;
+namespace lib\helpers;
 
 abstract class Validator{
 

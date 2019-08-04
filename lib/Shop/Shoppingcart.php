@@ -1,8 +1,8 @@
 <?php
-namespace lib\Shop;
+namespace lib\shop;
 
 use lib\Felta;
-use lib\Helpers\UUID;
+use lib\helpers\UUID;
 
 class Shoppingcart{
 

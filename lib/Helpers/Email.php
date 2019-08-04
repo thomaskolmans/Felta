@@ -1,9 +1,8 @@
 <?php
-namespace lib\Helpers;
+namespace lib\helpers;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 
 class Email{
 

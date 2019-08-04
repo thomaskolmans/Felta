@@ -1,6 +1,5 @@
 <?php
-
-use lib\Shop;
+use lib\shop;
 
 class Promotion{
 

@@ -1,5 +1,5 @@
 <?php
-namespace lib\Controllers;
+namespace lib\controllers;
 
 use lib\Felta;
 

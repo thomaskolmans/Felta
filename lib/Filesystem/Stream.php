@@ -1,7 +1,7 @@
 <?php
-namespace lib\Filesystem;
+namespace lib\filesystem;
 
-class Stream{
+class Stream {
 
     public $file;
 
