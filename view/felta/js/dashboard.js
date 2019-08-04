@@ -33,6 +33,7 @@ $(document).ready(function(){
             });
         }
     });
+    
     var ONE_HOUR = 60 * 60 * 1000;
     var hours = 24;
     var date = new Date;
@@ -133,13 +134,13 @@ function sameDay(d1, d2) {
     d1.getMonth() === d2.getMonth() &&
     d1.getDate() === d2.getDate();
 }
+
 function checkServer(){
     ifServerOnline(function(){
         $("#website_is").removeClass("offline");
         $("#website_is").addClass("online");
         $("#website_status").text("online");
         if(first){
-            console.log("hey?");
             first = false;
             $(".switcher").prop("checked",true);
         }
@@ -155,6 +156,7 @@ function checkServer(){
     });
     var tid = setTimeout(checkServer,2000);
 }
+
 function ifServerOnline(ifOnline, ifOffline){
     $.ajax({
         url: document.location.protocol+"//"+getDomain()+"/felta/status",

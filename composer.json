@@ -3,6 +3,7 @@
         "nytrix/SimpleSQL": "dev-master",
         "nytrix/Cleverload": "dev-master",
         "stripe/stripe-php": "^6.19",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "phpmailer/phpmailer": "^6.0"
     }
 }

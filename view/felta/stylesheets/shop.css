@@ -343,7 +343,7 @@ button {
   height: 35px;
   padding: 0 25px;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: bold;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   border-radius: 50px;
   transition: 0.3s;
@@ -527,7 +527,7 @@ button:active, button:focus {
   height: 35px;
   padding: 0 25px;
   font-size: 16px;
-  font-weight: 900;
+  font-weight: bold;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   border-radius: 50px;
   transition: 0.3s;
@@ -1089,18 +1089,22 @@ table.bill th {
     background: none;
     color: black !important;
   }
-
   /* line 794, ../sass/shop.sass */
+  .window h1 {
+    display: none;
+  }
+
+  /* line 796, ../sass/shop.sass */
   button {
     display: none !important;
   }
 
-  /* line 796, ../sass/shop.sass */
+  /* line 798, ../sass/shop.sass */
   table {
     background: none;
     color: black;
   }
-  /* line 799, ../sass/shop.sass */
+  /* line 801, ../sass/shop.sass */
   table.bill {
     background: none;
     color: black;

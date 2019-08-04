@@ -15,7 +15,7 @@
 <body>
   <?php
     use lib\Shop\Transaction;
-    use lib\Shop\Order;
+    use lib\Shop\Order\Order;
     use lib\Shop\Shop;
     use lib\Felta;
   ?>
@@ -95,7 +95,7 @@
           <div class="lang_container">
             <?php
               $catagories = Shop::getInstance()->getCatagories();
-              if(count($catagories) > 0){
+              if($catagories && count($catagories) > 0){
                 foreach($catagories as $key => $catagory){
                   $name = $catagory["name"];
                   $id = $catagory["id"];

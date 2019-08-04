@@ -1,12 +1,12 @@
 <?php
-namespace lib\Template;
+namespace lib\template;
 
-use lib\Routing\Router;
-use lib\Routing\Route;
+use lib\routing\Router;
+use lib\routing\Route;
 use lib\Cleverload;
 use lib\Felta;
 
-class Template extends Router{
+class Template extends Router {
     
     public $route = null;
     public $filepath = "";
@@ -25,18 +25,22 @@ class Template extends Router{
         }
 
     }
+
     public function getTemplateTags(){
         return Cleverload::getConfig("template_tags");
     }
+
     public function getFile(){
         if(file_exists($this->filepath)){
             return $this->filepath;
         }
         return $this->route->getRouter()->response->notfound();
     }
+
     public function getFileInfo(){
         return pathinfo($this->getFile());
     }
+    
     public function getDomFromFile($file){
         $dom = new \DOMDocument();
         $content = file_get_contents($file);
@@ -44,29 +48,36 @@ class Template extends Router{
         $dom->loadHTML($content);
         return $dom;
     }
+
     public function getDom($content){
         $this->dom = new \DOMDocument();
         $this->dom->loadHTML($this->extractPHP($content));
         return $this->dom;
     }
+
     public function getDomSinExtract($content){
         $this->dom = new \DOMDocument();
         $this->dom->loadHTML($content);
         return $this->dom;
     }
+
     public function getContent(){
         return $this->dom->saveHTML();
     }
+
     public function saveContent($content){
         $this->getDomSinExtract($content);
         return $this;
     }
+
     public function getAllowdExtensionsForTags(){
         return Cleverload::getConfig("extensions_template_tags");
     }
+
     public function getAllowdExtensionsForPlugins(){
         return Cleverload::getConfig("extension_template_plugin");
     }
+
     public function extractPHP($content){
         $matches = self::getInBetween($content,"<?php","?>");
         foreach($matches as $match){
@@ -76,6 +87,7 @@ class Template extends Router{
         }
         return $content;
     }
+
     public static function insertPHP($content){
         $matches = self::getInBetween($content,"<?php"," ?>");
         for($i = 0; $i < count($matches); $i++){
@@ -89,6 +101,7 @@ class Template extends Router{
         }
         return $content;
     }
+    
     public static function getInBetween($string, $start, $end){
         $contents = array();
         $startLength = strlen($start);

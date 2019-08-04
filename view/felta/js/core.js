@@ -7,7 +7,7 @@ $(document).ready(function(){
         }
     });
     $("#website").on("click",function(){
-        document.location = 'http://'+ getDomain();
+        document.location.href = document.location.protocol + '//'+ getDomain();
     });
     $("[href]").each(function() {
         if (this.href == window.location.href) {
@@ -15,6 +15,7 @@ $(document).ready(function(){
         }
     });
 });
+
 function getDomain(){
     if(document.domain.length){
         var parts = document.domain.replace(/^(www\.)/,"").split('.');
@@ -22,6 +23,9 @@ function getDomain(){
             var subdomain = parts.shift();
         }
         var domain = parts.join('.');
+        if (subdomain) {
+            return subdomain + "." + domain.replace(/(^\.*)|(\.*$)/g, "");
+        }
         return domain.replace(/(^\.*)|(\.*$)/g, "");
     }
     return '';

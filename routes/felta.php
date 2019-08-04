@@ -72,10 +72,10 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         /**
          * Edit
          */
-        Route::delete("/language/{language}",function($language){ POST_CONTROLLER::DELETE_LANGUAGE($language); });
+        Route::delete("/language/{language}",function($language){ PostController::DELETE_LANGUAGE($language); });
         Route::get("/edit/id/{id}/lang/{language}",function($id,$language){ PostController::GET_TEXT($id,$language); });
         Route::get("/edit/history/{id}", function($id){ /*  Has to implemented */ });
-        Route::post("/edit",function(){ PostController::SET_TEKST(); });
+        Route::post("/edit",function(){ PostController::SET_TEXT(); });
         Route::post("/edit/image",function(){ PostController::SET_IMAGE(); });
 
         /**

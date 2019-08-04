@@ -2,10 +2,9 @@
 namespace lib\Controllers;
 
 use lib\Felta;
-
-$edit = new Edit();
-$agenda = new Agenda();
-$news = new News();
+use lib\Post\Edit;
+use lib\Post\Agenda;
+use lib\Post\News;
 
 class PostController {
 
@@ -104,13 +103,13 @@ class PostController {
     /**
      * Edit
      */
-    public static function GET_TEKST($id, $language){
-        $edit = Edit();
+    public static function GET_TEXT($id, $language){
+        $edit = new Edit();
         echo $edit->get($id,$language);
     }
 
-    public static function SET_TEKST(){
-        $edit = Edit();
+    public static function SET_TEXT(){
+        $edit = new Edit();
         $text = $_POST["text"];
         $id = $_POST["id"];
         $language = $_POST["language"];
@@ -119,7 +118,7 @@ class PostController {
     }
 
     public static function SET_IMAGE(){
-        $edit = Edit();
+        $edit = new Edit();
         $w = Input::value("w");
         $h = Input::value("h");
         $x = Input::value("x1");
@@ -138,7 +137,8 @@ class PostController {
     }
 
     public static function DELETE_LANGUAGE($language){
-        $edit->language->remove($lnlanguageg); 
+        $edit = new Edit();
+        $edit->language->remove($language); 
         echo json_encode(["success" => "You've succesfully removed the language"]);
     }
 }

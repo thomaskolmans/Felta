@@ -13,7 +13,7 @@
     $user = lib\Felta::getInstance()->user;
     if($id !== null){
       if($user->verifyForgot($id)){
-    ?>
+?>
       <form method="post">
           <img src="/felta/images/logo_white2.png">
           <div class="input-group">
@@ -27,17 +27,19 @@
 
           <input type="submit" name="newpassword" value="Reset">
       </form>
-      <?php
+<?php
         if(isset($_POST['newpassword'])){
           $password = $_POST['password'];
           $repeatpassword = $_POST['repeat_password'];
           $user->recoverPassword($id,$password,$repeatpassword);
           header("Location: /felta");
         }
-        }else{
-          echo "Invalid key";
-        }
-    }else{ ?>
+      } else {
+        echo "Invalid key";
+      }
+
+    }else{ 
+?>
       <form method="post" class="reset">
         <img src="/felta/images/logo_white2.png">
         <div class="input-group">
@@ -45,13 +47,13 @@
           <input type="text" name="email">
         </div>
         <input type="submit" name="reset" value="Recover">
-        <a href="/felta" class="float_left"><button>Back</button></a>
+        <a href="/felta" class="button float_left">Back</a>
       </form>
     <?php } 
-    if(isset($_POST['reset'])){
-      $user->forgot($_POST['email']);
-      header('Location: /felta');
-    }
+      if(isset($_POST['reset'])){
+        $user->forgot($_POST['email']);
+        header('Location: /felta');
+      }
     ?>
 </body>
 

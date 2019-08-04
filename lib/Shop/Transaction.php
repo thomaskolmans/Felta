@@ -106,7 +106,7 @@ class Transaction{
     }
 
     public static function getLatest($from,$until){
-        return array_slice(Felta::getInstance()->getSQL()->query()->select()->from("shop_transaction")->where(["state" => 4])->orderBy("date")->desc()->limit($until)->execute(),$from);
+        return Felta::getInstance()->getSQL()->query()->select()->from("shop_transaction")->where(["state" => 4])->orderBy("date")->desc()->limit($from, $until)->execute();
     }
 }
 

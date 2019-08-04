@@ -6,7 +6,7 @@ use lib\Felta;
 class UserController {
 
     public static function REGISTER(){
-        
+        $user = Felta::getInstance()->user;
     }
 
     public static function LOGIN(){
@@ -18,9 +18,10 @@ class UserController {
         }
     }
 
-    public static function VERIFY_EMAIL(){
+    public static function VERIFY_EMAIL($key){
         $user = Felta::getInstance()->user;
         $user->verifyVerification($key);
+        header("Location: /felta");
     }
 
     public static function VERIFY_RESET_KEY($token){

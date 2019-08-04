@@ -6,8 +6,7 @@ use \lib\Felta;
 use \Stripe\Stripe;
 use \lib\Helpers\UUID;
 
-
-class Shop{
+class Shop {
     
     private $sql;
 

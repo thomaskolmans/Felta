@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* line 5, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,45 +21,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../../Ruby25-x64/lib/ruby/gems/2.5.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../Ruby23/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -327,7 +327,7 @@ section.hidden {
   float: left;
   margin-left: 200px;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: bold;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   border-radius: 50px;
   transition: 0.3s;
@@ -529,7 +529,7 @@ em, i, cite {
 
 /* line 304, ../sass/base/_base.sass */
 strong, b {
-  font-weight: 900;
+  font-weight: bold;
 }
 
 /* line 306, ../sass/base/_base.sass */
@@ -615,33 +615,18 @@ strong, b {
   border-radius: 50%;
 }
 
-/* line 367, ../sass/base/_base.sass */
-input[type="checkbox"].switcher:checked + .slider {
-  background-color: green;
-}
-/* line 369, ../sass/base/_base.sass */
-input[type="checkbox"].switcher:focus + .slider {
-  box-shadow: 0 0 1px green;
-}
-/* line 371, ../sass/base/_base.sass */
-input[type="checkbox"].switcher:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
 @media only screen and (max-width: 760px) {
-  /* line 376, ../sass/base/_base.sass */
+  /* line 367, ../sass/base/_base.sass */
   .left {
     box-shadow: none;
   }
-  /* line 378, ../sass/base/_base.sass */
+  /* line 369, ../sass/base/_base.sass */
   .left ul {
     margin-top: 45px;
   }
 }
 @media print {
-  /* line 381, ../sass/base/_base.sass */
+  /* line 372, ../sass/base/_base.sass */
   button {
     display: none;
   }
@@ -653,12 +638,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
   margin-top: 110px;
 }
 
-/* line 7, ../sass/front.sass */
-form.reset {
-  height: 350px;
-}
-
-/* line 9, ../sass/front.sass */
+/* line 8, ../sass/front.sass */
 form {
   position: absolute;
   width: 320px;
@@ -670,7 +650,11 @@ form {
   display: inline-block;
   box-shadow: 0px 0px 42px -8px black;
 }
-/* line 19, ../sass/front.sass */
+/* line 18, ../sass/front.sass */
+form.reset {
+  height: 350px;
+}
+/* line 20, ../sass/front.sass */
 form .remember {
   width: 125px;
   height: 20px;
@@ -678,13 +662,13 @@ form .remember {
   float: left;
   margin-left: 35px;
 }
-/* line 25, ../sass/front.sass */
+/* line 26, ../sass/front.sass */
 form img {
   max-width: 100px;
   height: 100px;
   margin: 15px;
 }
-/* line 29, ../sass/front.sass */
+/* line 30, ../sass/front.sass */
 form input {
   width: 250px;
   height: 35px;
@@ -694,23 +678,23 @@ form input {
   box-sizing: border-box;
   padding: 0 8px;
 }
-/* line 37, ../sass/front.sass */
+/* line 38, ../sass/front.sass */
 form input:focus, form input:active {
   outline: none;
 }
-/* line 39, ../sass/front.sass */
+/* line 40, ../sass/front.sass */
 form input[type="checkbox"] {
   height: 20px;
   width: 50px;
   margin-left: 15px;
 }
-/* line 43, ../sass/front.sass */
+/* line 44, ../sass/front.sass */
 form input[type="submit"] {
   width: 125px;
   height: 35px;
   color: #000c0c;
   font-size: 18px;
-  font-weight: 900;
+  font-weight: bold;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   border-radius: 50px;
   float: right;
@@ -718,8 +702,6 @@ form input[type="submit"] {
   margin-top: 25px;
   line-height: 25px;
   border: 2px solid #f1f1f1;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
 }
 /* line 58, ../sass/front.sass */
 form input[type="submit"]:hover {
@@ -740,16 +722,18 @@ form a {
 form a.float_left {
   margin: 0;
   float: left;
+  margin-left: 34px;
+  margin-top: 25px;
 }
-/* line 71, ../sass/front.sass */
+/* line 73, ../sass/front.sass */
 form a:hover {
   font-weight: 700;
 }
-/* line 73, ../sass/front.sass */
+/* line 75, ../sass/front.sass */
 form .input-group:not(:first-child) {
   margin-top: 15px;
 }
-/* line 75, ../sass/front.sass */
+/* line 77, ../sass/front.sass */
 form label {
   width: 250px;
   display: block;
@@ -757,7 +741,7 @@ form label {
   margin: 3px auto;
   color: #f1f1f1;
 }
-/* line 81, ../sass/front.sass */
+/* line 83, ../sass/front.sass */
 form h1 {
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   font-size: 65px;
@@ -766,23 +750,27 @@ form h1 {
   color: #000c0c;
   top: -70px;
 }
-/* line 89, ../sass/front.sass */
-form button {
+/* line 91, ../sass/front.sass */
+form button, form .button {
+  border: none;
+  box-sizing: border-box;
+  padding: 0 8px;
   width: 100px;
   height: 35px;
+  background: #f1f1f1;
   color: #000c0c;
   font-size: 18px;
-  font-weight: 900;
+  font-weight: bold;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
   border-radius: 50px;
-  float: left;
-  margin-left: 35px;
+  float: right;
   margin-top: 25px;
-  line-height: 25px;
+  line-height: 30px;
+  text-decoration: none;
   border: 2px solid #f1f1f1;
 }
-/* line 103, ../sass/front.sass */
-form button:hover {
+/* line 109, ../sass/front.sass */
+form button:hover, form .button:hover {
   transition: 0.3s;
   -webkit-transition: 0.3s;
   cursor: pointer;

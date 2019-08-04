@@ -1,12 +1,12 @@
 </html>
 <head>
    <title>Felta | News</title>
-   <link href="/Felta/stylesheets/main.css" rel="stylesheet">
-   <link href="/Felta/js/quill/quill.snow.css" rel="stylesheet">
-   <link rel="stylesheet" type="text/css" href="/Felta/js/datepicker/jquery.datetimepicker.css">
-   <link rel="icon" href="/Felta/images/black.png" type="image/png" />
-   <link rel="stylesheet" href="/Felta/fonts/font-awesome.min.css" />
-   <link rel="stylesheet" href="/Felta/fonts/font-awesome.css" />
+   <link href="/felta/stylesheets/main.css" rel="stylesheet">
+   <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/felta/js/datepicker/jquery.datetimepicker.css">
+   <link rel="icon" href="/felta/images/black.png" type="image/png" />
+   <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
+   <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
    <script src="/felta/js/jquery-1.11.3.min.js"></script>
    <script src="/felta/js/quill/quill.min.js"></script>
    <script src="/felta/js/datepicker/jquery.datetimepicker.min.js" type="text/javascript"></script>
@@ -134,8 +134,8 @@
                 <td>{$item['title']}</td>
                 <td>{$item['location']}</td>
                 <td>{$item['date']}</td>
-                <td><a href='/Felta/news/id/update/news_id/".$item["id"]."'><button>Edit</button></a></td>
-                <td><a href='/Felta/news/delete/".$item["id"]."'><div class='delete'></div></a></td>
+                <td><a href='/felta/news/id/update/news_id/".$item["id"]."'><button>Edit</button></a></td>
+                <td><a href='/felta/news/delete/".$item["id"]."'><div class='delete'></div></a></td>
               </tr>
               ";
             }
@@ -167,7 +167,7 @@
         <textarea style="display: none" name="description">
       </div>
       <div class="input-group right">
-        <a href="/Felta/news"><input type="button" value="Cancel" id="cancel_news"></a>
+        <a href="/felta/news"><input type="button" value="Cancel" id="cancel_news"></a>
         <input type="submit" name="new_news" value="Add item">
       </div>
     </form>
@@ -204,7 +204,7 @@
         <?php echo '<textarea style="display: none" id="update_editor_value" value="'.$description.'" name="description"></textarea>'; ?>
       </div>
       <div class="input-group right">
-        <a href="/Felta/news"><input type="button" value="Cancel" id="cancel_news"></a>
+        <a href="/felta/news"><input type="button" value="Cancel" id="cancel_news"></a>
         <input type="submit" name="new_news" value="Update item">
       </div>
     </form>

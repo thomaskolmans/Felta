@@ -11,7 +11,7 @@ class Statistics{
         $this->felta = Felta::getInstance();
         $this->sql = $this->felta->sql;
         $this->createTables();
-        $this->add();
+        // $this->add();
     }
 
     public function add(){

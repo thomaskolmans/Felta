@@ -8,7 +8,6 @@
   margin-left: 180px
   margin-top: 45px
   display: inline-block
-  overflow: hidden
   position: relative
   &.no-top
     margin-top: 0
@@ -27,7 +26,7 @@
     section
       flex: 0 0 49%
       display: inline-block
-      box-shadow: 0px 0px 25px -8px black
+      box-shadow: 0px 16px 35px 0px rgba(0, 0, 0, 0.19)
       margin: 15px 0
       padding: 5px 0
       text-align: center
@@ -89,7 +88,7 @@
       display: inline-block
       line-height: 50px
       border-radius: 50px
-      font-weight: 900
+      font-weight: bold
       margin-bottom: 15px
       &.online
         background: green
@@ -217,7 +216,7 @@
       font:
         style: italic
       b
-        font-weight: 900
+        font-weight: bold
   .editor_text, .image_editor,.editor_line
     width: 100%
     height: 100%
@@ -316,7 +315,7 @@
         width: 100%
         margin-bottom: 15px
       strong
-        font-weight: 900
+        font-weight: bold
       label
         background: none
         color: $main
@@ -382,7 +381,7 @@
     background: $main
     margin-top: 35px
     padding: 25px 0 !important
-    box-shadow: 0px 0px 25px -8px black
+    box-shadow: 0px 16px 35px 0px rgba(0, 0, 0, 0.19)
     &.head
       padding-top: 0
     &.no-margin
@@ -407,7 +406,7 @@
       td,th
         width: 20%
         text-align: center
-        font-weight: 900
+        font-weight: bold
         border: 4px solid $base
       th
         border: none
@@ -480,9 +479,8 @@
   &.right
     text-align: right
     margin-top: 15px
-button:focus
-  outline: none
-button
+  
+button,.button
   border: none
   border-radius: 4px
   background: $lightblue
@@ -492,7 +490,8 @@ button
   line-height: 1
   font-size: 14px
   font-weight: 600
-  +transition($s)
+  &:focus
+    outline: none
   &:hover
     cursor: pointer
     color: $main
@@ -507,7 +506,7 @@ button
     top: -38px
     +transition($s)
     &.tabs-above
-      top: -88px
+      top: -85px
   &.black
     background: $main
     border-color: $main
@@ -559,15 +558,16 @@ button
       content: "\f067"
 form.agenda,form.news
   margin: 50px auto
-  width: 560px
+  width: 100%
   text-align: left
   input,textarea
     width: 100%
     padding: 0 25px
     box-sizing: border-box
     height: 35px
-    background: #ccc
-    border: 1px solid #ccc
+    background: #e6e6e6
+    border: none
+    border-bottom: 1px solid #ccc
     &:active,&:focus
       outline: none
     &[type="submit"],&[type="button"]
@@ -602,7 +602,9 @@ form.agenda,form.news
   #editor,#update_editor
     width: 100%
     height: 500px
-    background: #ccc
+    background: #e6e6e6
+    border: none
+    border-bottom: 1px solid #ccc
   label
     position: absolute
     top: -24px
@@ -736,6 +738,17 @@ form.agenda,form.news
       content: ""
       font:
         family: "FontAwesome"
+
+input[type="checkbox"].switcher
+  &:checked + .slider
+    background-color: green
+  &:focus + .slider
+    box-shadow: 0 0 1px green
+  &:checked + .slider:before
+    -webkit-transform: translateX(26px)
+    -ms-transform: translateX(26px)
+    transform: translateX(26px)
+    
 @media only screen and (max-width: 1300px)
   .main
     &.dashboard

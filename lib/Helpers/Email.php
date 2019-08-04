@@ -1,70 +1,90 @@
 <?php
 namespace lib\Helpers;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
 class Email{
 
-    public $to;
-    public $subject;
-    public $message;
-    public $headers;
+    public $phpMail;
 
-    public $from;
-    public $reply_to;
+    public $success = false;
 
-    public $succes = false;
-
-    public function __construct($to = "",$subject = "",$message = "",$headers = ""){
-        $this->to = $to;
-        $this->subject = $subject;
-        $this->message = $message;
-        $this->headers = $headers;
+    public function __construct($to = "",$subject = "",$message = ""){
+        $this->phpMail = new PHPMailer(true);
+        
+        $this->setTo($to);
+        $this->setSubject($subject);
+        $this->setMessage($message);
     }
+
     public function load($file){
         if(file_exists($file)){
             $content = file_get_contents($file);
         }
         return $content;
     }
+
     public function html($argument){
-        if($argument){
-            $this->html = true;
-            $this->headers .= "MIME-Version: 1.0\r\n";
-            $this->headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-        }else{
-            $this->html = false;
-        }
+        $this->phpMail->isHTML($argument); 
     }
-    public function setTo($to){
-        $this->to = $to;
-        return $this;
+    public function setTo($to, $name = null){
+        if (empty($to)) return;
+        $this->phpMail->addAddress($to, $name);
     }
+
+    public function setFrom($from, $name = null) {
+        if (empty($from)) return;
+        $this->phpMail->SetFrom($from, $name);
+    }
+    
     public function setSubject($subject){
-        $this->subject = $subject;
-        return $this;
+        if (empty($subject)) return;
+        $this->phpMail->Subject = $subject;
     }
+
     public function setMessage($message){
-        $this->message = $message;
+        if (empty($message)) return;
+        $this->phpMail->Body = $message;
         return $this;
     }
     public function addMessage($message){
-        $this->message .= $message;
+        $this->phpMail->Body .= $message;
         return $this;
     }
-    public function setHeaders($headers){
-        $this->headers = $headers;
-        return $this;
-    }
-    public function addHeaders($headers){
-        $this->headers .= $headers;
-        return $this;
-    }
+
     public function isEmail($value){
         $value = new Value($value);
         return $value->is("email");
     }
+
     public function send(){
-        $this->succes = mail($this->to,$this->subject, $this->message,$this->headers);
+        $this->success = $this->phpMail->send();
         return $this;
+    }
+
+    public function setSMTP($host = "", $username = "", $password = "") {
+        if(empty($host) || empty($username) || empty($password)) {
+            $smtpConfig = \lib\Felta::getConfig("smtp");
+            $host = $smtpConfig["host"];
+            $username = $smtpConfig["username"];
+            $password = $smtpConfig["password"];
+            if(empty($host) || empty($username) || empty($password)) return;
+        }
+        $this->phpMail->isSMTP();
+        $this->phpMail->Host       = $host;
+        $this->phpMail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        $this->phpMail->Username   = $username;
+        $this->phpMail->Password   = $password;
+        $this->phpMail->SMTPSecure = 'tls';
+        $this->phpMail->Port       = 587;                  
     }
 }
 ?>
