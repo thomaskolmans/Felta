@@ -15,14 +15,14 @@ class Order {
     public $promotion;
     public $date;
 
-    private $shopitems = [];
+    private $products = [];
     
-    public function __construct($id,$customer,$orderStatus,$promotion,$date,$shopitems){
+    public function __construct($id,$customer,$orderStatus,$promotion,$date,$products){
         $this->sql = Felta::getInstance()->getSQL();
         $this->id = $id;
         $this->customer = $customer;
         $this->orderStatus = $orderStatus;
-        $this->shopitems = $shopitems;
+        $this->products = $products;
         $this->promotion = $promotion;
         $this->date = $date;
     }
@@ -30,9 +30,9 @@ class Order {
     public static function get($id){
         $sorder = Felta::getInstance()->getSQL()->select("*","shop_order",["id" => $id])[0];
         $sitems = Felta::getInstance()->getSQL()->select("*","shop_order_item",["oid" => $id]);
-        $shopitems = [];
+        $products = [];
         foreach($sitems as $item){
-            $shopitems[$item["iid"]] = $item["quantity"];
+            $products[$item["iid"]] = $item["quantity"];
         }
         return new Order(
             $id,
@@ -40,7 +40,7 @@ class Order {
             $sorder["orderStatus"],
             null,
             new \DateTime($sorder["order"]),
-            $shopitems
+            $products
         );
     }
 
@@ -53,10 +53,10 @@ class Order {
         return Order::create($customer,orderStatus::ACTIVE,null,$items);
     }
 
-    public static function create($customer,$orderStatus,$promotion,$shopitems){
+    public static function create($customer,$orderStatus,$promotion,$products){
         $id = UUID::generate(8);
         $date = new \DateTime();
-        return new Order($id,$customer,$orderStatus,$promotion,$date,$shopitems);
+        return new Order($id,$customer,$orderStatus,$promotion,$date,$products);
     }
 
     public static function getLatest($from,$until){
@@ -79,7 +79,7 @@ class Order {
             $this->promotion,
             $this->date->format("Y-m-d H:i:s")
         ]);
-        foreach($this->shopitems as $item => $quantity){
+        foreach($this->products as $item => $quantity){
             $uid = UUID::generate(20);
             $this->sql->insert("shop_order_item",[
                 $uid,
@@ -114,13 +114,13 @@ class Order {
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
         if(boolval($settings["exclbtw"])){
-            foreach($this->shopitems as $item => $quantity){
-                $itemv = ShopItemVariant::get($item);
+            foreach($this->products as $item => $quantity){
+                $itemv = ProductVariant::get($item);
                 $amount += intval($itemv->getPrice()) * $quantity;
             }
         } else {
-            foreach($this->shopitems as $item => $quantity){
-                $itemv = ShopItemVariant::get($item);
+            foreach($this->products as $item => $quantity){
+                $itemv = ProductVariant::get($item);
                 $amount += intval($itemv->getPrice()) * $quantity;
             }
             $amount -= $this->getBtw($amount, true); 
@@ -132,8 +132,8 @@ class Order {
     public function getTotalAmount(){
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
-        foreach($this->shopitems as $item => $quantity){
-            $itemv = ShopItemVariant::get($item);
+        foreach($this->products as $item => $quantity){
+            $itemv = ProductVariant::get($item);
             $amount += intval($itemv->getPrice()) * $quantity;
         }
         if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
@@ -155,14 +155,14 @@ class Order {
     }
 
     public function getShippingCost(){
-        $items = count($this->shopitems);
+        $items = count($this->products);
         $settings = Shop::getInstance()->getShipping();
         $price = $settings["amount"];
         $ipp = $settings["ipp"];
 
         $amount = $price;
         $counter = 0;
-        foreach($this->shopitems as $item => $quantity){
+        foreach($this->products as $item => $quantity){
             $counter += $quantity;
             if($counter > $ipp){
                 $amount += $price;
@@ -261,11 +261,11 @@ class Order {
         return $this;
     }
     public function addItem(array $item){
-        $shopitems[] = $item;
+        $products[] = $item;
     }
 
     public function removeItem($id){
-        unset($shopitems[$id]);
+        unset($products[$id]);
     }
 
     public function getItems(){
@@ -278,11 +278,11 @@ class Order {
         $this->date = $date;
         return $this;
     }
-    public function getShopItems(){
-        return $this->shopitems;
+    public function getProducts(){
+        return $this->products;
     }
-    public function setShopItems($shopitems){
-        $this->shopitems = $shopitems;
+    public function setProducts($products){
+        $this->products = $products;
         return $this;
     }
 }

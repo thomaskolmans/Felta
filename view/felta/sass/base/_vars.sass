@@ -1,4 +1,6 @@
 $base: #f1f1f1
+$black: #000c0c
+$white: white
 $main: #000c0c
 
 $gray: #ccc
@@ -10,53 +12,10 @@ $font: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif
 
 $s : .3s
 
+$defaultShadow: 0px 0px 30px -1px rgba(0,0,0, 0.3)
+
 @font-face
   font-family: FontAwesome
   src: url(../fonts/FontAwesome.otf)  
 
-=transition($s)
-  transition: $s
-  -webkit-transition: $s
-=psuedo()
-  content: " "
-  position: absolute
-  left: 0
-  top: 0
-  width: 100%
-  height: 100%
-
-=animation($animate...)
-  $max: length($animate)
-  $animations: ""
-
-  @for $i from 1 through $max
-    $animations: #{$animations + nth($animate, $i)}
-
-    @if $i < $max
-      $animations: #{$animations + ", "}
-
-  -webkit-animation: $animations
-  -moz-animation: $animations
-  -o-animation: $animations
-  animation: $animations
-
-=keyframes($animationName)
-  @-webkit-keyframes #{$animationName}
-    @content
-
-  @-moz-keyframes #{$animationName}
-    @content
-
-  @-o-keyframes #{$animationName}
-    @content
-
-  @keyframes #{$animationName}
-    @content
-+keyframes(load3)
-  0%
-    -webkit-transform: rotate(0deg)
-    transform: rotate(0deg)
-
-  100%
-    -webkit-transform: rotate(360deg)
-    transform: rotate(360deg)
+@import "base/mixins"

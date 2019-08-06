@@ -43,6 +43,7 @@ class PostController {
      */
     public static function ADD_AGENDA(){
         $agenda = new Agenda();
+        ECHO "EH!!!!";exit;
         $agenda->put(
             htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'),
@@ -71,6 +72,7 @@ class PostController {
         $agenda = new Agenda();
         $agenda->delete(["id"=>$id]);
         echo json_encode(["success" => "Agenda item has been succesfully deleted"]);
+        header("Location: /felta/agenda");
     }
 
     /**

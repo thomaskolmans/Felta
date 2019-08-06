@@ -14,7 +14,8 @@ class Agenda extends Post{
         "location" => "varchar(255)",
         "from" => "DateTime",
         "until" => "DateTime",
-        "posted" => "DateTime"
+        "createdAt" => "DateTime",
+        "updatedAt" => "DateTime"
     ];
 
     public function __construct(){
@@ -31,7 +32,9 @@ class Agenda extends Post{
             $location,
             $from->format("Y-m-d H:i:s"),
             $until->format("Y-m-d H:i:s"),
-            $now->format("Y-m-d H:i:s")]
+            $now->format("Y-m-d H:i:s"),
+            $now->format("Y-m-d H:i:s")
+            ]
         );
     }
     public function getAll(){

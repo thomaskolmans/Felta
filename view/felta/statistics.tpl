@@ -14,9 +14,11 @@
 </head>
 <body>
   <include>felta/parts/nav.tpl</include>
-  <div class="main dashboard">
-    <h1>Statistics</h1>
+  <div class="main-wrapper">
+    <div class="main dashboard">
+      <h1>Statistics</h1>
 
+    </div>
   </div>
 </body>
 </html>

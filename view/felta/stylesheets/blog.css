@@ -2,52 +2,40 @@
 @font-face {
   font-family: FontAwesome;
   src: url(../fonts/FontAwesome.otf); }
-@-webkit-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-@-moz-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-@-o-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
-@keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg); } }
 body {
   background: #f1f1f1;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-  overflow-x: none; }
+  overflow-x: none;
+  margin: 0; }
 
 * {
   box-sizing: border-box; }
 
+ul, menu {
+  padding: 0;
+  margin: 0; }
+
+iframe, image {
+  border: none; }
+
 hr {
   margin: 0; }
 
-h1.align-left, h2.align-left, h3.align-left, h4.align-left, h5.align-left, h6.align-left {
-  text-align: left !important; }
-h1.align-center, h2.align-center, h3.align-center, h4.align-center, h5.align-center, h6.align-center {
-  text-align: center !important; }
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
+  h1.align-left, h2.align-left, h3.align-left, h4.align-left, h5.align-left, h6.align-left {
+    text-align: left !important; }
+  h1.align-center, h2.align-center, h3.align-center, h4.align-center, h5.align-center, h6.align-center {
+    text-align: center !important; }
 
 section.hidden {
   display: none; }
+
+label {
+  display: block;
+  text-align: left;
+  color: #f1f1f1;
+  font-size: 0.9em; }
 
 .spinner {
   font-size: 10px;
@@ -88,9 +76,7 @@ section.hidden {
     margin: auto;
     position: absolute;
     top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0; }
+    left: 0; }
 
 .top {
   width: 100%;
@@ -214,6 +200,42 @@ section.hidden {
     .top button:active, .top button:focus {
       outline: none; }
 
+button, .button {
+  border: none;
+  border-radius: 4px;
+  background: #2196F3;
+  border: 2px solid #2196F3;
+  color: white;
+  padding: 10px 25px;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 600; }
+  button:focus, .button:focus {
+    outline: none; }
+  button:hover, .button:hover {
+    cursor: pointer;
+    color: #000c0c;
+    background: none;
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+  button.add, .button.add {
+    border-radius: 0px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    position: absolute;
+    right: 0;
+    top: -38px;
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+    button.add.tabs-above, .button.add.tabs-above {
+      top: -88px; }
+  button.black, .button.black {
+    background: #000c0c;
+    border-color: #000c0c; }
+    button.black:hover, .button.black:hover {
+      background: none;
+      color: #000c0c; }
+
 .select-box {
   max-width: 100%;
   position: relative;
@@ -273,7 +295,7 @@ section.hidden {
   height: 100vh;
   width: 180px;
   background: #000c0c;
-  box-shadow: 0px 0px 22px -5px black;
+  box-shadow: 0px 0px 22px -5px rgba(0, 0, 0, 0.5);
   z-index: 130;
   top: 0;
   left: 0; }
@@ -283,39 +305,60 @@ section.hidden {
     -webkit-transition: 0.3s; }
   .left img {
     width: 100px;
-    margin-top: 35px; }
+    margin: 35px auto 0;
+    display: block; }
   .left ul {
     margin-top: 35px;
     color: #f1f1f1;
     text-align: left;
-    list-style: none; }
-  .left a {
-    color: #f1f1f1;
-    text-decoration: none; }
-    .left a.active li, .left a:hover li {
-      cursor: pointer;
-      background: #151e23;
-      color: #2196F3;
+    list-style: none;
+    position: relative; }
+    .left ul a {
+      color: #f1f1f1;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%; }
+      .left ul a.active, .left ul a:hover {
+        color: #2196F3; }
+        .left ul a.active li, .left ul a:hover li {
+          cursor: pointer;
+          background: #151e23;
+          color: #2196F3;
+          transition: 0.3s;
+          -webkit-transition: 0.3s; }
+    .left ul li {
+      font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 100;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      box-sizing: border-box;
+      position: relative;
       transition: 0.3s;
       -webkit-transition: 0.3s; }
-  .left li {
-    font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
-    font-size: 17px;
-    font-weight: 100;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    box-sizing: border-box;
-    transition: 0.3s;
-    -webkit-transition: 0.3s; }
-    .left li:hover, .left li.active {
-      cursor: pointer;
-      background: #151e23;
-      color: #2196F3;
-      transition: 0.3s;
-      -webkit-transition: 0.3s; }
-    .left li i {
-      padding: 0 15px; }
+      .left ul li:hover, .left ul li.active {
+        cursor: pointer;
+        background: #151e23;
+        color: #2196F3;
+        transition: 0.3s;
+        -webkit-transition: 0.3s; }
+        .left ul li:hover ul, .left ul li.active ul {
+          display: block; }
+      .left ul li ul {
+        position: absolute;
+        width: 180px;
+        left: 180px;
+        top: 0;
+        margin: 0;
+        background: #000c0c;
+        box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.3);
+        z-index: 130;
+        display: none; }
+        .left ul li ul li {
+          padding-left: 15px; }
+      .left ul li i {
+        padding: 0 15px; }
   .left .bottom {
     width: 180px;
     height: 35px;
@@ -377,7 +420,23 @@ strong, b {
     font-weight: 500;
     font-size: 17px;
     user-select: none;
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    position: relative; }
+    .tabs .tab.add::before {
+      content: " ";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      content: "";
+      text-align: center;
+      line-height: 50px;
+      color: #2196F3;
+      font-family: FontAwesome;
+      font-size: 20px;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
     .tabs .tab.active {
       background: #151e23;
       color: #2196F3;

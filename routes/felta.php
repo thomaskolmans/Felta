@@ -94,11 +94,17 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
          */
         Route::group(["namespace" => "/shop"],function(){
             Route::get("/","felta/shop/dashboard.tpl");
+            Route::get(["/products", "/products/{from}/{until}"], "felta/shop/products.tpl");
+            Route::get("/categories", "felta/shop/categories.tpl");
             Route::get("/orders/{from}/{until}","felta/shop/orders.tpl");
+
             Route::get("/items", "felta/shop/items.tpl");
-            Route::get("/add/item","felta/shop/addShopItem.tpl");
-            Route::get("/update/item/{id}","felta/shop/updateShopItem.tpl");
+
+            Route::get("/add/item","felta/shop/create.tpl");
+            Route::get("/update/item/{id}","felta/shop/update.tpl");
+
             Route::get("/settings","felta/shop/settings.tpl");
+            
             Route::get("/transactions/{from}/{until}","felta/shop/transactions.tpl");
             Route::get("/transactions/week", function(){ ShopController::WEEK_TRANSACTIONS(); });
             Route::get("/transaction/{tid}","felta/shop/transaction.tpl");

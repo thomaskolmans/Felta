@@ -16,8 +16,8 @@
             use lib\Shop\Order;
             use lib\Shop\OrderStatus;
             use lib\Shop\Shop;
-            use lib\Shop\ShopItem;
-            use lib\Shop\ShopItemVariant;
+            use lib\Shop\Product;
+            use lib\Shop\ProductVariant;
             use lib\Shop\Shoppingcart;
             use lib\Shop\Customer;
             use lib\Felta;
@@ -115,20 +115,20 @@
                                 $iteration = 0;
                                 if(count($items) > 0){
                                     foreach($items as $item => $quantity){
-                                        $shopitemvariant = ShopItemVariant::get($item);
-                                        $images = $shopitemvariant->getImages();
+                                        $productvariant = ProductVariant::get($item);
+                                        $images = $productvariant->getImages();
                                         $image = count($images) > 0 ? $images[0] : "";
-                                        $shopitem = ShopItem::getSolo($shopitemvariant->getSid());
+                                        $product = Product::getSolo($productvariant->getSid());
                                         echo '
                                          <tr>
-                                            <td item-id="'.$shopitemvariant->getId().'">'.($iteration +1).'</td>
+                                            <td item-id="'.$productvariant->getId().'">'.($iteration +1).'</td>
                                             <td>
                                                 <img src="'.$image.'">
                                             </td>
-                                            <td><span>€</span>'.Shop::intToDouble($shopitemvariant->getPrice()).'</td>
-                                            <td>'.$shopitem->getName().'</td>
+                                            <td><span>€</span>'.Shop::intToDouble($productvariant->getPrice()).'</td>
+                                            <td>'.$product->getName().'</td>
                                             <td>'.$quantity.'</td>
-                                            <td><div class="delete" onclick="removeItem(\''. $shopitemvariant->getId().'\')"></div></td>
+                                            <td><div class="delete" onclick="removeItem(\''. $productvariant->getId().'\')"></div></td>
                                          </tr>';
                                         $iteration++;
                                     }
@@ -190,23 +190,23 @@
                         $iteration = 0;
                         if(count($items) > 0){
                             foreach($items as $item => $quantity){
-                                $shopitemvariant = ShopItemVariant::get($item);
-                                $images = $shopitemvariant->getImages();
+                                $productvariant = ProductVariant::get($item);
+                                $images = $productvariant->getImages();
                                 $image = count($images) > 0 ? $images[0] : "";
-                                $shopitem = ShopItem::getSolo($shopitemvariant->getSid());
+                                $product = Product::getSolo($productvariant->getSid());
                                 echo '
                                  <tr>
                                     <td>
                                         <img src="'.$image.'">
                                     </td>
-                                    <td>€'.Shop::intToDouble($shopitemvariant->getPrice()).'</td>
-                                    <td>'.$shopitem->getName().'</td>
+                                    <td>€'.Shop::intToDouble($productvariant->getPrice()).'</td>
+                                    <td>'.$product->getName().'</td>
                                     <td>
-                                        <input type="button" value="-" id="moins" onclick="mi('.$iteration.', \''.$shopitemvariant->getId().'\')" />
+                                        <input type="button" value="-" id="moins" onclick="mi('.$iteration.', \''.$productvariant->getId().'\')" />
                                         <input type="text" size="25" value="'.$quantity.'" id="amount'.$iteration.'" >
-                                        <input type="button" value="+" id="plus" onclick="plu('.$iteration. ' ,\''. $shopitemvariant->getId().'\')"/>
+                                        <input type="button" value="+" id="plus" onclick="plu('.$iteration. ' ,\''. $productvariant->getId().'\')"/>
                                     </td>
-                                    <td><div class="delete" onclick="removeItem(this,\''. $shopitemvariant->getId().'\')"></div></td>
+                                    <td><div class="delete" onclick="removeItem(this,\''. $productvariant->getId().'\')"></div></td>
                                  </tr>';
                                 $iteration++;
                             }

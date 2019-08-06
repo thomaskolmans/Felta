@@ -96,10 +96,10 @@ class Customer{
         }
         return false;
     }
+
     public function logout(){
         unset($_SESSION["shop_account"]);
     }
-
 }
 
 ?>

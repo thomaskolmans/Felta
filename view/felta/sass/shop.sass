@@ -1,3 +1,4 @@
+@import "base/mixins"
 
 $base: #f1f1f1
 $main: #000c0c
@@ -15,44 +16,7 @@ $s : .3s
   font-family: FontAwesome
   src: url(../fonts/FontAwesome.otf)  
 
-=transition($s)
-  transition: $s
-  -webkit-transition: $s
-=psuedo()
-  content: " "
-  position: absolute
-  left: 0
-  top: 0
-  width: 100%
-  height: 100%
 
-=animation($animate...)
-  $max: length($animate)
-  $animations: ""
-
-  @for $i from 1 through $max
-    $animations: #{$animations + nth($animate, $i)}
-
-    @if $i < $max
-      $animations: #{$animations + ", "}
-
-  -webkit-animation: $animations
-  -moz-animation: $animations
-  -o-animation: $animations
-  animation: $animations
-
-=keyframes($animationName)
-  @-webkit-keyframes #{$animationName}
-    @content
-
-  @-moz-keyframes #{$animationName}
-    @content
-
-  @-o-keyframes #{$animationName}
-    @content
-
-  @keyframes #{$animationName}
-    @content
 +keyframes(load3)
   0%
     -webkit-transform: rotate(0deg)
@@ -688,14 +652,14 @@ button
   left: 180px !important
   background: none !important
 .image-selector
-  height: 100px
+  height: 90px
   margin-top: 15px
   span
     display: inline-block
     position: relative
   .add,img
-    width: 100px
-    height: 100px
+    width: 90px
+    height: 90px
     display: inline-block
     background: $main
     position: relative
@@ -703,19 +667,19 @@ button
     &:hover
       cursor: pointer
       &::before
-        font-size: 45px
+        font-size: 35px
         +transition($s)
     &::before
       +psuedo()
       content: "\f067"
-      width: 100px
-      height: 100px
+      width: 90px
+      height: 90px
       text-align: center
-      line-height: 100px
+      line-height: 90px
       color: $lightblue
       font:
         family: FontAwesome
-        size: 35px
+        size: 30px
       +transition($s)
   .delete
     position: absolute

@@ -1,25 +1,29 @@
 @import "base/_base"
 
 .error
-  color: white
-  width: 100%
+  color: $white
+  width: calc(100% - 50px)
   margin: 0 25px 35px
+  text-align: center
+  border-bottom: 2px solid $red
 
 form
   position: absolute
   width: 320px
+  padding: 18px 0
   background: $main
   transform: translate(-50%,-50%)
   left: 50%
   top: 50%
   display: inline-block
-  box-shadow: 0px 0px 30px -1px rgba(0,0,0, 0.3)
-  .remember
-    width: 125px
-    height: 20px
-    line-height: 20px
-    margin-right: auto
-    margin-left: 35px
+  box-shadow: $defaultShadow
+  .remember-group
+    width: 100%
+    display: flex
+    .remember
+      width: auto
+      margin-right: 0
+      margin-left: 25px
   img
     max-width: 100px
     height: 100px

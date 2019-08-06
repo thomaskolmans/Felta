@@ -73,26 +73,26 @@ class Shop {
     }
 
     public static function getImage($id){
-        return Felta::getInstance()->getSQL()->select("*","shop_item_variant_image",["sid" => $id]);
+        return Felta::getInstance()->getSQL()->select("*","shop_product_variant_image",["sid" => $id]);
     }
 
     public static function deleteImage($url){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_item_variant_image",["url" => $url])[0];
+        $result = Felta::getInstance()->getSQL()->select("*","shop_product_variant_image",["url" => $url])[0];
         $url = $result["url"];
-        Felta::getInstance()->getSQL()->delete("shop_item_variant_image",["id" => $result["id"]]);
+        Felta::getInstance()->getSQL()->delete("shop_product_variant_image",["id" => $result["id"]]);
         unset($url);
     }
 
     public static function getItems(){
-        return Felta::getInstance()->getSQL()->select("*", "shop_item",[]);
+        return Felta::getInstance()->getSQL()->select("*", "shop_product",[]);
     }
 
     public static function getItemsByCatagory($catagory){
-        return Felta::getInstance()->getSQL()->select("*", "shop_item",["catagory" => $catagory]);
+        return Felta::getInstance()->getSQL()->select("*", "shop_product",["catagory" => $catagory]);
     }
 
     public static function getVariants($sid){
-        return Felta::getInstance()->getSQL()->select("*","shop_item_variant",["sid" => $sid]);
+        return Felta::getInstance()->getSQL()->select("*","shop_product_variant",["sid" => $sid]);
     }
 
     public function save(){

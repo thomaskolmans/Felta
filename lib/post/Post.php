@@ -20,7 +20,7 @@ abstract class Post implements IPost{
         return array_keys($structure)[0];
     }
     public function add(array $values){
-        $this->sql->insert($this->name,$values);
+        $this->sql->insert($this->name, $values);
         return $this;
     }
     public function delete(array $whereequals){

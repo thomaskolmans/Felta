@@ -8,7 +8,7 @@ return array(
     ),
 
     "website_url" => "",
-    "website_name" => "test",
+    "website_name" => "Felta",
 
     "default_dir" => "/data//",
 

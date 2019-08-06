@@ -152,122 +152,124 @@
 </head>
 <body>
   <include>felta/parts/nav.tpl</include>
-  <div class="main dashboard container multi-page" id="main">
-    <h1> Agenda </h1>
-    <div class="stats no-margin agenda relative">
-      <a href="#new"><button class="add">Add date</button></a>
-      <table>
-      <tr>
-        <th>Title</th>
-        <th>Location</th>
-        <th>From</th>
-        <th>Until</th>
-        <th class="clear"></th>
-        <th class="clear"></th>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <?php
-          $agenda = new lib\Post\Agenda();
-          $items = $agenda->getAll();
-          if($items != null){
-            foreach($items as $item){
-              echo "
-              <tr>
-                <td class='align-left'>{$item['title']}</td>
-                <td class='align-left'>{$item['location']}</td>
-                <td>{$item['from']}</td>
-                <td>{$item['until']}</td>
-                <td><a href='/felta/agenda/id/update/agenda_id/".$item["id"]."'><button>Edit</button></a></td>
-                <td><a href='/felta/agenda/delete/".$item["id"]."'><div class='delete'></div></a></td>
-              </tr>
-              ";
+  <div class="main-wrapper">
+    <div class="main dashboard container multi-page" id="main">
+      <h1> Agenda </h1>
+      <div class="stats no-margin agenda relative">
+        <a href="#new"><button class="add">Add date</button></a>
+        <table>
+        <tr>
+          <th>Title</th>
+          <th>Location</th>
+          <th>From</th>
+          <th>Until</th>
+          <th class="clear"></th>
+          <th class="clear"></th>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <?php
+            $agenda = new lib\Post\Agenda();
+            $items = $agenda->getAll();
+            if($items != null){
+              foreach($items as $item){
+                echo "
+                <tr>
+                  <td class='align-left'>{$item['title']}</td>
+                  <td class='align-left'>{$item['location']}</td>
+                  <td>{$item['from']}</td>
+                  <td>{$item['until']}</td>
+                  <td><a href='/felta/agenda/id/update/agenda_id/".$item["id"]."'><button>Edit</button></a></td>
+                  <td><a href='/felta/agenda/delete/".$item["id"]."'><div class='delete'></div></a></td>
+                </tr>
+                ";
+              }
+            }else{
+              echo "<tr> <td colspan='7'><i>No agenda items</i></td></tr>";
             }
-          }else{
-            echo "<tr> <td colspan='7'><h3>No agenda items</h3></td></tr>";
-          }
-      ?>
-      </table>
+        ?>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="main dashboard multi-page" id="new">
-    <h1>New agenda item</h1>
-    <form method="post" class="agenda">
-      <div class="input-group">
-        <label>Title</label>
-        <input type="text" name="title" placeholder="A boat tour through Amsterdam" />
-      </div>
-      <div class="input-group">
-        <label>Where?</label>
-        <input type="text" name="location" placeholder="Amsterdam, The Netherlands">
-      </div>
-      <div class="input-group">
-        <label>From?</label>
-        <input type="text" id="datetimepicker_from" name="date" />
-      </div>
-      <div class="input-group">
-        <label>Until?</label>
-        <input type="text" id="datetimepicker_until" name="date" />
-      </div>
-      <div class="input-group">
-        <label>Description</label>
-        <div id="editor"></div>
-        <textarea style="display: none" id="description" name="description">
-      </div>
-      <div class="input-group right">
-        <a href="/felta/agenda"><input type="button" value="Cancel" id="cancel_agenda"></a>
-        <input type="submit" name="new_agenda" value="Add item">
-      </div>
-    </form>
-  </div>
-  <div class="main dashboard multi-page" id="update">
-    <h1>Edit agenda item</h1>
-    <?php
-      $agenda_id = $_GET["agenda_id"];
-      $agenda = new lib\Post\Agenda();
-      $agenda_item = $agenda->getById($agenda_id);
+    <div class="main dashboard multi-page" id="new">
+      <h1>New agenda item</h1>
+      <form method="post" class="full">
+        <div class="input-group">
+          <label>Title</label>
+          <input type="text" name="title" placeholder="A boat tour through Amsterdam" />
+        </div>
+        <div class="input-group">
+          <label>Location</label>
+          <input type="text" name="location" placeholder="Amsterdam, The Netherlands">
+        </div>
+        <div class="input-group">
+          <label>From</label>
+          <input type="text" id="datetimepicker_from" name="date" />
+        </div>
+        <div class="input-group">
+          <label>Until</label>
+          <input type="text" id="datetimepicker_until" name="date" />
+        </div>
+        <div class="input-group">
+          <label>Description</label>
+          <div id="editor"></div>
+          <textarea style="display: none" id="description" name="description">
+        </div>
+        <div class="input-group right">
+          <a href="/felta/agenda"><input type="button" value="Cancel" id="cancel_agenda"></a>
+          <input type="submit" name="new_agenda" value="Add item">
+        </div>
+      </form>
+    </div>
+    <div class="main dashboard multi-page" id="update">
+      <h1>Edit agenda item</h1>
+      <?php
+        $agenda_id = $_GET["agenda_id"];
+        $agenda = new lib\Post\Agenda();
+        $agenda_item = $agenda->getById($agenda_id);
 
-      $title = $agenda_item['title'];
-      $location = $agenda_item['location'];
-      $from = $agenda_item['from'];
-      $until = $agenda_item['until'];
-      $description = $agenda_item['description'];
-    ?>
-    <form method="post" class="agenda" action="/felta/agenda/update">
-      <?php echo '<input type="text" name="id" value="'.$agenda_id.'" style="display:none" /> '; ?>
-      <div class="input-group">
-        <label>Title</label>
-        <?php echo '<input type="text" name="title" value="'.$title.'" placeholder="A boat tour through Amsterdam" />'; ?>
-      </div>
-      <div class="input-group">
-        <label>Where?</label>
-        <?php echo '<input type="text" name="location" value="'.$location.'" placeholder="Amsterdam, The Netherlands">'; ?>
-      </div>
-      <div class="input-group">
-        <label>From?</label>
-        <?php echo '<input type="datetime" date="'.$from.'" value="'.$from.'" id="datetimepicker_update_from" name="from" />'; ?>
-      </div>
-      <div class="input-group">
-        <label>Until?</label>
-        <?php echo '<input type="datetime" date="'.$until.'" value="'.$until.'" id="datetimepicker_update_until" name="until" />'; ?>
-      </div>
-      <div class="input-group">
-        <label>Description</label>
-        <?php echo '<div id="update_editor">'.$description.'</div>'; ?>
-        <?php echo '<textarea style="display: none" id="update_editor_value" value="'.$description.'" name="description"></textarea>'; ?>
-      </div>
-      <div class="input-group right">
-        <a href="/felta/agenda"><input type="button" value="Cancel" id="cancel_agenda"></a>
-        <input type="submit" name="new_agenda" value="Update item">
-      </div>
-    </form>
+        $title = $agenda_item['title'];
+        $location = $agenda_item['location'];
+        $from = $agenda_item['from'];
+        $until = $agenda_item['until'];
+        $description = $agenda_item['description'];
+      ?>
+      <form method="post" class="full" action="/felta/agenda/update">
+        <?php echo '<input type="text" name="id" value="'.$agenda_id.'" style="display:none" /> '; ?>
+        <div class="input-group">
+          <label>Title</label>
+          <?php echo '<input type="text" name="title" value="'.$title.'" placeholder="A boat tour through Amsterdam" />'; ?>
+        </div>
+        <div class="input-group">
+          <label>Where?</label>
+          <?php echo '<input type="text" name="location" value="'.$location.'" placeholder="Amsterdam, The Netherlands">'; ?>
+        </div>
+        <div class="input-group">
+          <label>From?</label>
+          <?php echo '<input type="datetime" date="'.$from.'" value="'.$from.'" id="datetimepicker_update_from" name="from" />'; ?>
+        </div>
+        <div class="input-group">
+          <label>Until?</label>
+          <?php echo '<input type="datetime" date="'.$until.'" value="'.$until.'" id="datetimepicker_update_until" name="until" />'; ?>
+        </div>
+        <div class="input-group">
+          <label>Description</label>
+          <?php echo '<div id="update_editor">'.$description.'</div>'; ?>
+          <?php echo '<textarea style="display: none" id="update_editor_value" value="'.$description.'" name="description"></textarea>'; ?>
+        </div>
+        <div class="input-group right">
+          <a href="/felta/agenda"><input type="button" value="Cancel" id="cancel_agenda"></a>
+          <input type="submit" name="new_agenda" value="Update item">
+        </div>
+      </form>
+    </div>
   </div>
 </body>
 </html>

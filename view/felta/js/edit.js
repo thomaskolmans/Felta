@@ -229,6 +229,9 @@ function editor(id){
             default:
               id = atr.attr("edit");
               var ck = document.getElementById('iframe').contentWindow.CKEDITOR;
+              ck.editorConfig = function( config ) {
+                config.removePlugins = 'easyimage, cloudservices';
+              };
               if(atr != "" && id != previous || ck.instances.length == 0){
                   for(name in ck.instances){
                       ck.instances[name].destroy(true);
@@ -244,7 +247,9 @@ function editor(id){
                           isLoading = true;
                       },
                       success: function(output) {
-                        var ckeditor = ck.inline(id);
+                        var ckeditor = ck.inline(id, {
+                          removePlugins: 'easyimage, cloudservices'
+                        });
                         ckeditor.on('change',function(e){
                           var language = getLanguage();
                           save(id,e.editor.getData(),language);
@@ -252,7 +257,6 @@ function editor(id){
                         ckeditor.on('blur', function(e){
                           var language = getLanguage();
                           save(id,e.editor.getData(),language);
-                          e.editor.destroy(true);
                         });
                       }
                   });

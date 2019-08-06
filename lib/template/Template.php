@@ -1,16 +1,15 @@
 <?php
 namespace lib\template;
 
-use lib\routing\Router;
-use lib\routing\Route;
+use lib\Routing\Router;
+use lib\Routing\Route;
 use lib\Cleverload;
-use lib\Felta;
 
-class Template extends Router {
+class Template extends Router{
     
     public $route = null;
     public $filepath = "";
-    public $dom;
+    public $dom = null;
 
     public static $php = [];
 
@@ -19,8 +18,11 @@ class Template extends Router {
         if($input instanceof Route){
             $this->route = $input;
             $this->filepath = Cleverload::getInstance()->getViewDir()."/".$input->getFile();
-            $this->dom = $this->getDomFromFile($this->getFile());
-        }else{
+            $file = $this->getFile();
+            if ($file != null){
+                $this->dom = $this->getDomFromFile($file);
+            }
+        } else {
             $this->dom = $this->getDom($input);
         }
 
@@ -34,13 +36,13 @@ class Template extends Router {
         if(file_exists($this->filepath)){
             return $this->filepath;
         }
-        return $this->route->getRouter()->response->notfound();
+        return null;
     }
 
     public function getFileInfo(){
         return pathinfo($this->getFile());
     }
-    
+
     public function getDomFromFile($file){
         $dom = new \DOMDocument();
         $content = file_get_contents($file);
@@ -88,20 +90,23 @@ class Template extends Router {
         return $content;
     }
 
-    public static function insertPHP($content){
+    public static function insertPHP($content){        
         $matches = self::getInBetween($content,"<?php"," ?>");
         for($i = 0; $i < count($matches); $i++){
             $match = trim($matches[$i]);
             if($i <= count(self::$php) - 1){
-                if(self::$php[$i][0] == $match){
-                    $content = str_replace(trim($match), self::$php[$i][1], $content);
+                foreach(self::$php as $phpPart) {
+                    if($phpPart[0] === $match){
+                        $content = str_replace(trim($match), $phpPart[1], $content);
+                        break;
+                    }
                 }
                 continue;
             }
         }
         return $content;
     }
-    
+
     public static function getInBetween($string, $start, $end){
         $contents = array();
         $startLength = strlen($start);
@@ -121,8 +126,10 @@ class Template extends Router {
     }
 
     public function load(){
-        $templateEdit = new TemplateEdit($this->dom);
-        $templateloader = new TemplateLoader($this);
-        return $templateloader->execute();
+        if ($this->dom != null && !empty($this->dom)) {
+            $templateEdit = new TemplateEdit($this->dom);
+            $templateloader = new TemplateLoader($this);
+            return $templateloader->execute();
+        }
     }
 }

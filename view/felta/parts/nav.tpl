@@ -21,8 +21,21 @@
      <a href="/felta/social"><li><i class="fa fa-users"></i>Social</li></a>
      <a href="/felta/audio"><li><i class="fa fa-volume-up"></i>Audio</li></a>
      <a href="/felta/blog"><li><i class="fa fa-pencil"></i>Blog</li></a>
+     <a href="/felta/faq"><li><i class="fa fa-pencil"></i>FAQ</li></a>
      -->
-     <a href="/felta/shop"><li><i class="fa fa-shopping-cart"></i>Shop</li></a>
+     <a href="/felta/shop">
+      <li>
+        <i class="fa fa-shopping-cart"></i>
+        Shop
+        <ul>
+          <a href="/felta/shop/orders/0/20"><li>Orders</li></a>
+          <a href="/felta/shop/categories"><li>Categories</li></a>
+          <a href="/felta/shop/products/0/20"><li>Products</li></a>
+          <a href="/felta/shop/transactions/0/20"><li>Transactions</li></a>
+          <a href="/felta/shop/promotions/0/20"><li>Promotions</li></a>
+        </ul>
+      </li>
+     </a>
      <a href="/felta/statistics"><li><i class="fa fa-bar-chart"></i>Statistics</li></a>
    </ul>
     <div class="bottom">

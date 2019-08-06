@@ -55,6 +55,9 @@ class Payment{
             case "ideal":
                 $this->charge();
             break;
+            case "mollie":
+                
+            break;
         }
     }
 

@@ -4,8 +4,9 @@ namespace lib\Template;
 use lib\post\Edit;
 use lib\helpers\Language;
 use lib\database\SQL;
-use \DateTime;
 use lib\Felta;
+
+use \DateTime;
 
 class TemplateEdit{
     
@@ -188,7 +189,7 @@ class TemplateEdit{
                         switch(strtolower($child->tagName)){
                             case "img":
                             case "iframe":
-                                $child->setAttribute("src",$this->edit->getText($id));
+                                $child->setAttribute("src", $this->edit->getText($id));
                             break;
                             default:
                                 $child->nodeValue = $this->edit->getText($id);
@@ -200,16 +201,21 @@ class TemplateEdit{
         }
         $this->dom->getElementsByTagName("html")[0]->setAttribute("lang",$this->language->get($this->language->getLanguageList()));
     }
+
     private function saveText($id,$text,$language){
-        if(!$this->sql->exists("post_edit",["id" => $id, "language" => $language])){
+        $now = new DateTime();
+        if(!$this->sql->exists("post_edit",["key" => $id, "language" => $language])){
             $this->sql->insert("post_edit",array(
                 0,
                 $id,
                 $text,
-                $language
+                $language,
+                $now->format("Y-m-d H:i:s"),
+                $now->format("Y-m-d H:i:s")
             ));
         }
     }
+
     private function getHTML($node){
         if($node instanceof DOMNode){
             $html = "";

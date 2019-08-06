@@ -4,7 +4,7 @@ namespace lib\shop;
 use lib\Felta;
 use lib\helpers\UUID;
 
-class Shoppingcart{
+abstract class ProductList{
 
     private $sql;
 
@@ -15,7 +15,6 @@ class Shoppingcart{
         $this->sql = Felta::getInstance()->getSQL();
         $this->id = $id;
     }
-
 
     public static function create(){
         return new Shoppingcart(UUID::generate(20));
@@ -55,19 +54,19 @@ class Shoppingcart{
     }
 
     public function set($item,$quantity){
-        if(ShopItemVariant::exists($item) && is_numeric($quantity)){
+        if(ProductVariant::exists($item) && is_numeric($quantity)){
             $this->items[$item] = $quantity;
             $this->save();
         }
     }
     public function add($item,$quantity){
-        if(ShopItemVariant::exists($item) && is_numeric($quantity)){
+        if(ProductVariant::exists($item) && is_numeric($quantity)){
             $this->items[$item] = $quantity;
             $this->save();
         }
     }
     public function update($item,$quantity){
-        if(ShopItemVariant::exists($item) && is_numeric($quantity)){
+        if(ProductVariant::exists($item) && is_numeric($quantity)){
             $this->items[$item] = $quantity;
             $this->updatesql($item,$quantity);
         }
@@ -94,7 +93,7 @@ class Shoppingcart{
         $settings = Shop::getInstance()->getSettings();
         if(boolval($settings["exclbtw"])){
             foreach($this->items as $item => $quantity){
-                $itemv = ShopItemVariant::get($item);
+                $itemv = ProductVariant::get($item);
                 $amount += intval($itemv->getPrice()) * $quantity;
             }
             if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
@@ -102,7 +101,7 @@ class Shoppingcart{
             }
         } else {
             foreach($this->items as $item => $quantity){
-                $itemv = ShopItemVariant::get($item);
+                $itemv = ProductVariant::get($item);
                 $amount += intval($itemv->getPrice()) * $quantity;
             }
             if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
@@ -118,7 +117,7 @@ class Shoppingcart{
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
         foreach($this->items as $item => $quantity){
-            $itemv = ShopItemVariant::get($item);
+            $itemv = ProductVariant::get($item);
             $amount += intval($itemv->getPrice()) * $quantity;
         }
         if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){

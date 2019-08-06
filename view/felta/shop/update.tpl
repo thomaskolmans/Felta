@@ -17,15 +17,15 @@
   <div class="main dashboard container" id="main">
     <?php
       use lib\Shop\Shop;
-      use lib\Shop\ShopItem;
-      use lib\Shop\ShopItemVariant;
+      use lib\Shop\Product;
+      use lib\Shop\ProductVariant;
 
       if(isset($_GET["id"])){
         $itemid = $_GET["id"];
-        if(ShopItem::exists($itemid)){
-          $item = ShopItem::get($itemid);
+        if(Product::exists($itemid)){
+          $item = Product::get($itemid);
         ?>
-    <h1>Update Item</h1>
+    <h1>Update product</h1>
     <form method="post" class="news" action="/felta/shop/update/item">
       <div class="input-group">
         <label>Title</label>

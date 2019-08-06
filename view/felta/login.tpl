@@ -18,7 +18,7 @@
                <label>Password</label>
                <input type="password" name="password" id="login_password">
             </div>
-            <div class="input-group">    
+            <div class="input-group remember-group">    
                <label class="remember" for="remember" >Remember me</label>
                <input class="remember" type="checkbox" id="remember" name="remember">
             </div>

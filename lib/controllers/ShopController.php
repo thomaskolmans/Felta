@@ -8,12 +8,15 @@ use lib\shop\Shoppingcart;
 use lib\shop\Promotion;
 use lib\shop\Order;
 use lib\shop\OrderStatus;
-use lib\shop\ShopItem;
-use lib\shop\ShopItemVariant;
+use lib\shop\Product;
+use lib\shop\ProductVariant;
 use lib\shop\Customer;
 use lib\shop\CustomerAddress;
 use lib\shop\Transaction;
 use lib\shop\Payment;
+
+use lib\Helpers\UUID;
+use lib\Filesystem\File;
 
 class ShopController {
 
@@ -29,7 +32,7 @@ class ShopController {
 		$catagory = $_POST["catagory"];
 		$description = $_POST["description"];
 		$image = null;
-		$shopitem = ShopItem::create($name,$catagory,$description,$image,true);
+		$product = Product::create($name,$catagory,$description,$image,true);
 
 		$variants = 1;
 		$ItemVariants = [];
@@ -41,8 +44,8 @@ class ShopController {
 		    $quantity = $_POST["quantity".$i];
 		    $images = $_POST["images"];
 
-		    $ItemVariants[] = ShopItemVariant::create(
-		        $shopitem->getId(),
+		    $ItemVariants[] = ProductVariant::create(
+		        $product->getId(),
 		        str_replace([",","."],["",""],$amount),
 		        $currency,
 		        $images,
@@ -51,24 +54,24 @@ class ShopController {
 		    );
 		}
 
-		$shopitem->setVariants($ItemVariants);
-        $shopitem->save();
+		$product->setVariants($ItemVariants);
+        $product->save();
         echo json_encode(["success" => "Item has succesfully added"]);
 	}
 
 	public static function UPDATE_ITEM(){
         $id = $_POST["id"];
-        $shopitem = ShopItem::get($id);
+        $product = Product::get($id);
 
-        $shopitem->setName($_POST["name"]);
-        $shopitem->setCatagory($_POST["catagory"]);
-        $shopitem->setDescription($_POST["description"]);
-        $shopitem->update();
+        $product->setName($_POST["name"]);
+        $product->setCatagory($_POST["catagory"]);
+        $product->setDescription($_POST["description"]);
+        $product->update();
 
         $variants = 1;
         $ItemVariants = [];
         $i = 1;
-        foreach($shopitem->getVariants() as $variant){
+        foreach($product->getVariants() as $variant){
             $amount = $_POST["amount".$i];
             $currency = $_POST["currency".$i];
             $variables = $_POST["variables".$i];
@@ -82,14 +85,14 @@ class ShopController {
             $variant->update();
             $i++;
         }
-        $shopitem->setVariants($ItemVariants);
-        $shopitem->update();
+        $product->setVariants($ItemVariants);
+        $product->update();
         echo json_encode(["success" => "Item has succesfully updated"]);
 	}
 
 	public static function DELETE_ITEM($id){
-        $shopitem = ShopItem::get($id);
-        $shopitem->delete();
+        $product = Product::get($id);
+        $product->delete();
         echo json_encode(["success" => "Item has succesfully deleted"]);
 	}
 
@@ -97,8 +100,8 @@ class ShopController {
      * Images
      */
     public static function UPLOAD_IMAGE(){
-        $uid = \lib\Helpers\UUID::generate(20);
-        $file =  new lib\Filesystem\File($_FILES["picture"],null);
+        $uid = UUID::generate(20);
+        $file =  new File($_FILES["picture"],null);
         $file->setExtension("png");
         $file->setName($uid);
         $file->upload(null);

@@ -36,12 +36,21 @@ class UserController {
         $user = Felta::getInstance()->user;
         $user->recoverPassword($_POST["token"],$_POST["password"],$_POST["repeatpassword"]);
         return json_encode(["success", "Password has been reset"]);
+        header("Location: /felta");
     }
+
+
+	public static function DELETE_USER(){
+		$user = Felta::getInstance()->user;
+		$user->delete($_POST['id']);
+		echo json_encode(["success" => "Successfully deleted user"]);
+	}
 
     public static function LOGOUT(){
         $user = Felta::getInstance()->user;
         $user->logout();
         echo json_encode(["success" => "You have successfully logged out"]);
+        header("Location: /felta");
     }
 
     public static function UPDATE_SETTINGS(){

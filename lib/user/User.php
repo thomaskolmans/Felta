@@ -240,7 +240,7 @@ class User extends Felta{
         if(!isset($_SESSION["user"])){
             if(isset($_COOKIE["session_key"])){
                 $id = $_COOKIE["id"];
-                $db_key = $this->sql->select("key",$this->table."_remember",array("id" => $id));
+                $db_key = $this->sql->select("`key`",$this->table."_remember",array("id" => $id));
                 if($db_key == $_COOKIE["session_key"]){
                     $this->setSessionFromId($id);
                     return true;

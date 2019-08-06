@@ -15,7 +15,7 @@ $sql->create("felta",[
     "id" => "int auto_increment",
     "online" => "boolean",
     "date" => "DateTime"
-],"id");
+], "id");
 $sql->insert("felta",[
     0,
     true,
@@ -34,56 +34,59 @@ $sql->create("settings", [
 /**
  * Blog
  */
-$this->sql->create("blog",[
+$sql->create("blog",[
     "id" => "int auto_increment",
     "title" => "varchar(556)",
-    "initiated" => "DateTime"
+    "createdAt" => "DateTime",
+    "updatedAt" => "DateTime"
 ],"id");
-$this->sql->create("blog_article", [
+$sql->create("blog_article", [
     "id" => "int auto_increment",
     "blog_id" => "int",
     "title" => "varchar(556)",
     "author" => "varchar(255)",
     "content" => "longtext",
-    "posted" => "DateTime"
+    "createdAt" => "DateTime",
+    "updatedAt" => "DateTime"
 ], "id");
-$this->sql->create("blog_comment", [
+$sql->create("blog_comment", [
     "id" => "int auto_increment",
     "article_id" => "int",
     "parent_id" => "int",
     "name" => "varchar(255)",
     "comment" => "longtext",
-    "posted" => "DateTime"
+    "createdAt" => "DateTime",
+    "updatedAt" => "DateTime"
 ], "id");
-$this->sql->create("blog_like", [
+
+$sql->create("blog_like", [
     "id" => "int auto_increment",
     "article_id" => "int",
     "user_id" => "int"
-]);
-}
+], "id");
 
 /**
  * Statistics
  */
 
-$this->sql->create("visitors_total",[
+$sql->create("visitors_total",[
     "id" => "int auto_increment",
     "ip" => "varchar(65)",
     "date" => "DateTime"
     ],"id");
-$this->sql->create("visitors_unique",[
+$sql->create("visitors_unique",[
     "id" => "int auto_increment",
     "ip" => "varchar(65)",
     "date" => "DateTime"
     ],"id");
-$this->sql->create("visitors_total_location",[
+$sql->create("visitors_total_location",[
     "id" => "int auto_increment",
     "ip" => "varchar(65)",
     "lat" => "varchar(255)",
     "long" => "varchar(255)",
     "date" => "DateTime"
 ],"id");
-$this->sql->create("visitors_unique_location",[
+$sql->create("visitors_unique_location",[
     "id" => "int auto_increment",
     "ip" => "varchar(65)",
     "lat" => "varchar(255)",
@@ -154,14 +157,17 @@ $sql->create("shop_product",[
     "id" => "varchar(255)",
     "name" => "varchar(560)",
     "catagory" => "varchar(512)",
+    "short_description" => "longtext",
     "description" => "longtext",
     "image" => "int",
     "date" => "DateTime",
     "active" => "boolean"
 ],"id");
+
 $sql->create("shop_product_variant",[
     "id" =>  "varchar(255)",
     "sid" => "varchar(255)",
+    "name" => "varchar(255)",
     "price" => "int",
     "currency" => "varchar(3)",
     "quantity" => "int",
@@ -172,7 +178,7 @@ $sql->create("shop_product_variant_image",[
     "id" => "int auto_increment",
     "sid" => "varchar(255)",
     "url" => "varchar(255)"
-],"id");
+], "id");
 
 $sql->create("shop_order",[
     "id" => "varchar(255)",

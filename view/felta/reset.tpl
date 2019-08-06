@@ -25,7 +25,7 @@
               <input type="password" name="repeat_password">
           </div>
 
-          <input type="submit" name="newpassword" value="Reset">
+          <input type="submit" name="newpassword" value="reset">
       </form>
 <?php
         if(isset($_POST['newpassword'])){
@@ -46,7 +46,7 @@
           <label>Your username/email</label>
           <input type="text" name="email">
         </div>
-        <input type="submit" name="reset" value="Recover">
+        <input type="submit" name="reset" value="recover">
         <a href="/felta" class="center">Back</a>
       </form>
     <?php } 
