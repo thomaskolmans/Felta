@@ -202,6 +202,7 @@ class User extends Felta{
 
             $email = new Email();
             $email->html(true);
+            $email->setSMTP();
             $email->setTo($adress);
             $email->setFrom(Felta::getConfig("smtp")['username']);
             $email->setSubject("Your ".Felta::getConfig("website_name"). " account");

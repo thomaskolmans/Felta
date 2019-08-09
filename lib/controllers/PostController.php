@@ -43,7 +43,6 @@ class PostController {
      */
     public static function ADD_AGENDA(){
         $agenda = new Agenda();
-        ECHO "EH!!!!";exit;
         $agenda->put(
             htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'),
@@ -53,6 +52,7 @@ class PostController {
             new \DateTime($_POST['until'])
         );
         echo json_encode(["success" => "Agenda item has been succesfully added"]);
+        header("Location: /felta/agenda");
     }
 
     public static function UPDATE_AGENDA(){
@@ -66,6 +66,7 @@ class PostController {
         $agenda->update('from',['id' => $id],$from->format("Y-m-d H:i:s"));
         $agenda->update('until',['id' => $id],$until->format("Y-m-d H:i:s"));
         echo json_encode(["success" => "Agenda item has been succesfully updated"]);
+        header("Location: /felta/agenda");
     }
 
     public static function DELETE_AGENDA($id){

@@ -1,5 +1,5 @@
 <?php
-namespace lib\shop;
+namespace lib\shop\product;
 
 use lib\Felta;
 use lib\helpers\UUID;
@@ -55,15 +55,27 @@ class ProductVariant{
     public static function fromResult($result){
         $images = Felta::getInstance()->getSQL()
             ->select("*","shop_product_variant_image",["sid" => $result["id"]]);
-        $imageslist = [];
-
+        $attributes = Felta::getInstance()->getSQL()
+            ->select("*","shop_product_variant_attribute",["pid" => $result["id"]]);
+        $imagesList = [];
+        $attributesList = [];
         if($images !== null){
             if(is_array($images)){
                 foreach($images as $image){
-                    $imageslist[] = $image["url"];
+                    $imagesList[] = $image["url"];
                 }
             } else{
-                $imageslist[] = $images["url"];
+                $imagesList[] = $images["url"];
+            }
+        }
+
+        if ($attributes !== null){
+            if(is_array($attributes)){
+                foreach($attributes as $attribute){
+                    $attributesList[] = Attribute::fromResult($attribute);
+                }
+            } else{
+                $attributesList[] = Attribute::fromResult($attributes);
             }
         }
         
@@ -73,16 +85,38 @@ class ProductVariant{
             $result["name"],
             $result["price"],
             $result["currency"],
-            $imageslist,
+            $imagesList,
+            $attributesList,
             $result["quantity"],
             json_decode($result["variables"])
         );
         return $productvariant;
     }
 
-    public static function create($sid,$price,$currency,$images,$quantity,$variables,$active = true){
+    public static function create(
+        $sid,
+        $name,
+        $price,
+        $currency,
+        $images,
+        $attributes,
+        $quantity, 
+        $variables,
+        $active = false
+    ){
         $id = UUID::generate(15);
-        return new ProductVariant($id,$sid,$price,$currency,$images,$quantity,$variables,$active = false);
+        return new ProductVariant(
+            $id,
+            $sid,
+            $name,
+            $price,
+            $currency,
+            $images,
+            $attributes,
+            $quantity, 
+            $variables,
+            $active = false
+        );
     }
 
     public static function exists($id){
@@ -104,12 +138,17 @@ class ProductVariant{
             $this->quantity,
             json_encode($this->variables)
         ]);
+
         foreach ($this->images as $image) {
             $this->sql->insert("shop_product_variant_image",[
                 0,
                 $this->id,
                 $image
             ]);
+        }
+
+        foreach ($this->attributes as $attribute) {
+            $attribute->insert();
         }
     }
 
@@ -136,6 +175,10 @@ class ProductVariant{
                 ]);  
             }
         }
+
+        foreach ($this->attributes as $attribute) {
+            $attribute->update();
+        }
     }
 
     public function getId(){
@@ -144,39 +187,59 @@ class ProductVariant{
     public function getSid(){
         return $this->sid;
     }
+
+    public function getName() {
+        return $this->name;
+    }
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
     public function setActive($active){
         $this->active = $active;
+        return $this;
     }
     public function getActive(){
         return $this->active;
     }
+    
     public function setPrice($price){
         $this->price = $price;
+        return $this;
     }
     public function getPrice(){
         return $this->price;
     }
+
     public function setCurrency($currency){
         $this->currency = $currency;
+        return $this;
     }
     public function getCurrency(){
         return $this->currency;
     }
+
     public function setImages(array $images){
         $this->images = $images;
+        return $this;
     }
     public function addImage($image){
         $this->image[] = $images;
+        return $this;
     }
     public function getImages(){
         return $this->images;
     }
+
     public function getQuantity(){
         return $this->quantity;
     }
     public function setQuantity($quantity){
         $this->quantity = $quantity;
+        return $this;
     }
+
     public function getVariables(){
         return $this->variables;
     }
@@ -184,6 +247,7 @@ class ProductVariant{
         $this->variables = $variables;
         return $this;
     }
+
 }
 
 ?>

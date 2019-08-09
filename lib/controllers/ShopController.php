@@ -6,17 +6,18 @@ use lib\Felta;
 use lib\shop\Shop;
 use lib\shop\Shoppingcart;
 use lib\shop\Promotion;
-use lib\shop\Order;
-use lib\shop\OrderStatus;
-use lib\shop\Product;
-use lib\shop\ProductVariant;
-use lib\shop\Customer;
-use lib\shop\CustomerAddress;
+use lib\shop\order\Order;
+use lib\shop\order\OrderStatus;
+use lib\shop\product\Product;
+use lib\shop\product\ProductVariant;
+use lib\shop\order\Customer;
+use lib\shop\order\CustomerAddress;
 use lib\shop\Transaction;
 use lib\shop\Payment;
 
-use lib\Helpers\UUID;
-use lib\Filesystem\File;
+use lib\helpers\UUID;
+use lib\filesystem\File;
+use lib\helpers\Input;
 
 class ShopController {
 
@@ -28,33 +29,44 @@ class ShopController {
      * Shop items
      */
 	public static function ADD_ITEM(){
-		$name = $_POST["name"];
-		$catagory = $_POST["catagory"];
-		$description = $_POST["description"];
+        $name = Input::clean("name");
+        $slug = Input::clean("slug");
+        $catagory = Input::clean("category");
+        $shortDescription = Input::clean("short_description");
+		$description = Input::clean("description");
 		$image = null;
-		$product = Product::create($name,$catagory,$description,$image,true);
+		$product = Product::create($name, $slug, $catagory, $shortDescription, $description, $image, true);
 
-		$variants = 1;
-		$ItemVariants = [];
-		for($i = 1; $i < $variants + 1; $i++){
+        $productVariants = [];
+        $variants = $_POST["variants"];
 
-		    $amount = $_POST["amount".$i];
-		    $currency = $_POST["currency".$i];
-		    $variables = $_POST["variables".$i];
-		    $quantity = $_POST["quantity".$i];
-		    $images = $_POST["images"];
+        foreach($variants as $variant) {
+            $images = [];
+            if (array_key_exists("images", $variant)) {
+                $images = $variant["images"];
+            }
 
-		    $ItemVariants[] = ProductVariant::create(
-		        $product->getId(),
-		        str_replace([",","."],["",""],$amount),
-		        $currency,
-		        $images,
-		        $quantity,
-		        $variables
-		    );
-		}
+            $attributes = [];
+            if (array_key_exists("images", $variant)) {
+                foreach($variant["attributes"] as $attribute) {
+                    $attributes = Attribute::create($attribute["name"], $attribute["value"]);
+                }
+            }
+ 
+            $productVariant = ProductVariant::create(
+                $product->getId(),
+                $variant["variant_name"],
+                str_replace([",","."],["",""], $variant["amount"]),
+                $variant["currency"],
+                $images,
+                $attributes,
+                $variant["quantity"],
+                []
+            );
+            $productVariants[] = $productVariant;
+        }
 
-		$product->setVariants($ItemVariants);
+		$product->setVariants($productVariants);
         $product->save();
         echo json_encode(["success" => "Item has succesfully added"]);
 	}

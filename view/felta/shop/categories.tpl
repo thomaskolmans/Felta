@@ -14,14 +14,12 @@
 </head>
 <body>
   <?php
-    use lib\Shop\Transaction;
-    use lib\Shop\Order\Order;
-    use lib\Shop\Shop;
+    use lib\shop\Shop;
     use lib\Felta;
   ?>
   <include>felta/parts/nav.tpl</include>
   <div class="main-wrapper">
-    <div class="main dashboard container">
+    <div class="main dashboard container languages">
         <h1> Categories </h1>
         <div class="lang_container">
             <?php

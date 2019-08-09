@@ -101,19 +101,19 @@ class Shop {
         }
     }
 
-    public function addCatagory($catagory){
-        if(!$this->sql->exists("shop_catagories",["name" => $catagory]) && $catagory !== ""){
-            $this->sql->insert("shop_catagories",[0,$catagory]);
+    public function addCategory($category){
+        if(!$this->sql->exists("shop_categories",["name" => $category]) && $category !== ""){
+            $this->sql->insert("shop_categories",[0,$category]);
         }
     }
-    public function deleteCatagory($catagory){
-        if($this->sql->exists("shop_catagories",["id" => $catagory])){
-            $this->sql->delete("shop_catagories",["id" => $catagory]);
+    public function deleteCategory($category){
+        if($this->sql->exists("shop_categories",["id" => $category])){
+            $this->sql->delete("shop_categories",["id" => $category]);
         }
     }
 
-    public static function getCatagories(){
-        return Felta::getInstance()->getSQL()->select("*","shop_catagories",[]);
+    public static function getCategories(){
+        return Felta::getInstance()->getSQL()->select("*","shop_categories",[]);
     }
 
     public function updateShopAddress($street,$number,$zipcode,$city,$country){

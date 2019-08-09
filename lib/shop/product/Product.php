@@ -1,5 +1,5 @@
 <?php
-namespace lib\shop;
+namespace lib\shop\product;
 
 use lib\Felta;
 use lib\helpers\UUID;
@@ -12,21 +12,23 @@ class Product{
     private $name;
     private $slug;
     private $catagory;
+    private $shortDescription;
     private $description;
     private $image;
     private $date;
 
     private $active;
 
-    private $itemVariants = [];
+    private $variants = [];
 
-    public function __construct($id,$name,$slug,$catagory,$description,$image,$date,$active = false){
+    public function __construct($id, $name, $slug, $category, $shortDescription, $description, $image, $date, $active = false){
         $this->sql = Felta::getInstance()->getSQL();
 
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;
-        $this->catagory = $catagory;
+        $this->category = $category;
+        $this->shortDescription = $shortDescription;
         $this->description = $description;
         $this->image = $image;
         $this->date = $date;
@@ -39,13 +41,13 @@ class Product{
             $result["id"],
             $result["name"],
             $result["slug"],
-            $result["catagory"],
+            $result["category"],
+            $result["short_description"],
             $result["description"],
             $result["image"],
             $result["date"],
             $result["active"]
         );
-        
         if($variants !== null){
             if(is_array($variants)){
                 foreach($variants as $variant){
@@ -58,10 +60,10 @@ class Product{
         return $product;
     }
 
-    public static function create($name,$catagory,$description,$image,$active = false){
+    public static function create($name, $slug, $category, $shorDescription, $description, $image, $active = false) {
         $id = UUID::generate(6);
         $date = new \DateTime();
-        return new Product($id,$name,$catagory,$description,$image,$date,$active = false);
+        return new Product($id,$name,$slug,$category,$shorDescription,$description,$image,$date,$active = false);
     }
 
     public static function exists($id){
@@ -84,12 +86,13 @@ class Product{
             $this->name,
             $this->slug,
             $this->catagory,
+            $this->shortDescription,
             $this->description,
             $this->image,
             $this->date->format("Y-m-d H:i:s"),
             $this->active
         ]);
-        foreach($this->itemVariants as $variant){
+        foreach($this->variants as $variant){
             $variant->save();
         }
     }
@@ -99,19 +102,20 @@ class Product{
         $this->sql->update("slug","shop_product",["id" => $this->id],$this->slug);
 
         $this->sql->update("catagory","shop_product",["id" => $this->id],$this->catagory);
+        $this->sql->update("shortDescription","shop_product",["id" => $this->id],$this->shortDescription);
         $this->sql->update("description","shop_product",["id" => $this->id],$this->description);
         $this->sql->update("image","shop_product",["id" => $this->id],$this->image);
         $this->sql->update("date","shop_product",["id" => $this->id],$this->date);
         $this->sql->update("active","shop_product",["id" => $this->id],$this->active);
 
-        foreach($this->itemVariants as $variant){
+        foreach($this->variants as $variant){
             $variant->update();
         }
     }
 
     public function delete(){
         $this->sql->delete("shop_product",["id" => $this->id]);
-        foreach($this->itemVariants as $variant){
+        foreach($this->variants as $variant){
             $variant->delete();
         }
     }
@@ -137,11 +141,18 @@ class Product{
         $this->slug = $slug;
         return $this;
     }
-    public function getcatagory(){
-        return $this->catagory;
+    public function getCategory(){
+        return $this->category;
     }
-    public function setCatagory($catagory){
-        $this->catagory = $catagory;
+    public function setCategory($category){
+        $this->category = $category;
+        return $this;
+    }
+    public function getShortDescription(){
+        return $this->shortDescription;
+    }
+    public function setShortDescription($shortDescription){
+        $this->shortDescription = $shortDescription;
         return $this;
     }
     public function getDescription(){
@@ -159,14 +170,14 @@ class Product{
         return $this;
     }
     public function getVariants(){
-        return $this->itemVariants;
+        return $this->variants;
     }
     public function addVariant($variant){
-        $this->itemVariants[] = $variant;
+        $this->variants[] = $variant;
         return $this;
     }
     public function setVariants($variants){
-        $this->itemVariants = $variants;
+        $this->variants = $variants;
         return $this;
     }
 

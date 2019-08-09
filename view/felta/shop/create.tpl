@@ -23,27 +23,27 @@
       </div>
       <div class="input-group">
         <label>Slug</label>
-        <input type="text" name="name" placeholder="Product slug" />
+        <input type="text" name="slug" placeholder="Product slug" />
       </div>
       <div class="input-group">
-        <label>Catagory</label>
+        <label>Category</label>
         <div class="select-box dark">
           <select name="catagory">
-            <option disabled selected value=="">-- select a catagory --</option>
+            <option disabled selected value=="">-- select a category --</option>
             <?php
               use lib\Shop\Shop;
               
               $shop = Shop::getInstance();
-              $catagories = $shop->getCatagories();
+              $categories = $shop->getCategories();
 
-              if($catagories === null){ $catagories = []; }
-              if(count($catagories) > 0){
-                foreach($catagories as $key => $catagory){
-                  $name = $catagory["name"];
+              if($categories === null){ $categories = []; }
+              if(count($categories) > 0){
+                foreach($categories as $key => $category){
+                  $name = $category["name"];
                   echo "<option value='{$name}'>{$name}</option>";
                 }
               }else{
-                echo 'No catagories yet, you need to add one';
+                echo 'No categories yet, you need to add one';
               }
             ?>
           </select>
@@ -51,7 +51,7 @@
       </div>
       <div class="input-group">
         <label>Short description</label>
-        <textarea class="small" placeholder="Describe your product...." name="description"></textarea>
+        <textarea class="small" placeholder="Describe your product...." name="short_description"></textarea>
       </div>
       <div class="input-group">
         <label>Description</label>
@@ -85,19 +85,8 @@
           <input type="number" step="0.01" id="amount" name="amount" placeholder="20,00" />
         </div>
         <div class="input-group">
-          <label>Quantity</label>
+          <label>Stock quantity</label>
           <input type="number" name="quantity" id="quantity" placeholder="10">
-        </div>
-        <div class="input-group">
-          <label>Attributes</label>
-          <div class="attributes" id="attributes">
-            <div class="attribute template" id="attribute-template">
-              <input type="text" placeholder="Name"/>
-              <input type="text" placeholder="Value"/>
-              <div class="delete" id="delete"></div>
-            </div>
-            <button class="">Add attribute</button>
-          </div>  
         </div>
 
         <input type="hidden" name="variables" id="variables"  placeholder="10">
@@ -107,9 +96,20 @@
             <div class="add" onclick="imageEditor()"></div>
           </div>
         </div>
+        <div class="input-group">
+          <label>Attributes</label>
+          <div class="attributes" id="attributes">
+            <div class="attribute template" id="attribute-template">
+              <input type="text" class="attribute-name" placeholder="Name"/>
+              <input type="text" class="attribute-value" placeholder="Value"/>
+              <button class="delete" id="delete"></button>
+            </div>
+            <button class="" id="add-attribute">Add attribute</button>
+          </div>  
+        </div>
       </section>
       <div class="input-group right">
-        <a href="/felta/shop"><input type="button" value="Cancel" id="cancel_news"></a>
+        <a href="/felta/shop/products"><input type="button" value="Cancel"></a>
         <input type="submit" name="new_news" value="Save product">
       </div>
     </form>
@@ -138,109 +138,6 @@
     </section>
   </div>
   <script src="/felta/js/shop.js" type="text/javascript"></script>
-  <script>
-      var variants = 1;
-      var images = 0;
-
-      setupVariant("variant1");
-      setupTabs();
-
-      $("#image_edit_cancel, #image_editor_background").click(function(){
-        closeImageEditor();
-      });
-      $("#cancelphoto").on("click",function(){
-        closeImageEditor();
-      });
-      $("#addphoto").on("click",function(){
-          $('#imageid').croppie('result', {
-            type: 'canvas',
-            size: 'viewport'
-          }).then(function (resp) {
-              uploadImage(
-                base64ToBlob(
-                  resp.replace(/^data:image\/(png|jpg);base64,/, ""),'image/png')
-                  ).then((response) => {
-                    json = JSON.parse(response);
-
-                    $("#image-selector").prepend("<span image-id='"+json.uid+"'><span class='delete' onclick='deleteImage(this,\""+json.url+"\")' /><input type='hidden' name='images[]' value='"+json.url+"' /> <img src='"+json.url+"' /></span>");
-                    closeImageEditor();
-                    images++;
-                  });
-          });
-      });
-
-      $("#add-tab").on("click", function(){
-        addVariant();
-      });
-      document.getElementById("amount").onblur =function (){    
-          this.value = parseFloat(this.value.replace(/,/g, ""))
-            .toFixed(2)
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, "");
-      }
-      function deleteImage(e,url){
-        $.ajax({
-          url: "/felta/shop/delete/image",
-          type: "POST",
-          data: {
-            url: url
-          },
-          success: function(response){
-          }
-        });
-        $(e).parent().remove();
-      }
-
-      function addVariant(){
-        variants++;
-        setupVariant("variant" + variants);
-      }
-
-      function removeVariant(variant){
-        $(variant + "-tab").remove();
-        $(variant).remove();
-        variants--;
-      }
-
-      function setupVariant(id) {
-        var variantTemplate = document.getElementById("variant");
-        var newVariant = variantTemplate.cloneNode(true);
-        
-        if (variants > 1){
-          var previousTab = document.getElementById("variant" + (variants - 1) + "-tab");
-          var newTab = previousTab.cloneNode(true);
-          newTab.setAttribute("id", "variant" + variants + "-tab");
-          newTab.setAttribute("column", id);
-          newTab.innerHTML = "Variant " + variants;
-          previousTab.parentNode.insertBefore(newTab, previousTab.nextSibling);
-        }
-
-        newVariant.setAttribute("id", id);
-        document.getElementById("variants-container").append(newVariant);
-        console.log("#variant" + id + " #variant_name");
-        $("#" + id + " #variant_name")[0].setAttribute("name", "variables[" + variants - 1 + "][variant_name]");
-        $("#" + id + " #currency")[0].setAttribute("name", "variables[" + variants - 1 + "][currency]");
-        $("#" + id + " #amount")[0].setAttribute("name", "variables[" + variants - 1 + "][amount]");
-        $("#" + id + " #quantity")[0].setAttribute("name", "variables[" + variants - 1 + "][quantity]");
-        $("#" + id + " #quantity")[0].setAttribute("name", "variables[" + variants - 1 + "][quantity]");
-
-        setupTabs();
-      }
-
-      function setupTabs() {
-        var active = "variant" + variants;
-        var last = "variant1";
-        $("#"+active).removeClass("hidden");
-        $("#"+active+"-tab").addClass("active");
-        $(".tab").on("click",function(e){
-            last = active;
-            $("#"+last).addClass("hidden");
-            $("#"+last+"-tab").removeClass("active");
-            active = $(this).attr("column");
-            $("#"+active).removeClass("hidden");
-            $("#"+active+"-tab").addClass("active");
-        });
-      }
-  </script>
+  <script src="/felta/js/shop/product.js"></script>
 </body>
 </html>

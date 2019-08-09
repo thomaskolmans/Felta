@@ -69,10 +69,14 @@ class Email{
             $host = $smtpConfig["host"];
             $username = $smtpConfig["username"];
             $password = $smtpConfig["password"];
-            if(empty($host) || empty($username) || empty($password)) return;
+            if(empty($host) || empty($username) || empty($password)) {
+                return;
+            }
         }
         $this->phpMail->isSMTP();
+        $this->phpMail->SMTPDebug = 0;
         $this->phpMail->Host       = $host;
+        $this->phpMail->SMTPAuth = true;
         $this->phpMail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,

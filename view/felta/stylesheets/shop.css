@@ -662,14 +662,14 @@ button {
   background: none !important; }
 
 .image-selector {
-  height: 90px;
+  height: 80px;
   margin-top: 15px; }
   .image-selector span {
     display: inline-block;
     position: relative; }
   .image-selector .add, .image-selector img {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     display: inline-block;
     background: #000c0c;
     position: relative; }
@@ -687,10 +687,10 @@ button {
     width: 100%;
     height: 100%;
     content: "";
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     text-align: center;
-    line-height: 90px;
+    line-height: 80px;
     color: #2196F3;
     font-family: FontAwesome;
     font-size: 30px;

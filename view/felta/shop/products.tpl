@@ -14,9 +14,9 @@
 </head>
 <body>
   <?php
-    use lib\Shop\Transaction;
-    use lib\Shop\Order\Order;
-    use lib\Shop\Shop;
+    use lib\shop\Transaction;
+    use lib\shop\order\Order;
+    use lib\shop\Shop;
     use lib\Felta;
   ?>
   <include>felta/parts/nav.tpl</include>
@@ -29,7 +29,7 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Catagory</th>
+            <th>Category</th>
             <th class="clear"></th>
             <th class="clear"></th>
           </tr>
@@ -48,7 +48,7 @@
                   <tr>
                     <td class='align-left'>{$item['id']}</td>
                     <td class='align-left'>{$item['name']}</td>
-                    <td>{$item['catagory']}</td>
+                    <td>{$item['category']}</td>
                     <td><a href='/felta/shop/update/item/".$item["id"]."'><button>Edit</button></a></td>
                     <td><a href='/felta/shop/delete/item/".$item["id"]."'><div class='delete'></div></a></td>
                   </tr>

@@ -592,106 +592,6 @@ strong, b {
         display: inline-block;
         margin-top: 8px;
         margin-left: 8px; }
-    .main.dashboard .languages .lang_container, .main.settings .languages .lang_container {
-      width: 100%; }
-      .main.dashboard .languages .lang_container:not(:first-child), .main.settings .languages .lang_container:not(:first-child) {
-        margin-top: 15px; }
-    .main.dashboard .languages .language, .main.settings .languages .language {
-      background: white;
-      color: #000c0c;
-      padding: 8px 0px;
-      border-radius: 50px;
-      width: 50%;
-      margin: 0 auto;
-      text-align: center;
-      display: block;
-      position: relative; }
-      .main.dashboard .languages .language .remove, .main.settings .languages .language .remove {
-        position: absolute;
-        right: 15px;
-        top: 55%;
-        transform: translateY(-50%); }
-        .main.dashboard .languages .language .remove::before, .main.settings .languages .language .remove::before {
-          content: "";
-          font-family: FontAwesome;
-          transition: 0.3s;
-          -webkit-transition: 0.3s; }
-        .main.dashboard .languages .language .remove:hover, .main.settings .languages .language .remove:hover {
-          cursor: pointer; }
-          .main.dashboard .languages .language .remove:hover::before, .main.settings .languages .language .remove:hover::before {
-            color: #801010;
-            transition: 0.3s;
-            -webkit-transition: 0.3s; }
-    .main.dashboard .languages h1, .main.settings .languages h1 {
-      color: #f1f1f1; }
-    .main.dashboard .languages form, .main.settings .languages form {
-      margin: 0;
-      margin-top: 35px;
-      width: initial;
-      display: none;
-      text-align: center; }
-      .main.dashboard .languages form select, .main.settings .languages form select {
-        height: 35px;
-        border: none; }
-      .main.dashboard .languages form input, .main.settings .languages form input {
-        height: 38px;
-        padding: 0 5px;
-        border: none; }
-        .main.dashboard .languages form input:focus, .main.settings .languages form input:focus {
-          outline: none; }
-      .main.dashboard .languages form option, .main.settings .languages form option {
-        border: none; }
-      .main.dashboard .languages form input[type="submit"], .main.dashboard .languages form input[type="button"], .main.settings .languages form input[type="submit"], .main.settings .languages form input[type="button"] {
-        border: none;
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-        background: #2196F3;
-        border: 2px solid #2196F3;
-        color: white;
-        padding: 10px 25px;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 1;
-        transition: 0.3s;
-        -webkit-transition: 0.3s; }
-        .main.dashboard .languages form input[type="submit"]:hover, .main.dashboard .languages form input[type="button"]:hover, .main.settings .languages form input[type="submit"]:hover, .main.settings .languages form input[type="button"]:hover {
-          transition: 0.3s;
-          -webkit-transition: 0.3s;
-          background: none;
-          color: #2196F3;
-          cursor: pointer; }
-        .main.dashboard .languages form input[type="submit"]:active, .main.dashboard .languages form input[type="submit"]:focus, .main.dashboard .languages form input[type="button"]:active, .main.dashboard .languages form input[type="button"]:focus, .main.settings .languages form input[type="submit"]:active, .main.settings .languages form input[type="submit"]:focus, .main.settings .languages form input[type="button"]:active, .main.settings .languages form input[type="button"]:focus {
-          outline: none; }
-      .main.dashboard .languages form input[type="button"], .main.settings .languages form input[type="button"] {
-        float: left; }
-    .main.dashboard .languages .new, .main.settings .languages .new {
-      width: 100%;
-      height: 50px;
-      position: relative;
-      display: inline-block;
-      background: #000c0c;
-      margin-top: 25px;
-      transition: 0.3s;
-      -webkit-transition: 0.3s; }
-      .main.dashboard .languages .new:hover, .main.settings .languages .new:hover {
-        cursor: pointer;
-        background: #151e23; }
-        .main.dashboard .languages .new:hover::after, .main.settings .languages .new:hover::after {
-          color: #2196F3;
-          transition: 0.3s;
-          -webkit-transition: 0.3s; }
-      .main.dashboard .languages .new::after, .main.settings .languages .new::after {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        height: 40px;
-        width: 40px;
-        line-height: 40px;
-        color: #f1f1f1;
-        transform: translate(-50%, -50%);
-        font-family: "FontAwesome";
-        font-size: 35px;
-        content: ""; }
     .main.dashboard .thankyou, .main.settings .thankyou {
       width: 100%;
       height: 50px;
@@ -946,6 +846,110 @@ strong, b {
       .main .stats.agenda table th.clear, .main .stats.news table th.clear {
         border: none; }
 
+.languages {
+  width: 100%;
+  max-width: 600px; }
+  .languages .lang_container {
+    width: 100%; }
+    .languages .lang_container:not(:first-child) {
+      margin-top: 15px; }
+  .languages .language {
+    background: white;
+    color: #000c0c;
+    padding: 8px 0px;
+    border-radius: 50px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+    position: relative; }
+    .languages .language .remove {
+      position: absolute;
+      right: 15px;
+      top: 55%;
+      transform: translateY(-50%); }
+      .languages .language .remove::before {
+        content: "";
+        font-family: FontAwesome;
+        transition: 0.3s;
+        -webkit-transition: 0.3s; }
+      .languages .language .remove:hover {
+        cursor: pointer; }
+        .languages .language .remove:hover::before {
+          color: #801010;
+          transition: 0.3s;
+          -webkit-transition: 0.3s; }
+  .languages form {
+    margin: 0;
+    margin-top: 35px;
+    width: initial;
+    display: none;
+    text-align: center; }
+    .languages form select {
+      height: 35px;
+      border: none; }
+    .languages form input {
+      height: 38px;
+      width: 85%;
+      padding: 0 5px;
+      border: none; }
+      .languages form input:focus {
+        outline: none; }
+    .languages form option {
+      border: none; }
+    .languages form input[type="submit"], .languages form input[type="button"] {
+      width: auto;
+      border: none;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      background: #2196F3;
+      border: 2px solid #2196F3;
+      color: white;
+      padding: 10px 25px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
+      .languages form input[type="submit"]:hover, .languages form input[type="button"]:hover {
+        transition: 0.3s;
+        -webkit-transition: 0.3s;
+        background: none;
+        color: #2196F3;
+        cursor: pointer; }
+      .languages form input[type="submit"]:active, .languages form input[type="submit"]:focus, .languages form input[type="button"]:active, .languages form input[type="button"]:focus {
+        outline: none; }
+    .languages form input[type="button"] {
+      float: left; }
+  .languages .new {
+    width: 100%;
+    height: 50px;
+    position: relative;
+    display: inline-block;
+    background: #000c0c;
+    margin-top: 25px;
+    transition: 0.3s;
+    -webkit-transition: 0.3s; }
+    .languages .new:hover {
+      cursor: pointer;
+      background: #151e23; }
+      .languages .new:hover::after {
+        color: #2196F3;
+        transition: 0.3s;
+        -webkit-transition: 0.3s; }
+    .languages .new::after {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: 40px;
+      width: 40px;
+      line-height: 40px;
+      color: #f1f1f1;
+      transform: translate(-50%, -50%);
+      font-family: "FontAwesome";
+      font-size: 35px;
+      content: ""; }
+
 #buystats {
   height: 400px;
   width: 90%;
@@ -1075,13 +1079,38 @@ form.full {
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between; }
+      form.full .attributes .attribute.template {
+        display: none; }
       form.full .attributes .attribute input {
-        flex: 0 0 48%; }
+        flex: 0 0 46%; }
   form.full button {
     background: #000c0c;
     color: white;
     margin: 0 auto;
     display: block; }
+    form.full button.delete {
+      width: 34px;
+      height: 34px;
+      background: #801010;
+      color: white;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      border-color: #801010; }
+      form.full button.delete:hover {
+        background: none;
+        color: #801010;
+        border-color: #801010; }
+      form.full button.delete::before {
+        content: "";
+        font-family: "FontAwesome";
+        height: 100%;
+        width: 100%;
+        top: 0;
+        line-height: 33px;
+        left: 0;
+        position: absolute; }
     form.full button:hover {
       color: #000c0c;
       background: none;

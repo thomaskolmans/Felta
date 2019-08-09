@@ -23,7 +23,7 @@ return array(
 
     "primary" => [ 
         "host"          => "127.0.0.1",
-        "databasename"  => "test",
+        "databasename"  => "felta",
         "username"      => "root",
         "password"      => ""
     ],

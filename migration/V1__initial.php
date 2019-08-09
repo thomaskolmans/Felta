@@ -134,7 +134,7 @@ $sql->create("shop_cart",[
     "quantity" => "int"
 ],"n");
 
-$sql->create("shop_catagories",[
+$sql->create("shop_categories",[
     "id" => "int auto_increment",
     "name" => "varchar(512)"
 ],"id");
@@ -156,7 +156,8 @@ $sql->create("shop_promotion_products",[
 $sql->create("shop_product",[
     "id" => "varchar(255)",
     "name" => "varchar(560)",
-    "catagory" => "varchar(512)",
+    "slug" => "varchar(255)",
+    "category" => "varchar(512)",
     "short_description" => "longtext",
     "description" => "longtext",
     "image" => "int",
@@ -173,6 +174,13 @@ $sql->create("shop_product_variant",[
     "quantity" => "int",
     "variables" => "longtext"
 ],"id");
+
+$sql->create("shop_product_variant_attribute", [
+    "id" =>  "varchar(255)",
+    "pid" => "varchar(255)",
+    "name" => "varchar(560)",
+    "value" => "varchar(560)"
+], "id");
 
 $sql->create("shop_product_variant_image",[
     "id" => "int auto_increment",

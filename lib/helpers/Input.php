@@ -7,6 +7,10 @@ class Input{
 
     public static $value = null;
 
+    public static function clean($name) {
+        return htmlspecialchars(Input::value($name));
+    }
+    
     public static function get($name){
         $value = null;
         if(isset($_POST[$name])){

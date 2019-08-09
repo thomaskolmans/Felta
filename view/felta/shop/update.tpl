@@ -1,6 +1,6 @@
 </html>
 <head>
-   <title>Felta | Update Item</title>
+   <title>Felta | Update product</title>
    <link href="/felta/stylesheets/all.css" rel="stylesheet">
    <link href="/felta/js/croppie/croppie.css" rel="stylesheet">
    <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
@@ -13,35 +13,48 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <include>Felta/parts/nav.tpl</include>
+  <include>felta/parts/nav.tpl</include>
   <div class="main dashboard container" id="main">
     <?php
-      use lib\Shop\Shop;
-      use lib\Shop\Product;
-      use lib\Shop\ProductVariant;
+      use lib\shop\Shop;
+      use lib\shop\product\Product;
+      use lib\shop\product\ProductVariant;
 
+      $product;
       if(isset($_GET["id"])){
         $itemid = $_GET["id"];
         if(Product::exists($itemid)){
-          $item = Product::get($itemid);
-        ?>
+          $product = Product::get($itemid);
+        } else {
+          echo "<h1>Product does not exist</h1>";exit;
+        }
+      }
+    ?>
     <h1>Update product</h1>
-    <form method="post" class="news" action="/felta/shop/update/item">
+
+    <form method="post" class="full" id="new_item" action="/felta/shop/add/item">
+      <?php echo '<input type="hidden" name="id" placeholder="A product" value="'.$product->getId().'" />'; ?>
       <div class="input-group">
-        <label>Title</label>
-        <?php echo '<input type="text" name="name" placeholder="A product" value="'.$item->getName().'" />'; ?>
-        <?php echo '<input type="hidden" name="id" placeholder="A product" value="'.$item->getId().'" />'; ?>
+        <label>Name</label>
+        <?php echo '<input type="text" name="name" placeholder="A product name" value="'.$product->getName().'"/>'; ?>
+      </div>
+    <div class="input-group">
+        <label>Slug</label>
+        <?php echo '<input type="text" name="slug" placeholder="Product slug" value="'.$product->getSlug().'" />'; ?>
       </div>
       <div class="input-group">
-        <label>Catagory</label>
+        <label>Category</label>
         <div class="select-box dark">
           <select name="catagory">
-            <option disabled selected value>-- select a catagory --</option>
-            <?php
-              $catagories = \lib\Shop\Shop::getCatagories();
-              if(count($catagories) > 0){
-                foreach($catagories as $key => $catagory){
-                  $name = $catagory["name"];
+            <option disabled selected value="">-- select a category --</option>
+            <?php              
+              $shop = Shop::getInstance();
+              $categories = $shop->getCategories();
+
+              if($categories === null){ $categories = []; }
+              if(count($categories) > 0){
+                foreach($categories as $key => $category){
+                  $name = $category["name"];
                   $selected = "";
                   if($name === $item->getCatagory()){
                     $selected = "selected";
@@ -49,31 +62,100 @@
                   echo "<option value='{$name}' ".$selected.">{$name}</option>";
                 }
               }else{
-                echo 'No catagories yet, you need to add one';
+                echo 'No categories yet, you need to add one';
               }
             ?>
           </select>
         </div>
       </div>
       <div class="input-group">
-        <label>Description</label>
-        <?php echo '<textarea  placeholder="Describe your product ...." name="description"  >'.$item->getDescription().'</textarea>'; ?>
+        <label>Short description</label>
+        <?php echo '<textarea class="small" placeholder="Describe your product...." name="short_description">'.$product->getShortDescription().'</textarea>'; ?>
       </div>
-
+      <div class="input-group">
+        <label>Description</label>
+        <?php echo '<textarea placeholder="Describe your product...." name="description">'.$product->getDescription().'</textarea>'; ?>
+      </div>
       <input type="hidden" id="variants" />
       <div class="tabs" style="margin-top: 50px">
-          <div class="tab" id="variant1-tab" column="variant1">Variant 1</div>
+          <?php
+            $variants = $product->getVariants();
+            if (count($variants) > 0){
+              foreach($variants as $key => $variant) {
+                $count = $key + 1;
+                echo '<div class="tab" id="variant'.$count.'-tab" column="variant'.$count.'">Variant '.$count.'</div>';
+              }
+            } else {
+              echo '<div class="tab" id="variant1-tab" column="variant1">Variant 1</div>';
+            }
+
+          ?>
           <div class="tab add" id="add-tab"></div>
       </div>
-      <?php 
-      foreach($item->getVariants() as $variant){
-        
-      ?>
-      <section class="hidden transparent" id="variant1">
+      <div class="variants" id="variants-container">
+        <?php
+          foreach($variants as $key => $variant) {
+            $count = $key + 1;
+        ?>
+          <?php echo '<section class="hidden transparent" id="variant'.$count.'">'; ?>
+              <button class="remove" id="remove-variant">Delete variant</button>
+              <div class="input-group">
+                <label>Name</label>
+                <?php echo '<input type="string" name="variant_name" id="variant_name" placeholder="Product variant" value="'.$variant->getName().'" />'; ?>
+              </div>
+              <div class="input-group">
+                <label>Currency</label>
+                  <div class="select-box dark">
+                    <select name="currency" id="currency">
+                      <option value="eur">EURO</option>
+                      <option value="eur">USD</option>
+                      <option value="eur">AUD</option>
+                      <option value="eur">MXN</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="input-group">
+                <label>Amount</label>
+                <input type="number" step="0.01" id="amount" name="amount" placeholder="20,00" />
+              </div>
+              <div class="input-group">
+                <label>Stock quantity</label>
+                <input type="number" name="quantity" id="quantity" placeholder="10">
+              </div>
+
+              <input type="hidden" name="variables" id="variables"  placeholder="10">
+              <div class="input-group">
+                <label>Image</label>
+                <div class="image-selector" id="image-selector">
+                  <div class="add" onclick="imageEditor()"></div>
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Attributes</label>
+                <div class="attributes" id="attributes">
+                  <div class="attribute template" id="attribute-template">
+                    <input type="text" class="attribute-name" placeholder="Name"/>
+                    <input type="text" class="attribute-value" placeholder="Value"/>
+                    <button class="delete" id="delete"></button>
+                  </div>
+                  <button class="" id="add-attribute">Add attribute</button>
+                </div>  
+              </div>
+            </section>
+        <?php
+          }
+        ?>
+      </div>
+      <section class="hidden transparent" id="variant">
+        <button class="remove" id="remove-variant">Delete variant</button>
+        <div class="input-group">
+          <label>Name</label>
+          <input type="string" name="variant_name" id="variant_name" placeholder="Product variant" />
+        </div>
         <div class="input-group">
           <label>Currency</label>
             <div class="select-box dark">
-              <select name="currency1">
+              <select name="currency" id="currency">
                 <option value="eur">EURO</option>
                 <option value="eur">USD</option>
                 <option value="eur">AUD</option>
@@ -83,30 +165,35 @@
         </div>
         <div class="input-group">
           <label>Amount</label>
-          <?php echo '<input type="number" step="0.10" id="amount" name="amount1" value="'.Shop::intToDoubleSeperator($variant->getPrice(),".").'" placeholder="20,00" />';?>
+          <input type="number" step="0.01" id="amount" name="amount" placeholder="20,00" />
         </div>
         <div class="input-group">
-          <label>Quantity</label>
-          <?php echo '<input type="number" name="quantity1" id="quantity1" value="'.intval($variant->getQuantity()).'" placeholder="10">'; ?>
+          <label>Stock quantity</label>
+          <input type="number" name="quantity" id="quantity" placeholder="10">
         </div>
-        <input type="hidden" name="variables1" id="variables1"  placeholder="10">
+
+        <input type="hidden" name="variables" id="variables"  placeholder="10">
         <div class="input-group">
           <label>Image</label>
           <div class="image-selector" id="image-selector">
-            <?php
-              $i = 0;
-              foreach($variant->getImages() as $image){
-                echo '<span><span class="delete" onclick="deleteImage(this,\''.$image.'\')"></span><input type="hidden" name="images[]" value="'.$image.'" /> <img src="'.$image.'" /></span>';
-                $i++;
-              }
-            ?>
             <div class="add" onclick="imageEditor()"></div>
           </div>
         </div>
+        <div class="input-group">
+          <label>Attributes</label>
+          <div class="attributes" id="attributes">
+            <div class="attribute template" id="attribute-template">
+              <input type="text" class="attribute-name" placeholder="Name"/>
+              <input type="text" class="attribute-value" placeholder="Value"/>
+              <button class="delete" id="delete"></button>
+            </div>
+            <button class="" id="add-attribute">Add attribute</button>
+          </div>  
+        </div>
       </section>
       <div class="input-group right">
-        <a href="/felta/shop"><input type="button" value="Cancel" id="cancel_news"></a>
-        <input type="submit" name="new_news" value="Update item">
+        <a href="/felta/shop/products"><input type="button" value="Cancel"></a>
+        <input type="submit" name="new_news" value="Save product">
       </div>
     </form>
     <div class="main">
@@ -132,75 +219,8 @@
         </div>
       </div>
     </section>
-    <?php }?>
-
-      </div>
-      <script src="/felta/js/shop.js" type="text/javascript"></script>
-      <script>
-          var variants = 1;
-          var images = 0;
-          var active = "variant1";
-          var last = "variant1";
-          $("#"+active).removeClass("hidden");
-          $("#"+active+"-tab").addClass("active");
-          $(".tab").on("click",function(e){
-              last = active;
-              $("#"+last).addClass("hidden");
-              $("#"+last+"-tab").removeClass("active");
-              active = $(this).attr("column");
-              $("#"+active).removeClass("hidden");
-              $("#"+active+"-tab").addClass("active");
-          });
-          $("#image_edit_cancel, #image_editor_background").click(function(){
-            closeImageEditor();
-          });
-          $("#cancelphoto").on("click",function(){
-            closeImageEditor();
-          });
-          $("#addphoto").on("click",function(){
-              $('#imageid').croppie('result', {
-                type: 'canvas',
-                size: 'viewport'
-              }).then(function (resp) {
-                  uploadImage(
-                    base64ToBlob(
-                      resp.replace(/^data:image\/(png|jpg);base64,/, ""),'image/png')
-                      ).then((response) => {
-                        json = JSON.parse(response);
-
-                        $("#image-selector").prepend("<span image-id='"+json.uid+"'><span class='delete' onclick='deleteImage(this,\""+json.url+"\")' /><input type='hidden' name='images[]' value='"+json.url+"' /> <img src='"+json.url+"' /></span>");
-                        closeImageEditor();
-                        images++;
-                      });
-              });
-          });
-          document.getElementById("amount").onblur =function (){    
-              this.value = parseFloat(this.value.replace(/,/g, ""))
-                              .toFixed(2)
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, "");
-          }
-          function deleteImage(e,url){
-            $.ajax({
-              url: "/felta/shop/delete/image",
-              type: "POST",
-              data: {
-                url: url
-              },
-              success: function(response){
-              }
-            });
-            $(e).parent().remove();
-          }
-          function addVariant(){
-            variants++;
-          }
-      </script>
-  <?php
-      }
-    }
-
-  ?>
-  
+  </div>
+  <script src="/felta/js/shop.js" type="text/javascript"></script>
+  <script src="/felta/js/shop/product.js"></script>
 </body>
 </html>
