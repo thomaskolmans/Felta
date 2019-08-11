@@ -41,16 +41,22 @@
             <td></td>
           </tr>
           <?php
-              $items = Shop::getInstance()->getItems();
-              if($items != null){
-                foreach($items as $item){
+              $from = 0;
+              $until = 20;
+              if(isset($_GET["from"]) && isset($_GET["until"])){
+                $from = $_GET["from"];
+                $until = $_GET["until"];
+              }
+              $products = Shop::getInstance()->getItems($from, $until);
+              if($products != null){
+                foreach($products as $product){
                   echo "
                   <tr>
-                    <td class='align-left'>{$item['id']}</td>
-                    <td class='align-left'>{$item['name']}</td>
-                    <td>{$item['category']}</td>
-                    <td><a href='/felta/shop/update/item/".$item["id"]."'><button>Edit</button></a></td>
-                    <td><a href='/felta/shop/delete/item/".$item["id"]."'><div class='delete'></div></a></td>
+                    <td class='align-left'>{$product['id']}</td>
+                    <td class='align-left'>{$product['name']}</td>
+                    <td>{$product['category']}</td>
+                    <td><a href='/felta/shop/update/item/".$product["id"]."'><button>Edit</button></a></td>
+                    <td><a href='/felta/shop/delete/item/".$product["id"]."'><div class='delete'></div></a></td>
                   </tr>
                   ";
                 }
@@ -60,6 +66,24 @@
           ?>
         </table>
       </section>
+      <?php
+            if(count($products) >= $until || $from > 0){
+              echo '<div class="buttons">';
+                    if($from > 0){
+                      if($from < 20){
+                        $from = 0;
+                        $until = 20;
+                      }
+                      echo '<a href="/felta/shop/products/'.$from.'/'.$until.'"><button>Previous</button></a>';
+                    }
+                    if(count($products) >= $until){
+                      $until += 20;
+                      $from += 20;
+                      echo '<a href="/felta/shop/products/'.$from.'/'.$until.'"><button>Next</button></a>';
+                    }
+              echo '</div>';
+            }
+      ?>
       </div>
     </div>
 </body>

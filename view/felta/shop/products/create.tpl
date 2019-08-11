@@ -28,7 +28,7 @@
       <div class="input-group">
         <label>Category</label>
         <div class="select-box dark">
-          <select name="catagory">
+          <select name="category">
             <option disabled selected value=="">-- select a category --</option>
             <?php
               use lib\Shop\Shop;
@@ -57,8 +57,7 @@
         <label>Description</label>
         <textarea placeholder="Describe your product...." name="description"></textarea>
       </div>
-      <input type="hidden" id="variants" />
-      <div class="tabs" style="margin-top: 50px">
+      <div class="tabs" id="variants" style="margin-top: 50px">
           <div class="tab" id="variant1-tab" column="variant1">Variant 1</div>
           <div class="tab add" id="add-tab"></div>
       </div>
@@ -74,9 +73,9 @@
             <div class="select-box dark">
               <select name="currency" id="currency">
                 <option value="eur">EURO</option>
-                <option value="eur">USD</option>
-                <option value="eur">AUD</option>
-                <option value="eur">MXN</option>
+                <option value="usd">USD</option>
+                <option value="aud">AUD</option>
+                <option value="mxn">MXN</option>
               </select>
             </div>
         </div>
@@ -88,7 +87,18 @@
           <label>Stock quantity</label>
           <input type="number" name="quantity" id="quantity" placeholder="10">
         </div>
-
+        <div class="input-group">
+          <label>Size (cm)</label>
+          <div class="group">
+            <input type="number" name="sizeW" id="sizeW" placeholder="width">
+            <input type="number" name="sizeH" id="sizeH" placeholder="height">
+            <input type="number" name="sizeD" id="sizeD" placeholder="depth">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Weight (Kg)</label>
+          <input type="number" name="weight" id="weight" placeholder="10">
+        </div>
         <input type="hidden" name="variables" id="variables"  placeholder="10">
         <div class="input-group">
           <label>Image</label>

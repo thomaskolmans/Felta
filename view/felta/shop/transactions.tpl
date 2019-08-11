@@ -16,10 +16,10 @@
   <div class="main-wrapper">
     <div class="main dashboard">
       <h1>Transactions</h1>
-      <section class="full transaction-list">
+      <section class="full first transaction-list">
         <?php
-          use lib\Shop\Transaction;
-          use lib\Shop\Shop;
+          use lib\shop\Transaction;
+          use lib\shop\Shop;
           
           $from = 0;
           $until = 20;

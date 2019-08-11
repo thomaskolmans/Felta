@@ -91,9 +91,13 @@ class Order {
     }
 
     public function paid(){
+        // Message to store owner
         $message = new Message();
         $url = Felta::getInstance()->settings->get("website_url")."/felta/shop/order/".$this->id;
         $message->put("You've recieved a new order", "Yes! You've recieved a new order from your webshop. It has been succesfully paid.", $url);
+
+        // Message to customer
+
         $this->orderStatus = orderStatus::PAID;
         $this->update();
     }
@@ -104,7 +108,6 @@ class Order {
         $this->sql->update("promotion","shop_order",["id" => $this->id],$this->promotion);
         $this->sql->update("order","shop_order",["id" => $this->id],$this->date->format("Y-m-d H:i:s"));
     }
-
 
     public function pay($method,$currency){
         $amount = $this->getTotalAmount();

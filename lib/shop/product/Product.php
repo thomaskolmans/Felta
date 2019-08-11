@@ -11,7 +11,7 @@ class Product{
     private $id;
     private $name;
     private $slug;
-    private $catagory;
+    private $category;
     private $shortDescription;
     private $description;
     private $image;
@@ -51,7 +51,7 @@ class Product{
         if($variants !== null){
             if(is_array($variants)){
                 foreach($variants as $variant){
-                    $product->addVariant(ProductVariant::get($variant));
+                    $product->addVariant(ProductVariant::get($variant["id"]));
                 }
             }else{
                 $product->addVariant(ProductVariant::get($variants));
@@ -85,7 +85,7 @@ class Product{
             $this->id,
             $this->name,
             $this->slug,
-            $this->catagory,
+            $this->category,
             $this->shortDescription,
             $this->description,
             $this->image,
@@ -101,13 +101,14 @@ class Product{
         $this->sql->update("name","shop_product",["id" => $this->id],$this->name);
         $this->sql->update("slug","shop_product",["id" => $this->id],$this->slug);
 
-        $this->sql->update("catagory","shop_product",["id" => $this->id],$this->catagory);
-        $this->sql->update("shortDescription","shop_product",["id" => $this->id],$this->shortDescription);
+        $this->sql->update("category","shop_product",["id" => $this->id],$this->category);
+        $this->sql->update("short_description","shop_product",["id" => $this->id],$this->shortDescription);
         $this->sql->update("description","shop_product",["id" => $this->id],$this->description);
         $this->sql->update("image","shop_product",["id" => $this->id],$this->image);
         $this->sql->update("date","shop_product",["id" => $this->id],$this->date);
         $this->sql->update("active","shop_product",["id" => $this->id],$this->active);
 
+        $this->sql->delete("shop_product_variant", ["sid" => $this->id]);
         foreach($this->variants as $variant){
             $variant->update();
         }

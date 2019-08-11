@@ -32,7 +32,7 @@
     ?>
     <h1>Update product</h1>
 
-    <form method="post" class="full" id="new_item" action="/felta/shop/add/item">
+    <?php echo '<form method="post" class="full" id="new_item" action="/felta/shop/update/item/'.$product->getId().'">'; ?>
       <?php echo '<input type="hidden" name="id" placeholder="A product" value="'.$product->getId().'" />'; ?>
       <div class="input-group">
         <label>Name</label>
@@ -45,18 +45,19 @@
       <div class="input-group">
         <label>Category</label>
         <div class="select-box dark">
-          <select name="catagory">
+          <select name="category">
             <option disabled selected value="">-- select a category --</option>
             <?php              
               $shop = Shop::getInstance();
               $categories = $shop->getCategories();
-
+              $activeCategory = $product->getCategory();
+              var_dump($activeCategory);
               if($categories === null){ $categories = []; }
               if(count($categories) > 0){
                 foreach($categories as $key => $category){
                   $name = $category["name"];
                   $selected = "";
-                  if($name === $item->getCatagory()){
+                  if($name === $activeCategory){
                     $selected = "selected";
                   }
                   echo "<option value='{$name}' ".$selected.">{$name}</option>";
@@ -76,8 +77,7 @@
         <label>Description</label>
         <?php echo '<textarea placeholder="Describe your product...." name="description">'.$product->getDescription().'</textarea>'; ?>
       </div>
-      <input type="hidden" id="variants" />
-      <div class="tabs" style="margin-top: 50px">
+      <div class="tabs" id="variants" style="margin-top: 50px">
           <?php
             $variants = $product->getVariants();
             if (count($variants) > 0){
@@ -96,53 +96,95 @@
         <?php
           foreach($variants as $key => $variant) {
             $count = $key + 1;
-        ?>
-          <?php echo '<section class="hidden transparent" id="variant'.$count.'">'; ?>
-              <button class="remove" id="remove-variant">Delete variant</button>
+            echo '<section class="hidden transparent"  id="variant'.$count.'">'; 
+          ?>
+              <!-- <button class="remove" id="remove-variant">Delete variant</button> -->
+              <?php echo '<input type="hidden" name="variants['.$key.'][id]" value="'.$variant->getId().'" />'; ?>
               <div class="input-group">
                 <label>Name</label>
-                <?php echo '<input type="string" name="variant_name" id="variant_name" placeholder="Product variant" value="'.$variant->getName().'" />'; ?>
+                <?php echo '<input type="string" name="variants['.$key.'][variant_name]" placeholder="Product variant" value="'.$variant->getName().'" />'; ?>
               </div>
               <div class="input-group">
                 <label>Currency</label>
                   <div class="select-box dark">
-                    <select name="currency" id="currency">
-                      <option value="eur">EURO</option>
-                      <option value="eur">USD</option>
-                      <option value="eur">AUD</option>
-                      <option value="eur">MXN</option>
-                    </select>
+                    <?php
+                        echo '<select name="variants['.$key.'][currency]" value="'.$variant->getCurrency().'" id="currency">'; 
+                        $eur = $variant->getCurrency() == "eur" ? ' selected="selected"' : '';
+                        $usd = $variant->getCurrency() == "usd" ? ' selected="selected"' : '';
+                        $aud = $variant->getCurrency() == "aud" ? ' selected="selected"' : '';
+                        $mxn = $variant->getCurrency() == "mxn" ? ' selected="selected"' : '';
+                        echo '<option value="eur" '.$eur.'>EURO</option>'; 
+                        echo '<option value="usd" '.$usd.'>USD</option>'; 
+                        echo '<option value="aud" '.$aud.'>AUD</option>'; 
+                        echo '<option value="mxn" '.$mxn.'>MXN</option>'; 
+                      
+                      echo '</select>';
+                    ?>
                   </div>
               </div>
               <div class="input-group">
                 <label>Amount</label>
-                <input type="number" step="0.01" id="amount" name="amount" placeholder="20,00" />
+                <?php echo '<input type="number" step="0.01"  name="variants['.$key.'][amount]" value="'.Shop::intToDoubleSeperator($variant->getPrice(), ".").'" placeholder="20,00" />'; ?>
               </div>
               <div class="input-group">
                 <label>Stock quantity</label>
-                <input type="number" name="quantity" id="quantity" placeholder="10">
+                <?php echo '<input type="number"  name="variants['.$key.'][quantity]" value="'.$variant->getQuantity().'" placeholder="10">'; ?>
               </div>
-
+              <div class="input-group">
+                <label>Size (cm)</label>
+                <div class="group">
+                  <?php echo '<input type="number" name="variants['.$key.'][sizeWidth]" value="'.$variant->getSizeWidth().'" placeholder="width">'; ?>
+                  <?php echo '<input type="number" name="variants['.$key.'][sizeHeight]" value="'.$variant->getSizeHeight().'" placeholder="height">'; ?>
+                  <?php echo '<input type="number" name="variants['.$key.'][sizeDepth]" value="'.$variant->getSizeDepth().'" placeholder="depth">'; ?>
+                </div>
+              </div>
+              <div class="input-group">
+                <label>Weight (Kg)</label>
+                <?php echo '<input type="number" name="variants['.$key.'][weight]" value="'.$variant->getWeight().'" placeholder="10">'; ?>
+              </div>
               <input type="hidden" name="variables" id="variables"  placeholder="10">
               <div class="input-group">
                 <label>Image</label>
                 <div class="image-selector" id="image-selector">
+                  <?php
+                    foreach($variant->getImages() as $imageKey => $image){
+                      echo '
+                        <span>
+                          <span class="delete" onclick="deleteImage(this,\''.$image.'\')"></span>
+                          <input type="hidden" name="variants['.$key.'][images][]" value="'.$image.'" /> 
+                          <img src="'.$image.'" />
+                        </span>
+                      ';
+                    }
+                  ?>
                   <div class="add" onclick="imageEditor()"></div>
                 </div>
               </div>
               <div class="input-group">
                 <label>Attributes</label>
-                <div class="attributes" id="attributes">
+                <?php echo '<div class="attributes" id="attributes'.$count.'">'; ?>
                   <div class="attribute template" id="attribute-template">
                     <input type="text" class="attribute-name" placeholder="Name"/>
                     <input type="text" class="attribute-value" placeholder="Value"/>
                     <button class="delete" id="delete"></button>
                   </div>
-                  <button class="" id="add-attribute">Add attribute</button>
+                  <?php 
+                    foreach($variant->getAttributes() as $aKey => $attribute) {
+                      $aCount = $aKey + 1;
+                      echo '
+                        <div class="attribute" id="attribute">
+                          <input type="text" class="attribute-name" name="variables['.$key.'][attributes]['.$aKey.']]name]" value="'.$attribute->getName().'" placeholder="Name"/>
+                          <input type="text" class="attribute-value" name="variables['.$key.'][attributes]['.$aKey.']]value]" value="'.$attribute->getValue().'"placeholder="Value"/>
+                          <button class="delete" id="delete"></button>
+                        </div>
+                      ';
+                    }
+                  ?>
+                  <?php echo '<button class="" id="add-attribute'.$count.'">Add attribute</button>'; ?>
                 </div>  
               </div>
-            </section>
         <?php
+            echo '</section>';
           }
         ?>
       </div>
@@ -171,7 +213,18 @@
           <label>Stock quantity</label>
           <input type="number" name="quantity" id="quantity" placeholder="10">
         </div>
-
+        <div class="input-group">
+          <label>Size (cm)</label>
+          <div class="group">
+            <input type="number" name="sizeW" id="sizeW" placeholder="width">
+            <input type="number" name="sizeH" id="sizeH" placeholder="height">
+            <input type="number" name="sizeD" id="sizeD" placeholder="depth">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Weight (Kg)</label>
+          <input type="number" name="weight" id="weight" placeholder="10">
+        </div>
         <input type="hidden" name="variables" id="variables"  placeholder="10">
         <div class="input-group">
           <label>Image</label>

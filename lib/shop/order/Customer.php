@@ -9,7 +9,6 @@ class Customer{
     private $sql;
 
     public $id;
-
     public $email;
     public $firstname;
     public $lastname;
@@ -51,11 +50,13 @@ class Customer{
     public function update(){
         
     }
+
     public function delete(){
         $this->sql->delete("shop_customer",["id" => $this->id]);
         $this->sql->delete("shop_customer_address",["id" => $this->id]);
         $this->sql->delete("shop_customer_account",["id" => $this->id]);
     }
+
     public static function get($id){
         $sql = Felta::getInstance()->getSQL();
         $address = CustomerAddress::get($id);
@@ -63,15 +64,18 @@ class Customer{
         $customer = new Customer($id,$r["firstname"],$r["lastname"],$r["email"],$address,$r["isBusiness"],$r["bName"],$r["account"]);
         return $customer;
     }
+
     public static function exists($id){
         return Felta::getInstance()->getSQL()->exists("shop_customer",["id" => $id]);
     }
+
     public static function create($firstname,$lastname,$email,$street,$number,$zipcode,$city,$country,$isBusiness,$bName,$account = false){
         $id = UUID::generate(10);
         $address = new CustomerAddress($id,$street,$number,$zipcode,$city,$country);
         $customer = new Customer($id,$firstname,$lastname,$email,$address,$isBusiness,$bName);
         return $customer;
     }
+
     public function register($email,$password){
         if(!$this->sql->exists("shop_customer_account",["email" => $email])){
             $hash = password_hash($password,PASSWORD_DEFAULT);
@@ -84,7 +88,6 @@ class Customer{
     }
     
     public static function login($email,$password){
-
         $table = "shop_customer_account";
         $id = $this->sql->select("id",$table,["email" => $email]);
         $hash = $this->sql->select("password",$table,["id" => $id]);

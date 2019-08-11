@@ -10,6 +10,7 @@ use lib\shop\order\Order;
 use lib\shop\order\OrderStatus;
 use lib\shop\product\Product;
 use lib\shop\product\ProductVariant;
+use lib\shop\product\Attribute;
 use lib\shop\order\Customer;
 use lib\shop\order\CustomerAddress;
 use lib\shop\Transaction;
@@ -31,33 +32,39 @@ class ShopController {
 	public static function ADD_ITEM(){
         $name = Input::clean("name");
         $slug = Input::clean("slug");
-        $catagory = Input::clean("category");
+        $category = Input::clean("category");
         $shortDescription = Input::clean("short_description");
 		$description = Input::clean("description");
 		$image = null;
-		$product = Product::create($name, $slug, $catagory, $shortDescription, $description, $image, true);
+		$product = Product::create($name, $slug, $category, $shortDescription, $description, $image, true);
 
         $productVariants = [];
         $variants = $_POST["variants"];
 
         foreach($variants as $variant) {
+            $variantId = UUID::generate(20);
             $images = [];
             if (array_key_exists("images", $variant)) {
                 $images = $variant["images"];
             }
 
             $attributes = [];
-            if (array_key_exists("images", $variant)) {
+            if (array_key_exists("attributes", $variant)) {
                 foreach($variant["attributes"] as $attribute) {
-                    $attributes = Attribute::create($attribute["name"], $attribute["value"]);
+                    $attributes[] = Attribute::create($variantId, $attribute["name"], $attribute["value"]);
                 }
             }
  
-            $productVariant = ProductVariant::create(
+            $productVariant = new ProductVariant(
+                $variantId,
                 $product->getId(),
                 $variant["variant_name"],
                 str_replace([",","."],["",""], $variant["amount"]),
                 $variant["currency"],
+                $variant["sizeWidth"],
+                $variant["sizeHeight"],
+                $variant["sizeDepth"],
+                $variant["weight"],
                 $images,
                 $attributes,
                 $variant["quantity"],
@@ -69,43 +76,71 @@ class ShopController {
 		$product->setVariants($productVariants);
         $product->save();
         echo json_encode(["success" => "Item has succesfully added"]);
+        Header("location: /felta/shop/products");
 	}
 
 	public static function UPDATE_ITEM(){
         $id = $_POST["id"];
         $product = Product::get($id);
 
-        $product->setName($_POST["name"]);
-        $product->setCatagory($_POST["catagory"]);
-        $product->setDescription($_POST["description"]);
-        $product->update();
+        $name = Input::clean("name");
+        $slug = Input::clean("slug");
+        $category = Input::value("category");
+        $shortDescription = Input::clean("short_description");
+		$description = Input::clean("description");
 
-        $variants = 1;
-        $ItemVariants = [];
-        $i = 1;
-        foreach($product->getVariants() as $variant){
-            $amount = $_POST["amount".$i];
-            $currency = $_POST["currency".$i];
-            $variables = $_POST["variables".$i];
-            $quantity = $_POST["quantity".$i];
-            $images = isset($_POST["images"]) ? $_POST["images"] : [];
-            $variant->setPrice(str_replace([",","."],["",""],$amount));
-            $variant->setCurrency($currency);
-            $variant->setImages($images);
-            $variant->setQuantity($quantity);
-            $variant->setVariables($variables);
-            $variant->update();
-            $i++;
+        $product->setName($name);
+        $product->setSlug($slug);
+        $product->setCategory($category);
+        $product->setShortDescription($shortDescription);
+        $product->setDescription($description);
+
+        $productVariants = [];
+        $variants = $_POST["variants"];
+
+        foreach($variants as $variant) {
+            $variantId = UUID::generate(20);
+            $images = [];
+            if (array_key_exists("images", $variant)) {
+                $images = $variant["images"];
+            }
+
+            $attributes = [];
+            if (array_key_exists("attributes", $variant)) {
+                foreach($variant["attributes"] as $attribute) {
+                    $attributes[] = Attribute::create($variantId, $attribute["name"], $attribute["value"]);
+                }
+            }
+ 
+            $productVariant = new ProductVariant(
+                $variantId,
+                $product->getId(),
+                $variant["variant_name"],
+                str_replace([",","."],["",""], $variant["amount"]),
+                $variant["currency"],
+                $variant["sizeWidth"],
+                $variant["sizeHeight"],
+                $variant["sizeDepth"],
+                $variant["weight"],
+                $images,
+                $attributes,
+                $variant["quantity"],
+                []
+            );
+            $productVariants[] = $productVariant;
         }
-        $product->setVariants($ItemVariants);
+
+        $product->setVariants($productVariants);
         $product->update();
         echo json_encode(["success" => "Item has succesfully updated"]);
+        Header("location: /felta/shop/products");
 	}
 
 	public static function DELETE_ITEM($id){
         $product = Product::get($id);
         $product->delete();
         echo json_encode(["success" => "Item has succesfully deleted"]);
+        Header("Location: /felta/shop/products");
 	}
 
     /**
@@ -134,16 +169,17 @@ class ShopController {
      * Category
      */
     public static function GET_CATEGORIES(){
-        echo json_encode(Shop::getInstance()->getCatagories());
+        echo json_encode(Shop::getInstance()->getCategories());
     }
 
 	public static function ADD_CATEGORY(){
-        Shop::getInstance()->addCatagory($_POST["catagory"]);
-        echo json_encode(["success" => "Category has succesfully deleted"]);
+        Shop::getInstance()->addCategory($_POST["category"]);
+        echo json_encode(["success" => "Category has succesfully been added"]);
+        header("Location: /felta/shop/categories");
     }
     
     public static function DELETE_CATEGORY(){
-        Shop::getInstance()->deleteCatagory($_POST["catagory"]);
+        Shop::getInstance()->deleteCategory($_POST["category"]);
         echo json_encode(["success" => "Category has succesfully deleted"]);
     }
     
@@ -235,7 +271,7 @@ class ShopController {
     public static function CREATE_SOURCE_IDEAL(){
         $order = Order::get($_POST["oid"]);
         $url = Felta::getInstance()->settings->get("website_url")."/felta/shop/return";
-        echo json_encode($order->toSource("ideal","eur",$url, array("ideal" => array("bank" => $_POST["bank"]))));
+        echo json_encode($order->toSource("ideal", "eur", $url, array("ideal" => array("bank" => $_POST["bank"]))));
     }
 
     /**

@@ -23,39 +23,42 @@
         <h1> Categories </h1>
         <div class="lang_container">
             <?php
-            $catagories = Shop::getInstance()->getCatagories();
-            if($catagories && count($catagories) > 0){
-                foreach($catagories as $key => $catagory){
-                $name = $catagory["name"];
-                $id = $catagory["id"];
-                echo "<div class='lang_container'><div class='language'>{$name}<div class='remove' catagory-id='{$id}'></div></div></div>";
+            $categories = Shop::getInstance()->getCategories();
+            if($categories && count($categories) > 0){
+                foreach($categories as $key => $category){
+                    $name = $category["name"];
+                    $id = $category["id"];
+                    echo "
+                        <div class='lang_container'>
+                            <div class='language'>{$name}<div class='remove' category-id='{$id}'></div></div>
+                        </div>";
                 }
             }else{
-                echo '<h3>No catagories, add one to get started.</h3>';
+                echo '<h3>No categories, add one to get started.</h3>';
             }
             ?>
         </div>
-        <form method="post" class="new-language" action="/felta/shop/add/catagory" style="display: none;">
-            <input type="text" name="catagory">
-            <input type="submit" value="add" name="addcatagory">
+        <form method="post" class="new-language" action="/felta/shop/add/category" style="display: none;">
+            <input type="text" name="category">
+            <input type="submit" value="add" name="addcategory">
         </form>
-        <div class="new" id="new_catagory"></div>
+        <div class="new" id="new_category"></div>
         </section>
       </div>
     </div>
     <script>
         $(".new-language").hide();
-        $("#new_catagory").on('click',function(){
+        $("#new_category").on('click',function(){
             $(".new-language").fadeIn();
         });
         $('.remove').on('click',function(){
-            var catagoryid = $(this).attr("catagory-id");
+            var categoryid = $(this).attr("cataeory-id");
             $(this).parent().remove();
             $.ajax({
-                url: "/felta/shop/delete/catagory",
+                url: "/felta/shop/delete/category",
                 type: "POST",
                 data: {
-                'catagory': catagoryid
+                'category': categoryid
                 }
             });
         });

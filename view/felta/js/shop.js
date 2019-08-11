@@ -146,7 +146,7 @@ function deleteShoppingcartItem(item){
         })
     });
 }
-function addShoppingcartItem(item,quantity){
+function addShoppingcartItem(item, quantity){
     return new Promise((resolve) => {
         $.ajax({
             url: "/felta/shop/add/shoppingcart",
@@ -185,6 +185,7 @@ function plus(i,item){
     countEl.value = count;
     return new Promise((resolve) => { resolve(updateShoppingcartItem(item,count)) });
 }
+
 function minus(i,item){
     var countEl = document.getElementById("amount"+i);
     var count = countEl.value;

@@ -17,6 +17,12 @@ class ProductVariant{
     private $currency;
     private $shipsFrom;
 
+    private $sizeWidth;
+    private $sizeHeight;
+    private $sizeDepth;
+
+    private $weight;
+
     private $images = [];
     private $attributes = [];
 
@@ -29,6 +35,10 @@ class ProductVariant{
         $name,
         $price,
         $currency,
+        $sizeWidth,
+        $sizeHeight,
+        $sizeDepth,
+        $weight,
         $images,
         $attributes,
         $quantity, 
@@ -45,6 +55,12 @@ class ProductVariant{
         $this->price = $price;
         $this->currency = $currency;
 
+        $this->sizeWidth = $sizeWidth;
+        $this->sizeHeight = $sizeHeight;
+        $this->sizeDepth = $sizeDepth;
+
+        $this->weight = $weight;
+        
         $this->images = $images;
         $this->attributes = $attributes;
 
@@ -54,11 +70,13 @@ class ProductVariant{
 
     public static function fromResult($result){
         $images = Felta::getInstance()->getSQL()
-            ->select("*","shop_product_variant_image",["sid" => $result["id"]]);
+            ->select("*","shop_product_variant_image", ["sid" => $result["id"]]);
         $attributes = Felta::getInstance()->getSQL()
             ->select("*","shop_product_variant_attribute",["pid" => $result["id"]]);
+        
         $imagesList = [];
         $attributesList = [];
+
         if($images !== null){
             if(is_array($images)){
                 foreach($images as $image){
@@ -79,12 +97,17 @@ class ProductVariant{
             }
         }
         
+
         $productvariant = new ProductVariant(
             $result["id"],
             $result["sid"],
             $result["name"],
             $result["price"],
             $result["currency"],
+            $result["size_width"],
+            $result["size_height"],
+            $result["size_depth"],
+            $result["weight"],
             $imagesList,
             $attributesList,
             $result["quantity"],
@@ -98,6 +121,10 @@ class ProductVariant{
         $name,
         $price,
         $currency,
+        $sizeWidth,
+        $sizeHeight,
+        $sizeDepth,
+        $weight,
         $images,
         $attributes,
         $quantity, 
@@ -111,6 +138,10 @@ class ProductVariant{
             $name,
             $price,
             $currency,
+            $sizeWidth,
+            $sizeHeight,
+            $sizeDepth,
+            $weight,
             $images,
             $attributes,
             $quantity, 
@@ -124,8 +155,7 @@ class ProductVariant{
     }
 
     public static function get($id){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_product_variant",["id" => $id])[0];
-        return ProductVariant::fromResult($result);
+        return ProductVariant::fromResult(Felta::getInstance()->getSQL()->select("*","shop_product_variant",["id" => $id])[0]);
     }
 
     public function save(){
@@ -135,6 +165,10 @@ class ProductVariant{
             $this->name,
             $this->price,
             $this->currency,
+            $this->sizeWidth,
+            $this->sizeHeight,
+            $this->sizeDepth,
+            $this->weight,
             $this->quantity,
             json_encode($this->variables)
         ]);
@@ -148,6 +182,7 @@ class ProductVariant{
         }
 
         foreach ($this->attributes as $attribute) {
+            var_dump($attribute);
             $attribute->insert();
         }
     }
@@ -160,25 +195,10 @@ class ProductVariant{
     }
 
     public function update(){
-        $this->sql->update("name","shop_product_variant",["sid" => $this->sid],$this->name);
-        $this->sql->update("price","shop_product_variant",["sid" => $this->sid],$this->price);
-        $this->sql->update("currency","shop_product_variant",["sid" => $this->sid],$this->currency);
-        $this->sql->update("quantity","shop_product_variant",["sid" => $this->sid],$this->quantity);
-        $this->sql->update("variables","shop_product_variant",["sid" => $this->sid],json_encode($this->variables));
+        $this->sql->delete("shop_product_variant_image", ["sid" => $this->id]);
+        $this->sql->delete("shop_product_variant_attribute", ["pid" => $this->id]);
 
-        foreach ($this->images as $image) {
-            if(!$this->sql->exists("shop_product_variant_image",["url" => $image])){
-                $this->sql->insert("shop_product_variant_image",[
-                    0,
-                    $this->id,
-                    $image
-                ]);  
-            }
-        }
-
-        foreach ($this->attributes as $attribute) {
-            $attribute->update();
-        }
+       $this->save();
     }
 
     public function getId(){
@@ -248,6 +268,49 @@ class ProductVariant{
         return $this;
     }
 
+    public function getAttributes(){
+        return $this->attributes;
+    }
+    public function setAttributes($attributes){
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    public function getSizeWidth(){
+        return $this->sizeWidth;
+    }
+
+    public function setSizeWidth($sizeWidth){
+        $this->sizeWidth = $sizeWidth;
+        return $this;
+    }
+
+    public function getSizeHeight(){
+        return $this->sizeHeight;
+    }
+
+    public function setSizeHeight($sizeHeight){
+        $this->sizeHeight = $sizeHeight;
+        return $this;
+    }
+
+    public function getSizeDepth(){
+        return $this->sizeDepth;
+    }
+
+    public function setSizeDepth($sizeDepth){
+        $this->sizeDepth = $sizeDepth;
+        return $this;
+    }
+
+    public function getWeight(){
+        return $this->weight;
+    }
+
+    public function setWeight($weight){
+        $this->weight = $weight;
+        return $this;
+    }
 }
 
 ?>

@@ -2,6 +2,7 @@
 namespace lib\shop\product;
 
 use lib\helpers\UUID;
+use lib\Felta;
 
 
 class Attribute {

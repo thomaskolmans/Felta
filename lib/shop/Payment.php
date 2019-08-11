@@ -6,7 +6,7 @@ use lib\helpers\UUID;
 class Payment{
 
     private $oid;
-    private $sourc;
+    private $source;
     private $amount;
     private $currency;
     private $method;
@@ -24,6 +24,8 @@ class Payment{
     public static function webhook($id){
         self::chargeFromSource($id);
     }
+
+    public static function mollieW
 
     public function pay(){
         switch($this->method){
@@ -56,9 +58,21 @@ class Payment{
                 $this->charge();
             break;
             case "mollie":
-                
+                $this->mollieCharge();
             break;
         }
+    }
+
+    public function mollieCharge(){
+        $payment = $mollie->payments->create([
+            "amount" => [
+                "currency" => $this->currency,
+                "value" => Shop::intToDoubleSeperator($this->amount)
+            ],
+            "description" => $this->description,
+            "redirectUrl" => Felta::getInstance()->settings->get("website_url")."/felta/shop/return",
+            "webhookUrl"  => Felta::getInstance()->settings->get("website_url")."/felta/shop/mollie-webhook/",
+        ]);
     }
 
     public function charge($customer = null){
@@ -78,12 +92,18 @@ class Payment{
                   "source" => $this->source["id"],
                 ]);
             }
+            //Set order to paid
             $order = Order::get($transaction->order);
             $order->paid();
+
+            //Set transaction to paid
             $transaction->state = TransactionState::COMMITTED;
             $transaction->update();
+
+            //Clear shoppingcart
             $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
             $shoppingcart->destroy();
+
             return $charge;
         }
         return null;
@@ -96,7 +116,14 @@ class Payment{
     public static function chargeFromSource($source){
         $transaction = Transaction::getFromSource($source);   
         if($transaction !== null){
-            $payment = new Payment($transaction->transactionid,$source,$transaction->method,$transaction->amount,$transaction->currency,"");
+            $payment = new Payment(
+                $transaction->transactionid,
+                $source,
+                $transaction->method,
+                $transaction->amount,
+                $transaction->currency,
+                ""
+            );
             $payment->pay();       
         }
         return ["success" => false,"error" => "Source does not exist"];

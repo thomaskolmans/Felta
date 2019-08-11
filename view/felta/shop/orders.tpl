@@ -16,7 +16,7 @@
   <div class="main-wrapper">
     <div class="main dashboard">
       <h1>Orders</h1>
-      <section class="full transaction-list">
+      <section class="full first transaction-list">
         <?php
           use lib\shop\order\Order;
           use lib\shop\Shop;

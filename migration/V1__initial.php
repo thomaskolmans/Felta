@@ -171,6 +171,10 @@ $sql->create("shop_product_variant",[
     "name" => "varchar(255)",
     "price" => "int",
     "currency" => "varchar(3)",
+    "size_width" => "float",
+    "size_height" => "float",
+    "size_depth" => "float",
+    "weight" => "float",
     "quantity" => "int",
     "variables" => "longtext"
 ],"id");

@@ -49,6 +49,9 @@
       &.full
         flex: 0 0 100%
         margin: 15px 0
+        display: block
+        &.first
+          margin-top: 0
       &.more
         margin: 50px 0 15px
       &.overview
@@ -642,6 +645,11 @@ form.full
       color: $main
       background: none
       border-color: $main
+  .group
+    display: flex
+    flex-wrap: wrap
+    input
+      flex: 1
 .settings
   section
     width: 100%
@@ -704,8 +712,8 @@ form.full
       width: 100%
     .me
       font:
-        size: 24px
-      padding: 25px 0
+        size: 20px
+      padding: 35px 0
       .line
         height: auto
         display: inline-block

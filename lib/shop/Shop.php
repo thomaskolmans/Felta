@@ -83,8 +83,9 @@ class Shop {
         unset($url);
     }
 
-    public static function getItems(){
-        return Felta::getInstance()->getSQL()->select("*", "shop_product",[]);
+    public static function getItems($from = 0, $to = 0){
+        return Felta::getInstance()->getSQL()->query()
+            ->select()->from("shop_product")->orderBy("date")->desc()->limit($from, $to)->execute();
     }
 
     public static function getItemsByCatagory($catagory){

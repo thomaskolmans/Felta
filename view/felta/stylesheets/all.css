@@ -1009,7 +1009,10 @@ strong, b {
         display: none; }
       .main.dashboard section.full, .main.settings section.full {
         flex: 0 0 100%;
-        margin: 15px 0; }
+        margin: 15px 0;
+        display: block; }
+        .main.dashboard section.full.first, .main.settings section.full.first {
+          margin-top: 0; }
       .main.dashboard section.more, .main.settings section.more {
         margin: 50px 0 15px; }
       .main.dashboard section.overview h2, .main.settings section.overview h2 {
@@ -1596,6 +1599,11 @@ form.full {
       color: #000c0c;
       background: none;
       border-color: #000c0c; }
+  form.full .group {
+    display: flex;
+    flex-wrap: wrap; }
+    form.full .group input {
+      flex: 1; }
 
 .settings section {
   width: 100%;
@@ -1658,8 +1666,8 @@ form.full {
   .settings section label {
     width: 100%; }
   .settings section .me {
-    font-size: 24px;
-    padding: 25px 0; }
+    font-size: 20px;
+    padding: 35px 0; }
     .settings section .me .line {
       height: auto;
       display: inline-block;
