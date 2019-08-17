@@ -145,7 +145,7 @@
               <input type="hidden" name="variables" id="variables"  placeholder="10">
               <div class="input-group">
                 <label>Image</label>
-                <div class="image-selector" id="image-selector">
+                <?php echo '<div class="image-selector" id="image-selector'.($key + 1).'">'; ?>
                   <?php
                     foreach($variant->getImages() as $imageKey => $image){
                       echo '
@@ -158,7 +158,7 @@
                     }
                   ?>
                   <div class="add" onclick="imageEditor()"></div>
-                </div>
+                <?php echo '</div>'; ?>
               </div>
               <div class="input-group">
                 <label>Attributes</label>
@@ -248,12 +248,11 @@
         <a href="/felta/shop/products"><input type="button" value="Cancel"></a>
         <input type="submit" name="new_news" value="Save product">
       </div>
-    </form>
+    <?php echo '</form>'; ?>
     <div class="main">
       <section class="image_editor" id="image_editor">
         <div class="background" id="image_editor_background"></div>
         <div class="editor">
-
           <div class="container" id="imageeditor">
             <form method="post" class="select-image" enctype="multipart/form-data">
               <div class="imageid" id="imageid"></div>

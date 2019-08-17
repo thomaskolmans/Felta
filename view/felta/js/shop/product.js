@@ -25,7 +25,7 @@ $("#addphoto").on("click",function(){
         base64ToBlob(resp.replace(/^data:image\/(png|jpg);base64,/, ""),'image/png')
       ).then((response) => {
         json = JSON.parse(response);
-        $("#image-selector").prepend(
+        $("#image-selector" + activeVariant).prepend(
           "<span image-id='"+json.uid+"'>" +
             "<span class='delete' onclick='deleteImage(this,\""+json.url+"\")' />" +
             "<input type='hidden' name='variants["+(activeVariant -1)+"][images][]' value='"+json.url+"' />" +
@@ -36,7 +36,6 @@ $("#addphoto").on("click",function(){
       });
     });
 });
-
 
 document.getElementById("amount").onblur =function (){    
     this.value = parseFloat(this.value.replace(/,/g, ""))
@@ -97,7 +96,8 @@ function setupVariant(id) {
     $("#" + id + " #weight")[0].setAttribute("name", "variants[" + (variants - 1) + "][weight]");
     $("#" + id + " #attributes")[0].setAttribute("id", "attributes" + (variants));
     $("#" + id + " #add-attribute")[0].setAttribute("id", "add-attribute" + (variants));
-  
+    $("#" + id + " #image-selector")[0].setAttribute("id", "image-selector" + (variants));
+
     $("#add-attribute" + (variants)).on("click", function(e) {
       e.preventDefault();
       var cVariants = variants -1 ;
@@ -158,7 +158,7 @@ function setupTabs() {
       $("#"+last+"-tab").removeClass("active");
       active = $(this).attr("column");
       if (active) {
-        activeVariant = parseInt(active.replace("variant"));
+        activeVariant = active.replace("variant");
       }
       $("#"+active).removeClass("hidden");
       $("#"+active+"-tab").addClass("active");

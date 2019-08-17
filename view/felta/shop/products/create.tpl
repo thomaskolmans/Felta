@@ -127,7 +127,6 @@
       <section class="image_editor" id="image_editor">
         <div class="background" id="image_editor_background"></div>
         <div class="editor">
-
           <div class="container" id="imageeditor">
             <form method="post" class="select-image" enctype="multipart/form-data">
               <div class="imageid" id="imageid"></div>
