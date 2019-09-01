@@ -15,7 +15,7 @@
    <ul>
      <a href="/felta/dashboard"><li><i class="fa fa-home"></i>Dashboard</li></a>
      <a href="/felta/editor"><li><i class="fa fa-edit"></i>Edit</li></a>
-     <a href="/felta/agenda"><li><i class="fa fa-calendar"></i>Agenda</li></a>
+     <!-- <a href="/felta/agenda"><li><i class="fa fa-calendar"></i>Agenda</li></a> -->
      <!--
      <a href="/felta/news"><li><i class="fa fa-newspaper"></i>News</li></a>
      <a href="/felta/social"><li><i class="fa fa-users"></i>Social</li></a>
@@ -37,7 +37,7 @@
         </ul>
       </li>
      </a>
-     <a href="/felta/statistics"><li><i class="fa fa-bar-chart"></i>Statistics</li></a>
+     <!-- <a href="/felta/statistics"><li><i class="fa fa-bar-chart"></i>Statistics</li></a> -->
    </ul>
     <div class="bottom">
       <a class="logout" href="/felta/logout"><i class="fa fa-sign-out"></i></a>

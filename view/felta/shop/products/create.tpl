@@ -90,14 +90,14 @@
         <div class="input-group">
           <label>Size (cm)</label>
           <div class="group">
-            <input type="number" name="sizeW" id="sizeW" placeholder="width">
-            <input type="number" name="sizeH" id="sizeH" placeholder="height">
-            <input type="number" name="sizeD" id="sizeD" placeholder="depth">
+            <input type="text" name="sizeW" id="sizeW" placeholder="width">
+            <input type="text" name="sizeH" id="sizeH" placeholder="height">
+            <input type="text" name="sizeD" id="sizeD" placeholder="depth">
           </div>
         </div>
         <div class="input-group">
           <label>Weight (Kg)</label>
-          <input type="number" name="weight" id="weight" placeholder="10">
+          <input type="text" name="weight" id="weight" placeholder="10">
         </div>
         <input type="hidden" name="variables" id="variables"  placeholder="10">
         <div class="input-group">

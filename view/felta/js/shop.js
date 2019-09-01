@@ -1,15 +1,28 @@
 var croppie;
 
+
+function getDomain(){
+    if(document.domain.length){
+        var parts = document.domain.replace(/^(www\.)/,"").split('.');
+        while(parts.length > 2){
+            var subdomain = parts.shift();
+        }
+        var domain = parts.join('.');
+        return domain.replace(/(^\.*)|(\.*$)/g, "");
+    }
+    return '';
+}
+
 function ideal(oid,bank){
     createIdealSource(oid,bank).then(function(response){
-        createTransaction(oid,"ideal",response.id,0).then((transaction) => {
+        createTransaction(oid,"ideal",response.id,0).then(function(transaction){
             window.location = response.redirect.url;
         });
     });
 }
 
 function createIdealSource(oid,bank){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve) {
         $.ajax({
             url: "/felta/shop/create/source/ideal",
             type: "POST", 
@@ -24,17 +37,6 @@ function createIdealSource(oid,bank){
     })
 }
 
-function getDomain(){
-    if(document.domain.length){
-        var parts = document.domain.replace(/^(www\.)/,"").split('.');
-        while(parts.length > 2){
-            var subdomain = parts.shift();
-        }
-        var domain = parts.join('.');
-        return domain.replace(/(^\.*)|(\.*$)/g, "");
-    }
-    return '';
-}
 
 function card(oid,c){
     var t = this;
@@ -43,7 +45,7 @@ function card(oid,c){
             var errorElement = document.getElementById('card-errors');
             errorElement.textContent = result.error.message;
         } else {
-            createCharge(oid,result.source.id,"creditcard").then((response) => {
+            createCharge(oid,result.source.id,"creditcard").then(function(response) {
               window.location = "/felta/shop/thankyou";
             });
         }
@@ -54,8 +56,24 @@ function paypal(oid){
 
 }
 
+function mollie(oid, method) {
+    return new Promise(function(resolve){
+        $.ajax({
+            url: "/felta/shop/mollie/transaction",
+            type: "POST", 
+            data: {
+              oid: oid,
+              method: method
+            },
+            success: function(response){
+                resolve(JSON.parse(response));
+            }
+        });
+    })
+}
+
 function createTransaction(oid,method,sid,state){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve) {
         $.ajax({
             url: "/felta/shop/transaction",
             type: "POST",
@@ -72,7 +90,7 @@ function createTransaction(oid,method,sid,state){
     });
 }
 function createChargeFromSource(source){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         $.ajax({
             url: "/felta/shop/charge/source",
             type: "POST",
@@ -87,7 +105,7 @@ function createChargeFromSource(source){
 }
 
 function createCharge(oid,source,method){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         $.ajax({
             url: "/felta/shop/charge",
             type: "POST",
@@ -105,7 +123,7 @@ function createCharge(oid,source,method){
 
 
 function getShopppingCart(){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         if(getCookie("SCID") === null){
             $.ajax({
                 url: "/felta/shop/create/shoppingcart",
@@ -121,9 +139,9 @@ function getShopppingCart(){
 }
 
 function getShoppingcartItems(){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         $.ajax({
-            url: "/felta/shop/get/shoppingcart/items",
+            url: "/felta/shop/shoppingcart",
             type: "GET", 
             success: function(response){
                 resolve(JSON.parse(response));
@@ -133,7 +151,7 @@ function getShoppingcartItems(){
 }
 
 function deleteShoppingcartItem(item){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         $.ajax({
             url: "/felta/shop/delete/shoppingcart",
             type: "POST",
@@ -147,7 +165,7 @@ function deleteShoppingcartItem(item){
     });
 }
 function addShoppingcartItem(item, quantity){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         $.ajax({
             url: "/felta/shop/add/shoppingcart",
             type: "POST",
@@ -162,7 +180,7 @@ function addShoppingcartItem(item, quantity){
     });
 }
 function updateShoppingcartItem(item,quantity){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve)  {
         $.ajax({
             url: "/felta/shop/update/shoppingcart",
             type: "POST",
@@ -183,7 +201,7 @@ function plus(i,item){
     var count = countEl.value;
     count++;
     countEl.value = count;
-    return new Promise((resolve) => { resolve(updateShoppingcartItem(item,count)) });
+    return new Promise(function(resolve) { resolve(updateShoppingcartItem(item,count)) });
 }
 
 function minus(i,item){
@@ -193,13 +211,13 @@ function minus(i,item){
     if (count > 1) {
         count--;
         countEl.value = count;
-        return new Promise((resolve) => { resolve(updateShoppingcartItem(item,count)) });
+        return new Promise(function(resolve) { resolve(updateShoppingcartItem(item,count)) });
     }
-    return new Promise((resolve) => {resolve(null)})
+    return new Promise(function(resolve){resolve(null)})
 }
 
 function uploadImage(blob){
-    return new Promise((resolve) => {
+    return new Promise(function(resolve) {
         var formData = new FormData();
         formData.append('picture', blob);
         $.ajax({
@@ -246,7 +264,6 @@ function image(input){
                 $image.croppie('bind', {
                     url: e.target.result
                 }).then(function(){
-                    console.log('jQuery bind complete');
                 });
                 
             }
@@ -256,8 +273,7 @@ function image(input){
     $image = $('#imageid').croppie({
         viewport: {
             width: 300,
-            height: 300,
-            type: 'square'
+            height: 200
         },
         enableExif: true
     });
@@ -321,7 +337,9 @@ function closeImageEditor(){
     $(".editor").removeClass("full");
     document.getElementById("file").value = "";
     $("#imageid").croppie('destroy');
-    $(".select-image")[0].reset();
+    if($(".select-image")[0]){
+        $(".select-image")[0].reset();
+    }
     croppie = null;
 }
 function intToDouble(int){

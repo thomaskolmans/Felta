@@ -14,10 +14,10 @@
     </head>
     <body> 
         <?php
-            use lib\Shop\Shop;
-            use lib\Shop\Order;
-            use lib\Shop\Customer;
-            use lib\Shop\Shoppingcart;
+            use lib\shop\Shop;
+            use lib\shop\order\Order;
+            use lib\shop\order\Customer;
+            use lib\shop\Shoppingcart;
             
             if(isset($_GET["oid"])){
                 $oid = $_GET["oid"];

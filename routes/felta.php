@@ -2,13 +2,13 @@
 use lib\Cleverload;
 use lib\Felta;
 
-use lib\Controllers\FeltaController;
-use lib\Controllers\ShopController;
-use lib\Controllers\UserController;
-use lib\Controllers\PostController;
+use lib\controllers\FeltaController;
+use lib\controllers\ShopController;
+use lib\controllers\UserController;
+use lib\controllers\PostController;
 
-use lib\Routing\Route;
-use lib\Helpers\Input;
+use lib\routing\Route;
+use lib\helpers\Input;
 
 $felta = Felta::getInstance();
 
@@ -165,11 +165,14 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         Route::post("/charge",function(){ ShopController::CHARGE(); });
         Route::post("/charge/source",function(){ ShopController::CHARGE_SOURCE(); });
         Route::post("/webhook",function(){ ShopController::WEBHOOK(); });
-
+        Route::post("/mollie-webhook/{tid}", function($tid) { ShopController::MOLLIE_WEBHOOK($tid); });
+        
         /**
          * Transaction
          */
         Route::post("/transaction",function(){ ShopController::TRANSACTION(); });
+        Route::post("/mollie/transaction", function() { ShopController::MOLLIE_TRANSACTION(); });
+        Route::post("/mollie/transaction/check", function(){ ShopController::CHECK_MOLLIE_PAYMENT(); });
 
         /**
          * Order
@@ -183,6 +186,7 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
          *  Shoppingcart
          */
         Route::get("/create/shoppingcart", function(){ ShopController::CREATE_SHOPPINGCART(); });
+        Route::get("/shoppingcart", function() { ShopController::GET_SHOPPINGCART(); });
         Route::post("/add/shoppingcart", function(){ ShopController::ADD_ITEM_SHOPPINGCART(); });
         Route::post("/update/shoppingcart", function(){ ShopController::UPDATE_ITEM_SHOPPINGCART(); });
         Route::post("/delete/shoppingcart", function(){ ShopController::DELETE_ITEM_SHOPPINGCART(); });

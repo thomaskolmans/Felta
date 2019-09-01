@@ -26,7 +26,6 @@
             id: returnsrc,
             client_secret: url.searchParams.get("client_secret")
          }).then(function(result) {
-            console.log(result.source.status);
             if(result.source.status === "chargeable"){
                createChargeFromSource(result.source).then(function(){
                   window.location = "/felta/shop/thankyou";  

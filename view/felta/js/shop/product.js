@@ -19,7 +19,10 @@ $("#add-tab").on("click", function(){
 $("#addphoto").on("click",function(){
     $('#imageid').croppie('result', {
       type: 'canvas',
-      size: 'viewport'
+      size: {
+        width: 1200,
+        height: 800
+      }
     }).then(function (resp) {
       uploadImage(
         base64ToBlob(resp.replace(/^data:image\/(png|jpg);base64,/, ""),'image/png')

@@ -13,13 +13,14 @@
     </head>
     <body> 
         <?php
-            use lib\Shop\Order;
-            use lib\Shop\OrderStatus;
-            use lib\Shop\Shop;
-            use lib\Shop\Product;
-            use lib\Shop\ProductVariant;
-            use lib\Shop\Shoppingcart;
-            use lib\Shop\Customer;
+            use lib\shop\order\Order;
+            use lib\shop\order\OrderStatus;
+            use lib\shop\order\Customer;
+
+            use lib\shop\Shop;
+            use lib\shop\product\Product;
+            use lib\shop\product\ProductVariant;
+            use lib\shop\Shoppingcart;
             use lib\Felta;
             
             if(isset($_GET["oid"])){
@@ -111,7 +112,7 @@
                                 <th>Quantity</th>
                             </tr>
                             <?php
-                                $items = $order->getShopitems();
+                                $items = $order->getProducts();
                                 $iteration = 0;
                                 if(count($items) > 0){
                                     foreach($items as $item => $quantity){
@@ -237,9 +238,10 @@
                         <a href="/"><button id="back" class="black">Back</button></a>
                         <?php
                             if(count($items) > 0){
-                                echo'<a href="/felta/shop/checkout/'.$_COOKIE["SCID"].'"> 
-                                        <button class="highlighted" id="checkout"> Go to checkout </button>
-                                    </a>';
+                                echo
+                                '<a href="/felta/shop/checkout/'.$_COOKIE["SCID"].'"> 
+                                    <button class="highlighted" id="checkout"> Go to checkout </button>
+                                </a>';
                             }
 
                         ?> 

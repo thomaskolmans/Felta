@@ -133,14 +133,14 @@
               <div class="input-group">
                 <label>Size (cm)</label>
                 <div class="group">
-                  <?php echo '<input type="number" name="variants['.$key.'][sizeWidth]" value="'.$variant->getSizeWidth().'" placeholder="width">'; ?>
-                  <?php echo '<input type="number" name="variants['.$key.'][sizeHeight]" value="'.$variant->getSizeHeight().'" placeholder="height">'; ?>
-                  <?php echo '<input type="number" name="variants['.$key.'][sizeDepth]" value="'.$variant->getSizeDepth().'" placeholder="depth">'; ?>
+                  <?php echo '<input type="text" name="variants['.$key.'][sizeWidth]" value="'.$variant->getSizeWidth().'" placeholder="width">'; ?>
+                  <?php echo '<input type="text" name="variants['.$key.'][sizeHeight]" value="'.$variant->getSizeHeight().'" placeholder="height">'; ?>
+                  <?php echo '<input type="text" name="variants['.$key.'][sizeDepth]" value="'.$variant->getSizeDepth().'" placeholder="depth">'; ?>
                 </div>
               </div>
               <div class="input-group">
                 <label>Weight (Kg)</label>
-                <?php echo '<input type="number" name="variants['.$key.'][weight]" value="'.$variant->getWeight().'" placeholder="10">'; ?>
+                <?php echo '<input type="text" name="variants['.$key.'][weight]" value="'.$variant->getWeight().'" placeholder="10">'; ?>
               </div>
               <input type="hidden" name="variables" id="variables"  placeholder="10">
               <div class="input-group">
@@ -216,14 +216,14 @@
         <div class="input-group">
           <label>Size (cm)</label>
           <div class="group">
-            <input type="number" name="sizeW" id="sizeW" placeholder="width">
-            <input type="number" name="sizeH" id="sizeH" placeholder="height">
-            <input type="number" name="sizeD" id="sizeD" placeholder="depth">
+            <input type="text" name="sizeW" id="sizeW" placeholder="width">
+            <input type="text" name="sizeH" id="sizeH" placeholder="height">
+            <input type="text" name="sizeD" id="sizeD" placeholder="depth">
           </div>
         </div>
         <div class="input-group">
           <label>Weight (Kg)</label>
-          <input type="number" name="weight" id="weight" placeholder="10">
+          <input type="text" name="weight" id="weight" placeholder="10">
         </div>
         <input type="hidden" name="variables" id="variables"  placeholder="10">
         <div class="input-group">
