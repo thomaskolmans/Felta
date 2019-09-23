@@ -5,15 +5,13 @@ use lib\Felta;
 
 use lib\shop\Shop;
 use lib\shop\Shoppingcart;
-use lib\shop\Promotion;
 use lib\shop\order\Order;
-use lib\shop\order\OrderStatus;
 use lib\shop\product\Product;
 use lib\shop\product\ProductVariant;
 use lib\shop\product\Attribute;
 use lib\shop\order\Customer;
-use lib\shop\order\CustomerAddress;
 use lib\shop\Transaction;
+use lib\shop\TransactionState;
 use lib\shop\Payment;
 
 use lib\helpers\UUID;
@@ -220,23 +218,50 @@ class ShopController {
         echo json_encode(Shoppingcart::create()->getId());
     }
 
+    public static function GET_SHOPPINGCART() {
+        $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
+        $shoppingcart->pull();
+        echo json_encode(["items" => $shoppingcart->getItems()]);
+    }
+
     public static function ADD_ITEM_SHOPPINGCART(){
         $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
-        $shoppingcart->set($_POST["item"],$_POST["quantity"]);
+        $shoppingcart->set($_POST["item"], $_POST["quantity"]);
         $shoppingcart->save();
-        echo json_encode(["amount" => $shoppingcart->getTotalAmount()]);
+        echo json_encode(
+            [
+            "action" => "add",
+            "product" => ProductVariant::get($_POST["item"])->expose(),
+            "quantity" => $_POST["quantity"],
+            "amount" => $shoppingcart->getTotalAmount()
+            ]
+        );
     }
 
     public static function UPDATE_ITEM_SHOPPINGCART(){
         $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
-        $shoppingcart->update($_POST["item"],$_POST["quantity"]);
-        echo json_encode(["amount" => $shoppingcart->getTotalAmount()]);
+        $shoppingcart->update($_POST["item"], $_POST["quantity"]);
+        
+        echo json_encode(
+            [
+            "action" => "update",
+            "product" => ProductVariant::get($_POST["item"])->expose(),
+            "quantity" => $_POST["quantity"],
+            "amount" => $shoppingcart->getTotalAmount()
+            ]
+        );
     }
 
     public static function DELETE_ITEM_SHOPPINGCART(){
         $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
         $shoppingcart->delete($_POST["item"]);
-        echo json_encode(["amount" => $shoppingcart->getTotalAmount()]);
+        echo json_encode(
+            [
+            "action" => "delete",
+            "product" => ProductVariant::get($_POST["item"])->expose(), 
+            "amount" => $shoppingcart->getTotalAmount()
+            ]
+        );
     }
 
     /**
@@ -294,7 +319,58 @@ class ShopController {
         $customer->save();
         $order = Order::createFromShoppingcart(new Shoppingcart($_COOKIE["SCID"]),$customer->id);
         $order->save();
-        header("Location: /felta/shop/pay/".$order->getId());
+        header("Location: /pay/".$order->getId());
+    }
+
+    public static function MOLLIE_TRANSACTION() {
+        $order = Order::get($_POST["oid"]);
+        $tid = UUID::generate(15);
+        $payment = Shop::getInstance()->getMollie()->payments->create([
+            "amount" => [
+                "currency" => "EUR",
+                "value" => Shop::intToDoubleSeperator($order->getTotalAmount(), ".")
+            ],
+            "description" => "A cleanheating payment",
+            "redirectUrl" => Felta::getInstance()->settings->get("website_url")."/shop/return/". $tid,
+            "webhookUrl"  => Felta::getInstance()->settings->get("website_url")."/felta/shop/mollie/". $tid,
+            "method" => $_POST["method"]
+        ]);
+
+        $transaction = new Transaction(
+            $tid,
+            htmlspecialchars($payment->id, ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars($_POST["oid"], ENT_QUOTES, 'UTF-8'),
+            htmlspecialchars("ideal", ENT_QUOTES, 'UTF-8'),
+            $order->getTotalAmount(),
+            "EUR",              
+            htmlspecialchars(0, ENT_QUOTES, 'UTF-8'),
+            new \DateTime()
+        );
+        $transaction->save();
+        echo json_encode(["transaction" => $transaction, "checkoutUrl" => $payment->getCheckoutUrl()]);
+    }
+
+    public static function CHECK_MOLLIE_PAYMENT(){
+        $transaction = Transaction::get($_POST["tid"]);
+        if ($transaction != null) {
+            $payment = Shop::getInstance()->getMollie()->payments->get($transaction->transactionid);
+            if ($payment->isPaid() && $transaction->state != TransactionState::COMMITTED){
+                //Set order to paid
+                $order = Order::get($transaction->order);
+                $order->paid();
+
+                //Set transaction to paid
+                $transaction->state = TransactionState::COMMITTED;
+                $transaction->update();
+
+                //Clear shoppingcart
+                $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
+                $shoppingcart->destroy();
+                echo json_encode(["success" => true]);
+                return true;
+            }
+        }
+        echo json_encode(["success" => false]);
     }
 
 	public static function TRANSACTION(){
@@ -335,6 +411,29 @@ class ShopController {
         $input = @file_get_contents("php://input");
         $json = json_decode($input,true);
         echo json_encode(Payment::chargeFromSource($json["data"]["object"]));
-	}
+    }
+    
+    public static function MOLLIE_WEBHOOK($tid){
+        $transaction = Transaction::get($tid);
+        if ($transaction != null) {
+            $payment = Shop::getInstance()->getMollie()->payments->get($transaction->transactionid);
+            if ($payment->isPaid() && $transaction->state != TransactionState::COMMITTED){
+                //Set order to paid
+                $order = Order::get($transaction->order);
+                $order->paid();
+
+                //Set transaction to paid
+                $transaction->state = TransactionState::COMMITTED;
+                $transaction->update();
+
+                //Clear shoppingcart
+                $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
+                $shoppingcart->destroy();
+                echo json_encode(["success" => true]);
+                return true;
+            }
+        }
+        echo json_encode(["success" => false]);
+    }
 }
 ?>

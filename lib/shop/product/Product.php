@@ -72,16 +72,19 @@ class Product{
 
     public static function get($id){
         $result = Felta::getInstance()->getSQL()->select("*","shop_product",["id" => $id])[0];
+        if($result == null) return null;
         return Product::fromResult($result);
     }
 
     public static function getFromSlug($slug) {
         $result = Felta::getInstance()->getSQL()->select("*","shop_product",["slug" => $slug])[0];
+        if($result == null) return null;
         return Product::fromResult($result);
     }
     
     public static function getSolo($id){
         $result = Felta::getInstance()->getSQL()->select("*","shop_product",["id" => $id])[0];
+        if($result == null) return null;
         return Product::fromResult($result);
     }
     
@@ -92,6 +95,7 @@ class Product{
                 $lowestPrice = $variant->getPrice();
             }
         }
+        return $lowestPrice;
     }
 
     public function getHighestPrice() {
@@ -101,6 +105,7 @@ class Product{
                 $highestPrice = $variant->getPrice();
             }
         }
+        return $highestPrice;
     }
 
     public function getAveragePrice() {
@@ -150,6 +155,12 @@ class Product{
         foreach($this->variants as $variant){
             $variant->delete();
         }
+    }
+
+    public function expose(){
+        $exposed = get_object_vars($this);
+		unset($exposed["sql"]);
+	    return $exposed;
     }
     
     public function getId(){

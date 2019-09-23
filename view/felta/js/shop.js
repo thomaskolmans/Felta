@@ -1,6 +1,4 @@
 var croppie;
-
-
 function getDomain(){
     if(document.domain.length){
         var parts = document.domain.replace(/^(www\.)/,"").split('.');
@@ -159,6 +157,9 @@ function deleteShoppingcartItem(item){
               item: item
             },
             success: function(response){
+                if(dataLayer) {
+                    dataLayer.push(JSON.parse(response))
+                }
                 resolve(JSON.parse(response));
             }
         })
@@ -174,12 +175,15 @@ function addShoppingcartItem(item, quantity){
               quantity: quantity
             },
             success: function(response){
+                if(dataLayer) {
+                    dataLayer.push(JSON.parse(response))
+                }
                 resolve(JSON.parse(response));
             }
         })
     });
 }
-function updateShoppingcartItem(item,quantity){
+function updateShoppingcartItem(item, quantity){
     return new Promise(function(resolve)  {
         $.ajax({
             url: "/felta/shop/update/shoppingcart",
@@ -189,6 +193,9 @@ function updateShoppingcartItem(item,quantity){
               quantity: quantity
             },
             success: function(response){
+                if(dataLayer) {
+                    dataLayer.push(JSON.parse(response))
+                }
                 resolve(JSON.parse(response));
             }
         })
