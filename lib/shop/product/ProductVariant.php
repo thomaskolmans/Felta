@@ -13,6 +13,7 @@ class ProductVariant{
     private $sid;
 
     private $name;
+    private $sku;
     private $price;
     private $currency;
     private $shipsFrom;
@@ -33,6 +34,7 @@ class ProductVariant{
         $id,
         $sid,
         $name,
+        $sku,
         $price,
         $currency,
         $sizeWidth,
@@ -52,6 +54,7 @@ class ProductVariant{
         $this->sid = $sid;
 
         $this->name = $name;
+        $this->sku = $sku;
         $this->price = $price;
         $this->currency = $currency;
 
@@ -102,6 +105,7 @@ class ProductVariant{
             $result["id"],
             $result["sid"],
             $result["name"],
+            $result["sku"],
             $result["price"],
             $result["currency"],
             $result["size_width"],
@@ -119,6 +123,7 @@ class ProductVariant{
     public static function create(
         $sid,
         $name,
+        $sku,
         $price,
         $currency,
         $sizeWidth,
@@ -136,6 +141,7 @@ class ProductVariant{
             $id,
             $sid,
             $name,
+            $sku,
             $price,
             $currency,
             $sizeWidth,
@@ -163,6 +169,7 @@ class ProductVariant{
             $this->id,
             $this->sid,
             $this->name,
+            $this->sku,
             $this->price,
             $this->currency,
             $this->sizeWidth,
@@ -199,6 +206,12 @@ class ProductVariant{
         $this->sql->delete("shop_product_variant_attribute", ["pid" => $this->id]);
 
        $this->save();
+    }
+
+    public function expose(){
+        $exposed = get_object_vars($this);
+		unset($exposed["sql"]);
+	    return $exposed;
     }
 
     public function getId(){
