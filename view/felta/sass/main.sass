@@ -20,7 +20,7 @@
     width: 1034px
     >*
       vertical-align: top
-  &.dashboard,&.settings
+  &.dashboard,&.settings,&.window
     width: 1034px
     .flex
       display: flex
@@ -499,6 +499,9 @@
   a
     color: $base
     text-decoration: none
+    &:last-child
+      .order,.transaction
+        border: none
   .order,.transaction
     padding: 15px 30px
     text-align: left

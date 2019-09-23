@@ -22,9 +22,9 @@
   <include>felta/parts/nav.tpl</include>
   <div class="main-wrapper">
     <div class="main dashboard container">
-      <h1>Products</h1>
+      <h1>Discounts</h1>
       <section class="stats no-margin agenda relative">
-        <a href="/felta/shop/add/item"><button class="add">Add product</button></a>
+        <a href="/felta/shop/add/item"><button class="add">Add discount</button></a>
         <table>
           <tr>
             <th>ID</th>

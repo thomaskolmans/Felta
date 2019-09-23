@@ -1,17 +1,19 @@
 <html>
     <head>
-       <title>Felta | Order</title>
-       <link href="/felta/stylesheets/shop.css" rel="stylesheet">
-       <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
-       <link rel="icon" href="/felta/images/black.png" type="image/png" />
-       <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
-       <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
-       <script src="/felta/js/jquery-1.11.3.min.js"></script>
-       <script src="/felta/js/Chart.min.js"></script>
-       <meta charset="utf-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Felta | Order</title>
+        <link href="/felta/stylesheets/all.css" rel="stylesheet">
+        <link href="/felta/stylesheets/shop.css" rel="stylesheet">
+        <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
+        <link rel="icon" href="/felta/images/black.png" type="image/png" />
+        <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
+        <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
+        <script src="/felta/js/jquery-1.11.3.min.js"></script>
+        <script src="/felta/js/Chart.min.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body> 
+        <include>felta/parts/nav.tpl</include>
         <?php
             use lib\shop\order\Order;
             use lib\shop\order\OrderStatus;
@@ -28,7 +30,7 @@
                 if(Order::exists($oid)){
                     $order = Order::get($oid);
                     ?>
-                    <div class="window">
+                    <div class="window main">
                         <h1>Order <i>#<?php echo $oid; ?></i></h1>
 
                         <table class="bill big">
@@ -182,7 +184,7 @@
                     }
                 }else{
                 ?>
-                <div class="window shoppingcart">
+                <div class="window shoppingcart main">
                     <h1>Shoppingcart</i></h1>
                     <table class="cart">
                     <?php

@@ -31,7 +31,7 @@
           <a href="/felta/shop/orders/0/20"><li>Orders</li></a>
           <a href="/felta/shop/products/0/20"><li>Products</li></a>
           <a href="/felta/shop/transactions/0/20"><li>Transactions</li></a>
-          <a href="/felta/shop/discounts/0/20"><li>Customers</li></a>
+          <a href="/felta/shop/customers/0/20"><li>Customers</li></a>
           <a href="/felta/shop/discounts/0/20"><li>Discounts</li></a>
           <a href="/felta/shop/categories"><li>Categories</li></a>
         </ul>

@@ -2,8 +2,11 @@
 namespace lib\shop\order;
 
 use lib\Felta;
+use lib\shop\Shop;
+use lib\shop\product\ProductVariant;
 use lib\post\Message;
 use lib\helpers\UUID;
+use lib\helpers\Email;
 
 class Order {
 
@@ -29,7 +32,7 @@ class Order {
 
     public static function get($id){
         $sorder = Felta::getInstance()->getSQL()->select("*","shop_order",["id" => $id])[0];
-        $sitems = Felta::getInstance()->getSQL()->select("*","shop_order_item",["oid" => $id]);
+        $sitems = Felta::getInstance()->getSQL()->select("*","shop_order_product",["oid" => $id]);
         $products = [];
         foreach($sitems as $item){
             $products[$item["iid"]] = $item["quantity"];
@@ -37,7 +40,7 @@ class Order {
         return new Order(
             $id,
             $sorder["customer"],
-            $sorder["orderStatus"],
+            $sorder["orderstatus"],
             null,
             new \DateTime($sorder["order"]),
             $products
@@ -50,7 +53,7 @@ class Order {
 
     public static function createFromShoppingcart($cart,$customer){
         $items = $cart->pull()->getItems();
-        return Order::create($customer,orderStatus::ACTIVE,null,$items);
+        return Order::create($customer,OrderStatus::ACTIVE,null,$items);
     }
 
     public static function create($customer,$orderStatus,$promotion,$products){
@@ -64,7 +67,7 @@ class Order {
             ->query()
             ->select()
             ->from("shop_order")
-            ->where("orderStatus", 1)
+            ->where("orderstatus", 1)
             ->orderBy("order")
             ->desc()
             ->limit($from, $until)
@@ -81,7 +84,7 @@ class Order {
         ]);
         foreach($this->products as $item => $quantity){
             $uid = UUID::generate(20);
-            $this->sql->insert("shop_order_item",[
+            $this->sql->insert("shop_order_product",[
                 $uid,
                 $this->id,
                 $item,
@@ -97,14 +100,31 @@ class Order {
         $message->put("You've recieved a new order", "Yes! You've recieved a new order from your webshop. It has been succesfully paid.", $url);
 
         // Message to customer
+        $this->customer = Customer::get($this->customer);
+        $this->orderConfirmation(
+            "Uw bestelling is compleet", 
+            "Uw bestelling komt er zo spoedig mogelijk aan. Mocht u nog vragen hebben, neemt u gerust contact op met ons. <br><br> Uw order nummer: ".$this->id
+        );
 
-        $this->orderStatus = orderStatus::PAID;
+        $this->customer = $this->customer->id;
+        $this->orderStatus = OrderStatus::PAID;
         $this->update();
     }
 
+    private function orderConfirmation($title, $message) {
+        $url = Felta::getInstance()->getConfig("website_url")."/order/".$this->id;
+        $email = new Email();
+        $email->html(true);
+        $email->setSMTP();
+        $email->setTo($this->customer->email);
+        $email->setFrom(Felta::getConfig("smtp")["username"]);
+        $email->setSubject(Felta::getInstance()->getConfig("website_name")." bestelling");
+        $email->setMessage(str_replace(["{title}","{message}","{url}"], [$title,$message,$url], $email->load("emails/shop/thankyou.html")));
+        $email->send();
+    }
     public function update(){
         $this->sql->update("customer","shop_order",["id" => $this->id],$this->customer);
-        $this->sql->update("orderStatus","shop_order",["id" => $this->id],$this->orderStatus);
+        $this->sql->update("orderstatus","shop_order",["id" => $this->id],$this->orderStatus);
         $this->sql->update("promotion","shop_order",["id" => $this->id],$this->promotion);
         $this->sql->update("order","shop_order",["id" => $this->id],$this->date->format("Y-m-d H:i:s"));
     }
@@ -289,4 +309,3 @@ class Order {
         return $this;
     }
 }
-?>

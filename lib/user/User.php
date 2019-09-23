@@ -99,6 +99,7 @@ class User extends Felta{
             $url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/felta/forgot/code/".$key;
             $adress = $this->sql->select("email",$this->table,["id" => $id]);
             $email = new Email();
+            $email->setSMTP();
             $email->html(true);
             $email->setTo($adress);
             $email->setFrom(Felta::getConfig("smtp")['username']);

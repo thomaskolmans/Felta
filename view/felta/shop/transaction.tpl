@@ -1,20 +1,22 @@
 <html>
     <head>
-       <title>Felta | Transaction</title>
-       <link href="/felta/stylesheets/shop.css" rel="stylesheet">
-       <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
-       <link rel="icon" href="/felta/images/black.png" type="image/png" />
-       <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
-       <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
-       <script src="/felta/js/jquery-1.11.3.min.js"></script>
-       <script src="/felta/js/Chart.min.js"></script>
-       <meta charset="utf-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Felta | Transaction</title>
+        <link href="/felta/stylesheets/all.css" rel="stylesheet">
+        <link href="/felta/stylesheets/shop.css" rel="stylesheet">
+        <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
+        <link rel="icon" href="/felta/images/black.png" type="image/png" />
+        <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
+        <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
+        <script src="/felta/js/jquery-1.11.3.min.js"></script>
+        <script src="/felta/js/Chart.min.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body> 
+        <include>felta/parts/nav.tpl</include>
         <?php
-            use lib\Shop\Transaction;
-            use lib\Shop\Shop;
+            use lib\shop\Transaction;
+            use lib\shop\Shop;
             use lib\Felta;
             
             if(isset($_GET["tid"])){
@@ -22,7 +24,7 @@
                 if(Transaction::exists($tid)){
                     $transaction = Transaction::get($tid);
                     ?>
-                    <div class="main container no-top settings">
+                    <div class="main window">
                         <h1>Transaction <i>#<?php echo $tid; ?></i></h1>
                         <table class="bill big">
                             <tr>

@@ -98,7 +98,9 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
             Route::get("/categories", "felta/shop/categories.tpl");
             Route::get("/orders/{from}/{until}","felta/shop/orders.tpl");
 
-            Route::get("/items", "felta/shop/items.tpl");
+            Route::get("/discounts/{from}/{until}","felta/shop/discounts/discounts.tpl");
+
+            Route::get("/customers/{from}/{until}","felta/shop/customers/customers.tpl");
 
             Route::get("/add/item","felta/shop/products/create.tpl");
             Route::get("/update/item/{id}","felta/shop/products/update.tpl");
