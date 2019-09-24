@@ -26,6 +26,26 @@ class CustomerAddress{
         $this->country = $country;
     }
 
+    public static function create($id,$street,$number,$zipcode,$city,$country){
+        return new CustomerAddress($id, $street,$number,$zipcode,$city,$country);
+    }
+    
+    public static function get($id){
+        $result = Felta::getInstance()->getSQL()->select("*","shop_customer_address",["id" => $id])[0];
+        return CustomerAddress::fromResult($result);
+    }
+
+    public static function fromResult($result){
+        return new CustomerAddress (
+            $result["id"],
+            $result["street"],
+            $result["number"],
+            $result["zipcode"],
+            $result["city"],
+            $result["country"]
+        );
+    }
+
     public function save(){
         $this->sql->insert("shop_customer_address",[
             $this->id,
@@ -36,13 +56,7 @@ class CustomerAddress{
             $this->country
         ]);
     }
-    public static function create($id,$street,$number,$zipcode,$city,$country){
-        return new CustomerAddress($id, $street,$number,$zipcode,$city,$country);
-    }
-    public static function get($id){
-        $r = Felta::getInstance()->getSQL()->select("*","shop_customer_address",["id" => $id])[0];
-        return new CustomerAddress($id,$r["street"],$r["number"],$r["zipcode"],$r["city"],$r["country"]);
-    }
+
     public function setStreet($street){
         $this->street = $street;
         return $this;

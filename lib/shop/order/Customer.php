@@ -35,6 +35,19 @@ class Customer{
         $this->account = $account;
     }
 
+    public static function fromResult($result, $address) {
+        return new Customer(
+            $result["id"],
+            $result["firstname"],
+            $result["lastname"],
+            $result["email"],
+            $address,
+            $r["isBusiness"],
+            $r["bName"],
+            $r["account"]
+        );
+    }
+
     public function save(){
         $this->sql->insert("shop_customer",[
             $this->id,
@@ -47,8 +60,15 @@ class Customer{
         ]);
         $this->address->save();
     }
+
     public function update(){
-        
+        $this->sql->update("firstname", "shop_customer", ["id" => $this->$id], $this->firstname);
+        $this->sql->update("lastname", "shop_customer", ["id" => $this->$id], $this->lastname);
+        $this->sql->update("email", "shop_customer", ["id" => $this->$id], $this->email);
+        $this->sql->update("isBusiness", "shop_customer", ["id" => $this->$id], $this->isBusiness);
+        $this->sql->update("bName", "shop_customer", ["id" => $this->$id], $this->bName);
+        $this->sql->update("account", "shop_customer", ["id" => $this->$id], $this->account);
+
     }
 
     public function delete(){
@@ -60,9 +80,8 @@ class Customer{
     public static function get($id){
         $sql = Felta::getInstance()->getSQL();
         $address = CustomerAddress::get($id);
-        $r = $sql->select("*","shop_customer",["id" => "$id"])[0];
-        $customer = new Customer($id,$r["firstname"],$r["lastname"],$r["email"],$address,$r["isBusiness"],$r["bName"],$r["account"]);
-        return $customer;
+        $result = $sql->select("*","shop_customer",["id" => "$id"])[0];
+        return Customer::fromResult($result, $address);
     }
 
     public static function exists($id){
