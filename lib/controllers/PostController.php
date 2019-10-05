@@ -76,20 +76,7 @@ class PostController {
         header("Location: /felta/agenda");
     }
 
-    /**
-     * Blog
-     */
-    public static function ADD_BLOG(){
-        
-    }
-    
-    public static function UPDATE_BLOG(){
 
-    }
-
-    public static function DELETE_BLOG($id){
-
-    }
     /**
      * Audio
      */

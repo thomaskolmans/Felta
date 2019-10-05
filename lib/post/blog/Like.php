@@ -2,28 +2,25 @@
 
 namespace lib\post\blog;
 
-class Comment {
+class Like {
 
     private $sql;
 
     private $id;
     private $parent;
-    private $article;
+    private $namespace;
     private $user;
     private $name;
-    private $comment;
-    private $accepted;
+    private $type;
     private $createdAt; 
     private $updatedAt;
 
     public function __construct(
         $id, 
         $parent, 
-        $article, 
-        $user = null, 
-        $name, 
-        $comment, 
-        $accepted = false, 
+        $namespace, 
+        $user = null,
+        $type, 
         $createdAt, 
         $updatedAt
     ){
@@ -31,11 +28,9 @@ class Comment {
 
         $this->id = $id;
         $this->parent = $parent;
-        $this->article = $article;
+        $this->namespace = $namespace;
         $this->user = $user;
-        $this->name = $name;
-        $this->comment = $comment;
-        $this->accepted = $accepted;
+        $this->type = $type;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
 
@@ -46,21 +41,19 @@ class Comment {
     }
 
     public static function fromResult($result) {
-        return new Comment(
+        return new Like(
             $result["id"],
             $result["parent"],
-            $result["article"],
+            $result["namespace"],
             $result["user"],
-            $result["name"],
-            $result["comment"],
-            $result["accepted"],
+            $result["type"],
             new DateTime($result["createdAt"]),
             new DateTime($result["updatedAt"])
         );
     }
     
     public function save(){
-        if ($this->sql->exists("comment", ["id" => $this->id])){
+        if ($this->sql->exists("type", ["id" => $this->id])){
             $this->update();
         } else {
             $this->insert();
@@ -68,30 +61,28 @@ class Comment {
     }
     
     public function insert(){
-        $this->sql->insert("article", [
+        $this->sql->insert("`like`", [
             $this->id,
             $this->parent,
-            $this->article,
+            $this->namespace,
             $this->user,
             $this->name,
-            $this->comment,
-            $this->accepted,
+            $this->type,
             $this->createdAt->format("Y-m-d H:i:s"),
             $this->updatedAt->format("Y-m-d H:i:s")
         ]);
     }
     
     public function update(){
-        $this->sql->update("user", "article", ["id" => $this->$id], $this->user);
-        $this->sql->update("name", "article", ["id" => $this->$id], $this->name);
-        $this->sql->update("comment", "article", ["id" => $this->$id], $this->comment);
-        $this->sql->update("accepted", "article", ["id" => $this->$id], $this->accepted);
-        $this->sql->update("createdAt", "article", ["id" => $this->$id], $this->createdAt->format("Y-m-d H:i:s"));
-        $this->sql->update("updatedAt", "article", ["id" => $this->$id], $this->updatedAt->format("Y-m-d H:i:s"));
+        $this->sql->update("user", "`like`", ["id" => $this->$id], $this->user);
+        $this->sql->update("name", "`like`", ["id" => $this->$id], $this->name);
+        $this->sql->update("type", "`like`", ["id" => $this->$id], $this->type);
+        $this->sql->update("createdAt", "`like`", ["id" => $this->$id], $this->createdAt->format("Y-m-d H:i:s"));
+        $this->sql->update("updatedAt", "`like`", ["id" => $this->$id], $this->updatedAt->format("Y-m-d H:i:s"));
     }
 
     public function delete(){
-        $this->sql->delete("comment",["id" => $this->id]);
+        $this->sql->delete("type",["id" => $this->id]);
     }
 
     public function expose(){
@@ -118,12 +109,12 @@ class Comment {
 		return $this;
 	}
 
-	public function getArticle(){
-		return $this->article;
+	public function getNamespace(){
+		return $this->namespace;
 	}
 
-	public function setArticle($article){
-		$this->article = $article;
+	public function setNamespace($namespace){
+		$this->namespace = $namespace;
 		return $this;
 	}
 
@@ -136,21 +127,12 @@ class Comment {
 		return $this;
 	}
 
-	public function getName(){
-		return $this->name;
+	public function getType(){
+		return $this->type;
 	}
 
-	public function setName($name){
-		$this->name = $name;
-		return $this;
-	}
-
-	public function getComment(){
-		return $this->comment;
-	}
-
-	public function setComment($comment){
-		$this->comment = $comment;
+	public function setType($type){
+		$this->type = $type;
 		return $this;
 	}
 

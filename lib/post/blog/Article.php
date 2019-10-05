@@ -3,6 +3,7 @@ namespace lib\post\blog;
 
 use lib\Felta;
 use lib\helpers\UUID;
+
 use \DateTime;
 
 class Article {
@@ -10,7 +11,9 @@ class Article {
     private $sql; 
 
     private $id;
+    private $blog;
     private $title;
+    private $author;
     private $description;
     private $images;
     private $body;
@@ -21,7 +24,9 @@ class Article {
 
     public function __construct(
         $id = "",
+        $blog = "",
         $title = "", 
+        $author = "",
         $description = "", 
         $images = [], 
         $body = "", 
@@ -33,7 +38,9 @@ class Article {
         $this->sql = Felta::getInstance()->getSQL();
 
         $this->id = $id;
+        $this->blog = $blog;
         $this->title = $title;
+        $this->author = $author;
         $this->description = $description;
         $this->images = $images;
         $this->body = $body;
@@ -44,16 +51,36 @@ class Article {
     }
 
     public static function get($id){
-        $articleResult = Felta::getInstance()->getSQL()->select("*", "article", ["id" => $this->id]);
+        $articleResult = Felta::getInstance()->getSQL()->select("*", "article", ["id" => $id]);
         if ($articleResult == null) return null;
         return Article::fromResult($articleResult);
+    }
+
+    public static function allFromBlog($blog, $from, $to){
+        $articleResults = Felta::getInstance()->getSQL()->query()
+            ->select()
+            ->from("article")
+            ->where("blog", $blog)
+            ->orderby("updatedAt")
+            ->limit($from, $to)
+            ->execute();
+
+        if ($articleResults != null && count($articleResults) < 1) return [];
+
+        $articles = [];
+        foreach($articleResults as $result) {
+            $articles[] = Article::fromResult($result);
+        }
+        return $articles;
     }
     
     public static function fromResult($result){
         $images = [];
         $article = new Article(
             $result["id"],
+            $result["blog"],
             $result["title"],
+            $result["author"],
             $result["description"],
             [],
             $result["body"],
@@ -76,7 +103,9 @@ class Article {
     public function insert(){
         $this->sql->insert("article", [
             $this->id,
+            $this->blog,
             $this->title,
+            $this->author,
             $this->description,
             $this->body,
             $this->active,
@@ -87,7 +116,8 @@ class Article {
     }
     
     public function update(){
-        $this->sql->update("name", "article", ["id" => $this->$id], $this->name);
+        $this->sql->update("title", "article", ["id" => $this->$id], $this->title);
+        $this->sql->update("author", "article", ["id" => $this->$id], $this->author);
         $this->sql->update("description", "article", ["id" => $this->$id], $this->description);
         $this->sql->update("body", "article", ["id" => $this->$id], $this->body);
         $this->sql->update("active", "article", ["id" => $this->$id], $this->active);
@@ -117,6 +147,15 @@ class Article {
 	public function setId($id){
 		$this->id = $id;
 		return $this;
+    }
+
+	public function getBlog(){
+		return $this->blog;
+	}
+
+	public function setBlog($blog){
+		$this->blog = $blog;
+		return $this;
 	}
 
 	public function getTitle(){
@@ -126,8 +165,17 @@ class Article {
 	public function setTitle($title){
 		$this->title = $title;
 		return $this;
+    }
+    
+	public function getAuthor(){
+		return $this->author;
 	}
 
+	public function setAuthor($author){
+		$this->author = $author;
+		return $this;
+    }
+    
 	public function getDescription(){
 		return $this->description;
 	}

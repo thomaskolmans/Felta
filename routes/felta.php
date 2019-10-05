@@ -6,6 +6,7 @@ use lib\controllers\FeltaController;
 use lib\controllers\ShopController;
 use lib\controllers\UserController;
 use lib\controllers\PostController;
+use lib\controllers\BlogController;
 
 use lib\routing\Route;
 use lib\helpers\Input;
@@ -49,10 +50,17 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         /**
          * Blog
          */
-        Route::post("/blog",function(){ Postcontroller::ADD_AGENDA(); });
-        Route::post("/blog/update",function(){ PostController::UPDATE_AGENDA(); });
-        Route::get("/blog/delete/{id}",function($id){ PostController::DELETE_AGENDA($id); });
-
+        Route::get("/blogs", function(){ BlogController::GET_ALL_BLOGS(); });
+        Route::get("/blog/{id}", function($id) { BlogController::GET_BLOG($id); }); 
+        Route::post("/blog", function(){ BlogController::CREATE_BLOG(); });
+        Route::post("/blog/update", function(){ BlogController::UPDATE_BLOG(); });
+        Route::delete("/blog/delete/{id}", function($id){ BlogController::DELETE_BLOG($id); });
+        
+        Route::get("/articles/{blog}/{from}/{to}", function($blog, $from, $to) { BlogController::GET_ARTICLES_FROM_BLOG($blog, $from, $to); });
+        Route::get("/article/{id}", function($id) { BlogController::GET_ARICLE($id); });
+        Route::post("/article", function(){ BlogController::CREATE_ARTICLE(); });
+        Route::post("/article/update", function() { BlogController::UPDATE_ARTILCE(); }); 
+        Route::delete("/article/delete/{id}", function($id){ BlogController::DELETE_ARTICLE($id); });
         /**
          * Audio
          */

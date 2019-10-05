@@ -29,6 +29,30 @@ class Blog {
         $this->updatedAt = $updatedAt;
     }
 
+    public static function getAll(){
+        $blogResults = Felta::getInstance()->getSQL()->select("*", "blog", []);
+        if ($blogResults != null && count($blogResults) < 1) return [];
+
+        $blogs = [];
+        foreach($blogResults as $result){
+            $blogs[] = Blog::fromResult($result);
+        }
+
+        return $blogs;
+    }
+
+    public static function getAllActive(){
+        $blogResults = Felta::getInstance()->getSQL()->select("*", "blog", ["active" => true]);
+        if ($blogResults != null && count($blogResults) < 1) return [];
+
+        $blogs = [];
+        foreach($blogResults as $result){
+            $blogs[] = Blog::fromResult($result);
+        }
+
+        return $blogs;
+    }
+
     public static function get($id){
         $blogResult = Felta::getInstance()->getSQL()->select("*", "blog", ["id" => $id])[0];
         if ($blogResult == null) return null;
@@ -77,7 +101,7 @@ class Blog {
 
     public function delete(){
         $this->sql->delete("blog",["id" => $this->id]);
-        $articles = $this->sql->select("*", "article", ["blog_id" => $this->id]);
+        $articles = $this->sql->select("*", "article", ["blog" => $this->id]);
         foreach($articles as $article) {
             Article::fromResult($article)->delete();
         }
