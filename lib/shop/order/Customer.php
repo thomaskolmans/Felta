@@ -4,7 +4,7 @@ namespace lib\shop\order;
 use lib\Felta;
 use lib\helpers\UUID;
 
-class Customer{
+class Customer {
     
     private $sql;
 
@@ -42,9 +42,9 @@ class Customer{
             $result["lastname"],
             $result["email"],
             $address,
-            $r["isBusiness"],
-            $r["bName"],
-            $r["account"]
+            $result["isBusiness"],
+            $result["bName"],
+            $result["account"]
         );
     }
 
@@ -62,12 +62,12 @@ class Customer{
     }
 
     public function update(){
-        $this->sql->update("firstname", "shop_customer", ["id" => $this->$id], $this->firstname);
-        $this->sql->update("lastname", "shop_customer", ["id" => $this->$id], $this->lastname);
-        $this->sql->update("email", "shop_customer", ["id" => $this->$id], $this->email);
-        $this->sql->update("isBusiness", "shop_customer", ["id" => $this->$id], $this->isBusiness);
-        $this->sql->update("bName", "shop_customer", ["id" => $this->$id], $this->bName);
-        $this->sql->update("account", "shop_customer", ["id" => $this->$id], $this->account);
+        $this->sql->update("firstname", "shop_customer", ["id" => $this->id], $this->firstname);
+        $this->sql->update("lastname", "shop_customer", ["id" => $this->id], $this->lastname);
+        $this->sql->update("email", "shop_customer", ["id" => $this->id], $this->email);
+        $this->sql->update("isBusiness", "shop_customer", ["id" => $this->id], $this->isBusiness);
+        $this->sql->update("bName", "shop_customer", ["id" => $this->id], $this->bName);
+        $this->sql->update("account", "shop_customer", ["id" => $this->id], $this->account);
 
     }
 
@@ -107,9 +107,10 @@ class Customer{
     }
     
     public static function login($email,$password){
+        $sql = Felta::getInstance()->getSQL();
         $table = "shop_customer_account";
-        $id = $this->sql->select("id",$table,["email" => $email]);
-        $hash = $this->sql->select("password",$table,["id" => $id]);
+        $id = $sql->select("id",$table,["email" => $email]);
+        $hash = $sql->select("password",$table,["id" => $id]);
 
         if(password_verify($password,$hash)){
             $customer = Customer::get($id);

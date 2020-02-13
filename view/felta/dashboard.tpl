@@ -21,11 +21,10 @@
             <h1>Dashboard</h1>
             <div class='flex'>
                 <section class="hub half">
-                    <h1>Welcome to Felta!</h1>
-                    <h2>The easiest content management system</h2>
+                    <h1><?php echo lib\Felta::getInstance()->getConfig("website_name"); ?></h1>
                     <hr>
                     <div class="live">
-                        <div class="label">Website live to the public</div>
+                        <div class="label">Website published</div>
                         <label class="switch">
                             <input type="checkbox" class="switcher" checked>
                             <div class="slider round"></div>
@@ -38,18 +37,18 @@
                 <section class="languages half">
                     <h1> Languages </h1>
                     <?php
-                $lang = new lib\Helpers\Language(lib\Felta::getInstance()->sql);
-                $langlist = (array) $lang->getLanguageList();
-                $i = 0;
-                foreach($langlist as $language){ 
-                        if($i == 0){
-                            echo "<div class='lang_container'><div class='language'>{$language}</div></div>";
-                        }else{
-                            echo "<div class='lang_container'><div class='language'>{$language}<div class='remove' lang='{$language}'></div></div></div>";
+                        $lang = new lib\Helpers\Language(lib\Felta::getInstance()->sql);
+                        $langlist = (array) $lang->getLanguageList();
+                        $i = 0;
+                        foreach($langlist as $language){ 
+                            if ($i === 0){
+                                echo "<div class='lang_container'><div class='language'>{$language}</div></div>";
+                            } else {
+                                echo "<div class='lang_container'><div class='language'>{$language}<div class='remove' lang='{$language}'></div></div></div>";
+                            }
+                            $i++;
                         }
-                        $i++;
-                }
-            ?>
+                    ?>
                         <form method="post" class="new-language">
                             <div class="select-box">
                                 <select name="language">
@@ -439,13 +438,13 @@
                             </div>
                             <input type="submit" value="add" name="addlanguage">
                             <?php
-                if(isset($_POST["addlanguage"]) && isset($_POST["language"])){
-                        $language = $_POST["language"];
-                        $lang->createTable();
-                        $lang->add($language);
-                        header("Location: /felta/dashboard");
-                }
-                ?>
+                                if(isset($_POST["addlanguage"]) && isset($_POST["language"])){
+                                        $language = $_POST["language"];
+                                        $lang->createTable();
+                                        $lang->add($language);
+                                        header("Location: /felta/dashboard");
+                                }
+                            ?>
                         </form>
                         <div class="new" id="new_language"></div>
                 </section>
@@ -462,8 +461,8 @@
                         </tr>
                         <tr>
                             <?php
-                        $sql = lib\Felta::getInstance()->sql;
-                ?>
+                                $sql = lib\Felta::getInstance()->sql;
+                            ?>
                                 <th>Unique users</th>
                                 <td>
                                     <?php echo $sql->execute("select count(*) from visitors_unique where date >= curdate()")[0][0]; ?>

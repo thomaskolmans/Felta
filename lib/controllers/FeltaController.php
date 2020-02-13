@@ -27,6 +27,15 @@ class FeltaController {
 		$user->createWithPassword($_POST["username"], $_POST["password"]);
 		echo json_encode(["success" => "Successfully added user"]);
 	}
+
+	public static function UPLOAD_IMAGE(){
+        $uid = UUID::generate(20);
+        $file =  new File($_FILES["picture"],null);
+        $file->setExtension("png");
+        $file->setName($uid);
+        $file->upload(null);
+        echo json_encode(["success" => "Image has been succesfully added", "url" => $file->getRelativeDest(),"uid"=> $uid]);
+    }
 }
 
 ?>

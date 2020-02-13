@@ -12,10 +12,10 @@ use \DateTime;
 
 class BlogController {
 
+  
     /**
      * Blog
      */
-
     public static function GET_ALL_BLOGS(){
         $blogs = Blog::getAll();
         $exposedBlogs = [];
@@ -85,11 +85,11 @@ class BlogController {
      */
 
     public static function GET_ARTICLE($id){
-        echo json_encode(["success" => true, "blog" => Article::get($id)]);
+        echo json_encode(["success" => true, "article" => Article::get($id)->expose()]);
     }
 
-    public static function GET_ARTICLES_FROM_BLOG($blog, $from, $to){
-        $articles = Article::allFromBlog($blog, $from, $to);
+    public static function GET_ARTICLES_FROM_BLOG($blog, $page = 1){
+        $articles = Article::allFromBlog($blog, ($page * 20) - 20, ($page * 20));
         $exposedArticles = [];
         foreach($articles as $article) {
             $exposedArticles[] = $article->expose(); 
@@ -99,13 +99,25 @@ class BlogController {
     }
 
     public static function CREATE_ARTICLE(){
+        $imageUrls = array_filter(json_decode($_POST["images"]));
+        $images = [];
+        foreach($imageUrls as $url) {
+            $images[] = new ArticleImage(
+                UUID::generate(10),
+                Input::clean("id"),
+                $url,
+                "",
+                new DateTime()
+            );
+        }
+
         $article = new Article(
             UUID::generate(15),
             Input::clean("blog"),
             Input::clean("title"),
             Input::clean("author"),
             Input::clean("description"),
-            [],
+            $images,
             Input::clean("body"),
             Input::clean("active") == "true" ? true : false,
             new DateTime(Input::clean("activeFrom")),
@@ -119,25 +131,41 @@ class BlogController {
     }
     
     public static function UPDATE_ARTICLE(){
+        $imageUrls = array_filter(json_decode($_POST["images"]));
+        $images = [];
+        foreach($imageUrls as $url) {
+            $images[] = new ArticleImage(
+                UUID::generate(10),
+                Input::clean("id"),
+                $url,
+                "",
+                new DateTime()
+            );
+        }
+
         $article = Article::get(Input::clean("id"));
         $article->setTitle(Input::clean("title"));
+        $article->setAuthor(Input::clean("author"));
         $article->setDescription(Input::clean("description"));
         $article->setBody(Input::clean("body"));
         $article->setActive(Input::clean("active"));
         $article->setActiveFrom(new DateTime(Input::clean("activeFrom")));
+        $article->setImages($images);
 
         $article->save();
         
-        echo json_encode(["success" => true, "message" => "Article has been created!"]);
+        echo json_encode(["success" => true, "message" => "Article has been updated!", "article" => $article->expose()]);
     }
 
     public static function DELETE_ARTICLE($id){
         $article = Article::get($id);
-        $article->delete();
-
-        echo json_encode(["success" => true, "message" => "Article has been deleted!"]);
+        if ($article == null) {
+            echo json_encode(["success" => false, "message" => "Article does not exist."]);
+        } else {
+            $article->delete();
+            echo json_encode(["success" => true, "message" => "Article has been deleted!"]);
+        }
     }
-
 
     /**
      * Comment
