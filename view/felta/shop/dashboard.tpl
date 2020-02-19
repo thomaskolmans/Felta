@@ -14,8 +14,6 @@
 </head>
 <body>
   <?php
-    use lib\Shop\Transaction;
-    use lib\Shop\Order\Order;
     use lib\Shop\Shop;
     use lib\Felta;
   ?>

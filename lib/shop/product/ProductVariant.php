@@ -221,6 +221,14 @@ class ProductVariant{
         return $this->sid;
     }
 
+
+    public function getSku(){
+        return $this->sku;
+    }
+    public function setSku($sku){
+        return $this->sku = $sku;
+    }
+
     public function getName() {
         return $this->name;
     }
@@ -258,7 +266,7 @@ class ProductVariant{
         return $this;
     }
     public function addImage($image){
-        $this->image[] = $images;
+        $this->image[] = $image;
         return $this;
     }
     public function getImages(){

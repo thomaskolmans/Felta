@@ -69,6 +69,10 @@
           <input type="string" name="variant_name" id="variant_name" placeholder="Product variant" />
         </div>
         <div class="input-group">
+          <label>SKU</label>
+          <input type="string" name="sku" id="sku" placeholder="Product SKU" />
+        </div>
+        <div class="input-group">
           <label>Currency</label>
             <div class="select-box dark">
               <select name="currency" id="currency">
@@ -114,8 +118,8 @@
               <input type="text" class="attribute-value" placeholder="Value"/>
               <button class="delete" id="delete"></button>
             </div>
-            <button class="" id="add-attribute">Add attribute</button>
           </div>  
+          <button class="" id="add-attribute">Add attribute</button>
         </div>
       </section>
       <div class="input-group right">

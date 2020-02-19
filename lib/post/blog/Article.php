@@ -51,7 +51,7 @@ class Article {
     }
 
     public static function get($id){
-        $articleResult = Felta::getInstance()->getSQL()->select("*", "article", ["id" => $id]);
+        $articleResult = Felta::getInstance()->getSQL()->select("*", "article", ["id" => $id])[0];
         if ($articleResult == null) return null;
         return Article::fromResult($articleResult);
     }

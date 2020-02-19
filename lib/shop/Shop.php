@@ -208,6 +208,7 @@ class Shop {
     public function setStripeKey($stripeKey){
         $this->stripeKey = $stripeKey;
         $this->stripe = Stripe::setAPIKey($this->stripeKey);
+        self::$instance = $this;
         return $this;
     }
 
@@ -215,10 +216,45 @@ class Shop {
         $this->mollieKey = $mollieKey;
         $this->mollie = new \Mollie\Api\MollieApiClient();
         $this->mollie->setApiKey($mollieKey);
+        self::$instance = $this;
+        return $this;
     }
 
     public function getStripePublicKey(){
         return $this->stripePublicKey;
     }
+
+	public function getPaypal(){
+		return $this->paypal;
+	}
+	
+	
+	public function setPaypal($paypal){
+		$this->paypal = $paypal;
+		return $this;
+	}
+	
+
+	public function getStripe(){
+		return $this->stripe;
+	}
+	
+	
+	public function setStripe($stripe){
+		$this->stripe = $stripe;
+		return $this;
+	}
+	
+
+	public function getMollie(){
+		return $this->mollie;
+	}
+	
+	
+	public function setMollie($mollie){
+		$this->mollie = $mollie;
+		return $this;
+	}
+	
 }
 ?>

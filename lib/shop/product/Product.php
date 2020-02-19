@@ -87,6 +87,24 @@ class Product{
         if($result == null) return null;
         return Product::fromResult($result);
     }
+
+    public static function all($from = 0, $amount = 20) {
+        $results = Felta::getInstance()->getSQL()->select("*","shop_product",[]);
+        $products = [];
+        foreach($results as $result) {
+            $products[] = Product::fromResult($result);
+        }
+        return $products;
+    }
+
+    public static function allWithCategory($category, $from = 0, $amount = 20) {
+        $results = Felta::getInstance()->getSQL()->query()->select()->from("shop_product")->where("category", $category)->execute();
+        $products = [];
+        foreach($results as $result) {
+            $products[] = Product::fromResult($result);
+        }
+        return $products;
+    }
     
     public function getLowestPrice() {
         $lowestPrice = null;

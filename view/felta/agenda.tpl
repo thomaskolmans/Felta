@@ -176,10 +176,10 @@
           <td></td>
         </tr>
         <?php
-            $agenda = new lib\Post\Agenda();
+            $agenda = new lib\post\Agenda();
             $items = $agenda->getAll();
-            if($items != null){
-              foreach($items as $item){
+            if ($items != null) {
+              foreach($items as $item) {
                 echo "
                 <tr>
                   <td class='align-left'>{$item['title']}</td>
@@ -191,7 +191,7 @@
                 </tr>
                 ";
               }
-            }else{
+            } else {
               echo "<tr> <td colspan='7'><i>No agenda items</i></td></tr>";
             }
         ?>
@@ -232,7 +232,7 @@
       <h1>Edit agenda item</h1>
       <?php
         $agenda_id = $_GET["agenda_id"];
-        $agenda = new lib\Post\Agenda();
+        $agenda = new lib\post\Agenda();
         $agenda_item = $agenda->getById($agenda_id);
 
         $title = $agenda_item['title'];

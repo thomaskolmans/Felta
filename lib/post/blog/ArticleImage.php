@@ -1,5 +1,5 @@
 <?php
-namespace lib\blog;
+namespace lib\post\blog;
 
 use lib\Felta;
 use \DateTime;

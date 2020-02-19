@@ -105,6 +105,10 @@
                 <?php echo '<input type="string" name="variants['.$key.'][variant_name]" placeholder="Product variant" value="'.$variant->getName().'" />'; ?>
               </div>
               <div class="input-group">
+                <label>SKU</label>
+                <?php echo '<input type="string" name="variants['.$key.'][sku]" placeholder="Product SKU" value="'.$variant->getSku().'" />'; ?>
+              </div>
+              <div class="input-group">
                 <label>Currency</label>
                   <div class="select-box dark">
                     <?php
@@ -180,8 +184,8 @@
                       ';
                     }
                   ?>
-                  <?php echo '<button class="" id="add-attribute'.$count.'">Add attribute</button>'; ?>
-                </div>  
+                </div> 
+                <?php echo '<button class="" id="add-attribute'.$count.'">Add attribute</button>'; ?>
               </div>
         <?php
             echo '</section>';

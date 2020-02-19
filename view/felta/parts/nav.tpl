@@ -19,8 +19,9 @@
      <!--
      <a href="/felta/news"><li><i class="fa fa-newspaper"></i>News</li></a>
      <a href="/felta/social"><li><i class="fa fa-users"></i>Social</li></a>
-     <a href="/felta/audio"><li><i class="fa fa-volume-up"></i>Audio</li></a>
+     <a href="/felta/audio"><li><i class="fa fa-volume-up"></i>Audio</li></a> -->
      <a href="/felta/blog"><li><i class="fa fa-pencil"></i>Blog</li></a>
+     <!-- 
      <a href="/felta/faq"><li><i class="fa fa-pencil"></i>FAQ</li></a>
      -->
      <a href="/felta/shop">

@@ -2,7 +2,6 @@
 namespace lib\post\blog;
 
 use lib\Felta;
-use lib\helpers\UUID;
 use \DateTime;
 
 class Blog {
@@ -31,7 +30,7 @@ class Blog {
 
     public static function getAll(){
         $blogResults = Felta::getInstance()->getSQL()->select("*", "blog", []);
-        if ($blogResults != null && count($blogResults) < 1) return [];
+        if ($blogResults == null || count($blogResults) < 1) return [];
 
         $blogs = [];
         foreach($blogResults as $result){
@@ -55,7 +54,7 @@ class Blog {
 
     public static function get($id){
         $blogResult = Felta::getInstance()->getSQL()->select("*", "blog", ["id" => $id])[0];
-        if ($blogResult == null) return null;
+        if ($blogResult === null) return null;
         return Blog::fromResult($blogResult);
     }
     public static function fromResult($result) {
@@ -91,12 +90,12 @@ class Blog {
     }
     
     public function update(){
-        $this->sql->update("name", "blog", ["id" => $this->$id], $this->name);
-        $this->sql->update("description", "blog", ["id" => $this->$id], $this->description);
-        $this->sql->update("active", "blog", ["id" => $this->$id], $this->active);
-        $this->sql->update("order", "blog", ["id" => $this->$id], $this->order);
-        $this->sql->update("createdAt", "blog", ["id" => $this->$id], $this->createdAt->format("Y-m-d H:i:s"));
-        $this->sql->update("updatedAt", "blog", ["id" => $this->$id], $this->updatedAt->format("Y-m-d H:i:s"));
+        $this->sql->update("name", "blog", ["id" => $this->id], $this->name);
+        $this->sql->update("description", "blog", ["id" => $this->id], $this->description);
+        $this->sql->update("active", "blog", ["id" => $this->id], $this->active);
+        $this->sql->update("order", "blog", ["id" => $this->id], $this->order);
+        $this->sql->update("createdAt", "blog", ["id" => $this->id], $this->createdAt->format("Y-m-d H:i:s"));
+        $this->sql->update("updatedAt", "blog", ["id" => $this->id], $this->updatedAt->format("Y-m-d H:i:s"));
     }
 
     public function delete(){

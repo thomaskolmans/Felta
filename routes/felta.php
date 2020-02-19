@@ -21,12 +21,23 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         Route::get("/editor","felta/editor.tpl");
         Route::get("/social","felta/social.tpl");
         Route::get("/settings","felta/settings.tpl");
+
         Route::get("/agenda","felta/agenda.tpl");
         Route::get("/agenda/{id}/update","felta/agenda.tpl");
+
         Route::get("/news","felta/news.tpl");
         Route::get("/news/{id}/update","felta/news.tpl");
-        Route::get("/blog","felta/blog_main.tpl");
+        
+        Route::get("/faq","felta/faq.tpl");
+        Route::get("/faq/{id}/update","felta/faq.tpl");
+        
+        Route::get("/blog","felta/blog/blog.tpl");
+        Route::get("/blog/{id}/update","felta/blog/blog.tpl");
 
+        Route::get("/blog/{blog}/article", "/felta/blog/article.tpl");
+        Route::get("/blog/{blog}/article/{id}/update", "/felta/blog/article.tpl");
+        
+        
         Route::post("/settings",function(){ UserController::UPDATE_SETTINGS(); });
         Route::post("/settings/delete/user",function(){ UserController::DELETE_USER(); });
 
@@ -37,14 +48,14 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
          * News
          */
         Route::post("/news",function() { PostController::ADD_NEWS(); });
-        Route::post("/news/update",function() { PostController::UPDATE_NEWS(); });
+        Route::put("/news",function() { PostController::UPDATE_NEWS(); });
         Route::get("/news/delete/{id}",function($id){ PostController::DELETE_NEWS($id); });
 
         /**
          * Agenda
          */
         Route::post("/agenda",function(){ Postcontroller::ADD_AGENDA(); });
-        Route::post("/agenda/update",function(){ PostController::UPDATE_AGENDA(); });
+        Route::put("/agenda",function(){ PostController::UPDATE_AGENDA(); });
         Route::get("/agenda/delete/{id}",function($id){ PostController::DELETE_AGENDA($id); });
 
         /**
@@ -53,14 +64,15 @@ Route::group(["namespace" => "/felta"], function() use ($felta){
         Route::get("/blogs", function(){ BlogController::GET_ALL_BLOGS(); });
         Route::get("/blog/{id}", function($id) { BlogController::GET_BLOG($id); }); 
         Route::post("/blog", function(){ BlogController::CREATE_BLOG(); });
-        Route::post("/blog/update", function(){ BlogController::UPDATE_BLOG(); });
+        Route::put("/blog", function(){ BlogController::UPDATE_BLOG(); });
         Route::delete("/blog/delete/{id}", function($id){ BlogController::DELETE_BLOG($id); });
         
         Route::get("/articles/{blog}/{from}/{to}", function($blog, $from, $to) { BlogController::GET_ARTICLES_FROM_BLOG($blog, $from, $to); });
-        Route::get("/article/{id}", function($id) { BlogController::GET_ARICLE($id); });
+        Route::get("/article/{id}", function($id) { BlogController::GET_ARTICLE($id); });
         Route::post("/article", function(){ BlogController::CREATE_ARTICLE(); });
-        Route::post("/article/update", function() { BlogController::UPDATE_ARTILCE(); }); 
+        Route::put("/article", function() { BlogController::UPDATE_ARTICLE(); }); 
         Route::delete("/article/delete/{id}", function($id){ BlogController::DELETE_ARTICLE($id); });
+
         /**
          * Audio
          */

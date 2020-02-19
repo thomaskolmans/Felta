@@ -90,6 +90,7 @@ function setupVariant(id) {
     document.getElementById("variants-container").append(newVariant);
   
     $("#" + id + " #variant_name")[0].setAttribute("name", "variants[" + (variants - 1) + "][variant_name]");
+    $("#" + id + " #sku")[0].setAttribute("sku", "variants[" + (variants - 1) + "][sku]");
     $("#" + id + " #currency")[0].setAttribute("name", "variants[" + (variants - 1)+ "][currency]");
     $("#" + id + " #amount")[0].setAttribute("name", "variants[" + (variants - 1) + "][amount]");
     $("#" + id + " #quantity")[0].setAttribute("name", "variants[" + (variants - 1) + "][quantity]");
@@ -119,7 +120,7 @@ function setupVariant(id) {
         clone.remove();
       });
   
-      parent.prepend(clone);
+      parent.append(clone);
     });
   } else {
     for(var i = 0; i < variants; i++){
@@ -142,7 +143,7 @@ function setupVariant(id) {
           clone.remove();
         });
     
-        parent.prepend(clone);
+        parent.append(clone);
       });
     }
   }

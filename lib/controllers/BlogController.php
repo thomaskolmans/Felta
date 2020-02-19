@@ -2,11 +2,12 @@
 namespace lib\controllers;
 
 use lib\Felta;
-use lib\Helpers\Input;
-use lib\Helpers\UUID;
-use lib\Post\blog\Blog;
-use lib\Post\blog\Article;
-use lib\Post\blog\Comment;
+use lib\helpers\Input;
+use lib\helpers\UUID;
+use lib\post\blog\Blog;
+use lib\post\blog\Article;
+use lib\post\blog\ArticleImage;
+use lib\post\blog\Comment;
 
 use \DateTime;
 
@@ -57,17 +58,22 @@ class BlogController {
     }
     
     public static function UPDATE_BLOG(){
-        $blog = Blog::get(Input::clean("id"));
-        $blog->setName(Input::clean("name"));
-        $blog->setDescription(Input::clean("description"));
-        $blog->setActive(Input::clean("active"));
-        $blog->setOrder(Input::clean("order"));
-        $blog->setUpdatedAt(new DateTime());
+        parse_str(file_get_contents("php://input"),$_POST);
 
-        $blog->save();
-
-        echo json_encode(["success" => true, "message" => "Blog has been updated!"]);
-
+        $blog = Blog::get(Input::value("id"));
+        if ($blog == null) {
+            echo json_encode(["success" => false, "message" => "Blog does not exist."]);
+        } else {
+            $blog->setName(Input::clean("name"));
+            $blog->setDescription(Input::clean("description"));
+            $blog->setActive(Input::clean("active") === "on");
+            $blog->setOrder(Input::clean("order"));
+            $blog->setUpdatedAt(new DateTime());
+    
+            $blog->save();
+    
+            echo json_encode(["success" => true, "message" => "Blog has been updated!"]);
+        }
     }
 
     public static function DELETE_BLOG($id){
@@ -173,9 +179,9 @@ class BlogController {
     public static function CREATE_ARTICLE_COMMENT(){
         $comment = new Comment(
             UUID::generate(15),
-            isEmpty(Input::clean("parent")) ? null : Input::clean("parent"),
-            isEmpty(Input::clean("article")) ? null : Input::clean("article"),
-            isEmpty(Input::clean("user")) ? null : Input::clean("user"),
+            empty(Input::clean("parent")) ? null : Input::clean("parent"),
+            empty(Input::clean("article")) ? null : Input::clean("article"),
+            empty(Input::clean("user")) ? null : Input::clean("user"),
             Input::clean("name"),
             Input::clean("comment"),
             Input::clean("accepted"),

@@ -2,6 +2,8 @@
 namespace lib\shop;
 
 use lib\helpers\UUID;
+use lib\shop\order\Order;
+use lib\shop\order\Customer;
 
 class Payment{
 
@@ -25,7 +27,9 @@ class Payment{
         self::chargeFromSource($id);
     }
 
-    public static function mollieW
+    public static function mollieWebhook() {
+
+    }
 
     public function pay(){
         switch($this->method){

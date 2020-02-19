@@ -10,26 +10,21 @@ body {
 
 * {
   box-sizing: border-box; }
+  *.no-padding-bottom {
+    padding-bottom: 0 !important; }
+  *.align-left, *.left {
+    text-align: left !important; }
+  *.align-center, *.center {
+    text-align: center !important; }
+  *.hidden {
+    display: none; }
 
-ul, menu {
-  padding: 0;
-  margin: 0; }
-
-iframe, image {
+iframe, img {
   border: none; }
 
-hr {
-  margin: 0; }
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0; }
-  h1.align-left, h2.align-left, h3.align-left, h4.align-left, h5.align-left, h6.align-left {
-    text-align: left !important; }
-  h1.align-center, h2.align-center, h3.align-center, h4.align-center, h5.align-center, h6.align-center {
-    text-align: center !important; }
-
-section.hidden {
-  display: none; }
+h1, h2, h3, h4, h5, h6, hr, ul, menu {
+  margin: 0;
+  padding: 0; }
 
 label {
   display: block;
@@ -491,26 +486,21 @@ body {
 
 * {
   box-sizing: border-box; }
+  *.no-padding-bottom {
+    padding-bottom: 0 !important; }
+  *.align-left, *.left {
+    text-align: left !important; }
+  *.align-center, *.center {
+    text-align: center !important; }
+  *.hidden {
+    display: none; }
 
-ul, menu {
-  padding: 0;
-  margin: 0; }
-
-iframe, image {
+iframe, img {
   border: none; }
 
-hr {
-  margin: 0; }
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0; }
-  h1.align-left, h2.align-left, h3.align-left, h4.align-left, h5.align-left, h6.align-left {
-    text-align: left !important; }
-  h1.align-center, h2.align-center, h3.align-center, h4.align-center, h5.align-center, h6.align-center {
-    text-align: center !important; }
-
-section.hidden {
-  display: none; }
+h1, h2, h3, h4, h5, h6, hr, ul, menu {
+  margin: 0;
+  padding: 0; }
 
 label {
   display: block;
@@ -994,7 +984,6 @@ strong, b {
       padding: 5px 0;
       text-align: center;
       background: #000c0c;
-      border-radius: 16px;
       color: #f1f1f1; }
       .main.dashboard section.transparent, .main.settings section.transparent, .main.window section.transparent {
         background: none;
@@ -1048,6 +1037,13 @@ strong, b {
       .main.dashboard .hub h2, .main.settings .hub h2, .main.window .hub h2 {
         font-size: 20px;
         padding: 15px 0; }
+    .main.dashboard a, .main.settings a, .main.window a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+      -webkit-transition: 0.3s; }
+      .main.dashboard a:hover, .main.settings a:hover, .main.window a:hover {
+        text-decoration: underline; }
     .main.dashboard .status, .main.settings .status, .main.window .status {
       width: 300px;
       height: 50px;
@@ -1494,7 +1490,7 @@ strong, b {
     content: ""; }
 
 form.full {
-  margin: 50px auto;
+  margin: 0 auto 50px auto;
   width: 100%;
   max-width: 600px;
   text-align: left; }
@@ -1558,6 +1554,9 @@ form.full {
     padding: 3px 0;
     color: #000c0c;
     font-weight: bold; }
+    form.full label.switch {
+      top: 0;
+      position: relative; }
   form.full .attributes {
     padding: 10px 0; }
     form.full .attributes .attribute {
@@ -1757,7 +1756,7 @@ input[type="checkbox"].switcher:checked + .slider:before {
       width: 100%; }
     .main .top h1 {
       margin-left: 15px;
-      font-size: 30px; }
+      font-size: 20px; }
     .main .editor_line .editor {
       width: 90%; }
       .main .editor_line .editor input {
@@ -1783,10 +1782,11 @@ input[type="checkbox"].switcher:checked + .slider:before {
   .main h1 {
     text-align: center; }
   .main.dashboard h1 {
-    font-size: 50px;
+    font-size: 35px;
     padding: 10px 0;
     text-align: left; }
   .main.dashboard section {
+    flex: 0 0 100%;
     width: 100%;
     margin: 15px 0; }
   .main.dashboard .hub h1, .main.dashboard section h1, .main.dashboard .stats h1 {
