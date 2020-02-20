@@ -5,3 +5,5 @@ CREATE TABLE IF NOT EXISTS `article_image`(
     `description` text,
     `createdAt` DateTime
 );
+
+ALTER TABLE `shop_product_variant` ADD COLUMN `sku` varchar(255) AFTER `name`;

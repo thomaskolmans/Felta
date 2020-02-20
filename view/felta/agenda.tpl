@@ -262,7 +262,7 @@
         <div class="input-group">
           <label>Description</label>
           <?php echo '<div id="update_editor">'.$description.'</div>'; ?>
-          <?php echo '<textarea style="display: none" id="update_editor_value" value="'.$description.'" name="description"></textarea>'; ?>
+          <?php echo '<textarea style="display: none" id="update_editor_value" name="description">'.$description.'</textarea>'; ?>
         </div>
         <div class="input-group right">
           <a href="/felta/agenda"><input type="button" value="Cancel" id="cancel_agenda"></a>

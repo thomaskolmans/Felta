@@ -170,16 +170,16 @@
                   <div class="attribute template" id="attribute-template">
                     <input type="text" class="attribute-name" placeholder="Name"/>
                     <input type="text" class="attribute-value" placeholder="Value"/>
-                    <button class="delete" id="delete"></button>
+                    <button class="delete"></button>
                   </div>
                   <?php 
-                    foreach($variant->getAttributes() as $aKey => $attribute) {
+                    foreach(array_reverse($variant->getAttributes()) as $aKey => $attribute) {
                       $aCount = $aKey + 1;
                       echo '
                         <div class="attribute" id="attribute">
-                          <input type="text" class="attribute-name" name="variables['.$key.'][attributes]['.$aKey.']]name]" value="'.$attribute->getName().'" placeholder="Name"/>
-                          <input type="text" class="attribute-value" name="variables['.$key.'][attributes]['.$aKey.']]value]" value="'.$attribute->getValue().'"placeholder="Value"/>
-                          <button class="delete" id="delete"></button>
+                          <input type="text" class="attribute-name" name="variants['.$key.'][attributes]['.$aKey.'][name]" value="'.$attribute->getName().'" placeholder="Name"/>
+                          <input type="text" class="attribute-value" name="variants['.$key.'][attributes]['.$aKey.'][value]" value="'.$attribute->getValue().'"placeholder="Value"/>
+                          <button class="delete" onclick="(function(e){ e.preventDefault(); e.target.parentElement.remove(); })(event)"></button>
                         </div>
                       ';
                     }

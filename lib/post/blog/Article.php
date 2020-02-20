@@ -116,14 +116,14 @@ class Article {
     }
     
     public function update(){
-        $this->sql->update("title", "article", ["id" => $this->$id], $this->title);
-        $this->sql->update("author", "article", ["id" => $this->$id], $this->author);
-        $this->sql->update("description", "article", ["id" => $this->$id], $this->description);
-        $this->sql->update("body", "article", ["id" => $this->$id], $this->body);
-        $this->sql->update("active", "article", ["id" => $this->$id], $this->active);
-        $this->sql->update("activeFrom", "article", ["id" => $this->$id], $this->createdAactiveFromt->format("Y-m-d H:i:s"));
-        $this->sql->update("createdAt", "article", ["id" => $this->$id], $this->createdAt->format("Y-m-d H:i:s"));
-        $this->sql->update("updatedAt", "article", ["id" => $this->$id], $this->updatedAt->format("Y-m-d H:i:s"));
+        $this->sql->update("title", "article", ["id" => $this->id], $this->title);
+        $this->sql->update("author", "article", ["id" => $this->id], $this->author);
+        $this->sql->update("description", "article", ["id" => $this->id], $this->description);
+        $this->sql->update("body", "article", ["id" => $this->id], $this->body);
+        $this->sql->update("active", "article", ["id" => $this->id], $this->active);
+        $this->sql->update("activeFrom", "article", ["id" => $this->id], $this->activeFrom->format("Y-m-d H:i:s"));
+        $this->sql->update("createdAt", "article", ["id" => $this->id], $this->createdAt->format("Y-m-d H:i:s"));
+        $this->sql->update("updatedAt", "article", ["id" => $this->id], $this->updatedAt->format("Y-m-d H:i:s"));
     }
 
     public function delete(){

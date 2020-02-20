@@ -5,6 +5,9 @@ use lib\Felta;
 use lib\post\Edit;
 use lib\post\Agenda;
 use lib\post\News;
+use lib\helpers\Input;
+use lib\filesystem\File;
+use lib\filesystem\type\Image;
 
 class PostController {
 
@@ -15,7 +18,7 @@ class PostController {
         $news = new News();
         $news->put(
             htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'),
+            $_POST["description"], ENT_QUOTES, 'UTF-8',
             null,
             new \DateTime($_POST['date'])
         );
@@ -26,7 +29,7 @@ class PostController {
         $news = new News();
         $id = $_POST['id'];
         $news->update('title',['id' => $id], htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'));
-        $news->update('description',['id' => $id], htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'));
+        $news->update('description',['id' => $id], $_POST["description"], ENT_QUOTES, 'UTF-8');
         $date = new \DateTime($_POST['date']);
         $news->update('date',['id' => $id], $date->format("Y-m-d H:i:s"));
         echo json_encode(["success" => "News has been succesfully updated"]);
@@ -45,7 +48,7 @@ class PostController {
         $agenda = new Agenda();
         $agenda->put(
             htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'),
+            $_POST["description"],
             null,
             htmlspecialchars($_POST["location"], ENT_QUOTES, 'UTF-8'),
             new \DateTime($_POST['from']),
@@ -59,7 +62,7 @@ class PostController {
         $agenda = new Agenda();
         $id = $_POST['id'];
         $agenda->update('title',['id' => $id],htmlspecialchars($_POST["title"], ENT_QUOTES, 'UTF-8'));
-        $agenda->update('description',['id' => $id], htmlspecialchars($_POST["description"], ENT_QUOTES, 'UTF-8'));
+        $agenda->update('description',['id' => $id], $_POST["description"]);
         $agenda->update('location',['id' => $id], htmlspecialchars($_POST["location"], ENT_QUOTES, 'UTF-8'));
         $from = new \DateTime($_POST['from']);
         $until = new \DateTime($_POST['until']);
@@ -117,10 +120,10 @@ class PostController {
         $y2 = Input::value("y2");
         $id = Input::value("id");
         $lang = Input::value("language");
-        $file =  new lib\Filesystem\File($_FILES["file_name"],null);
+        $file =  new File($_FILES["file_name"],null);
         $image = $file->getTmpFile();
         if($file->upload(null)){
-            lib\Filesystem\type\Image::resize($file->getDestination(),$x,$y,$w,$h,$x2,$y2);
+            Image::resize($file->getDestination(),$x,$y,$w,$h,$x2,$y2);
         }
         $edit->setText($id,$lang,$file->getRelativeDest());
         echo $file->getRelativeDest();

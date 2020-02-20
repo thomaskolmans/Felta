@@ -45,7 +45,7 @@ class BlogController {
         $blog = new Blog(
             UUID::generate(15),
             Input::clean("name"),
-            Input::clean("description"),
+            Input::value("description"),
             Input::clean("active"),
             Input::clean("order"),
             new DateTime(),
@@ -65,7 +65,7 @@ class BlogController {
             echo json_encode(["success" => false, "message" => "Blog does not exist."]);
         } else {
             $blog->setName(Input::clean("name"));
-            $blog->setDescription(Input::clean("description"));
+            $blog->setDescription(Input::value("description"));
             $blog->setActive(Input::clean("active") === "on");
             $blog->setOrder(Input::clean("order"));
             $blog->setUpdatedAt(new DateTime());
@@ -105,7 +105,7 @@ class BlogController {
     }
 
     public static function CREATE_ARTICLE(){
-        $imageUrls = array_filter(json_decode($_POST["images"]));
+        $imageUrls = array_filter(json_decode(isset($_POST["images"]) ? $_POST["images"] : "[]"));
         $images = [];
         foreach($imageUrls as $url) {
             $images[] = new ArticleImage(
@@ -122,10 +122,10 @@ class BlogController {
             Input::clean("blog"),
             Input::clean("title"),
             Input::clean("author"),
-            Input::clean("description"),
+            Input::value("description"),
             $images,
-            Input::clean("body"),
-            Input::clean("active") == "true" ? true : false,
+            Input::value("body"),
+            Input::clean("active") === "on",
             new DateTime(Input::clean("activeFrom")),
             new DateTime(),
             new DateTime()
@@ -137,7 +137,9 @@ class BlogController {
     }
     
     public static function UPDATE_ARTICLE(){
-        $imageUrls = array_filter(json_decode($_POST["images"]));
+        parse_str(file_get_contents("php://input"),$_POST);
+
+        $imageUrls = array_filter(json_decode(isset($_POST["images"]) ? $_POST["images"] : "[]"));
         $images = [];
         foreach($imageUrls as $url) {
             $images[] = new ArticleImage(
@@ -149,12 +151,13 @@ class BlogController {
             );
         }
 
-        $article = Article::get(Input::clean("id"));
+        $article = Article::get(Input::value("id"));
+
         $article->setTitle(Input::clean("title"));
         $article->setAuthor(Input::clean("author"));
-        $article->setDescription(Input::clean("description"));
-        $article->setBody(Input::clean("body"));
-        $article->setActive(Input::clean("active"));
+        $article->setDescription(Input::value("description"));
+        $article->setBody(Input::value("body"));
+        $article->setActive(Input::clean("active") === "on");
         $article->setActiveFrom(new DateTime(Input::clean("activeFrom")));
         $article->setImages($images);
 

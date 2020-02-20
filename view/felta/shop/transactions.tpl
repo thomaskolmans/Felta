@@ -42,7 +42,7 @@
               </a>';
             }
           }else{
-            echo '<h3>No transactions made</h3>';
+            echo '<i>No transactions</i>';
           }
         ?>
       </section>
