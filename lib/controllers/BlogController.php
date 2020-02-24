@@ -105,14 +105,15 @@ class BlogController {
     }
 
     public static function CREATE_ARTICLE(){
-        $imageUrls = array_filter(json_decode(isset($_POST["images"]) ? $_POST["images"] : "[]"));
+        $imageUrls = array_filter((isset($_POST["images"]) ? $_POST["images"] : "[]"));
         $images = [];
-        foreach($imageUrls as $url) {
+        foreach($imageUrls as $key => $url) {
             $images[] = new ArticleImage(
                 UUID::generate(10),
                 Input::clean("id"),
                 $url,
                 "",
+                $key,
                 new DateTime()
             );
         }
@@ -139,14 +140,15 @@ class BlogController {
     public static function UPDATE_ARTICLE(){
         parse_str(file_get_contents("php://input"),$_POST);
 
-        $imageUrls = array_filter(json_decode(isset($_POST["images"]) ? $_POST["images"] : "[]"));
+        $imageUrls = array_filter((isset($_POST["images"]) ? $_POST["images"] : "[]"));
         $images = [];
-        foreach($imageUrls as $url) {
+        foreach($imageUrls as $key => $url) {
             $images[] = new ArticleImage(
                 UUID::generate(10),
                 Input::clean("id"),
                 $url,
                 "",
+                $key,
                 new DateTime()
             );
         }

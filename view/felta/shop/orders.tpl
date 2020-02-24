@@ -44,7 +44,7 @@
               </a>';
             }
           }else{
-            echo '<h3>No orders placed yet</h3>';
+            echo '<i>No orders placed yet</i>';
           }
         ?>
       </section>

@@ -38,7 +38,6 @@
         </ul>
       </li>
      </a>
-     <!-- <a href="/felta/statistics"><li><i class="fa fa-bar-chart"></i>Statistics</li></a> -->
    </ul>
     <div class="bottom">
       <a class="logout" href="/felta/logout"><i class="fa fa-sign-out"></i></a>

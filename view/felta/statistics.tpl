@@ -9,7 +9,7 @@
    <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
    <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
    <script src="/felta/js/jquery-1.11.3.min.js"></script>
-   <script src="/felta/js/Chart.min.js" type="text/javascript"></script>
+   <script src="/felta/js/chartjs/Chart.min.js"></script>
    <script src="/felta/js/dash.js"></script>
 </head>
 <body>

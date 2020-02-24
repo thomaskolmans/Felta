@@ -29,6 +29,7 @@ class ArticleImage {
         $this->article = $article;
         $this->url = $url;
         $this->description = $description;
+        $this->order = $order;
         $this->createdAt = $createdAt;
     }
 
@@ -56,6 +57,7 @@ class ArticleImage {
             $result["article"],
             $result["url"],
             $result["description"],
+            $result["order"],
             new DateTime($result["createdAt"])
         );
         return $articleImage;
@@ -130,6 +132,15 @@ class ArticleImage {
 	
 	public function setDescription($description){
 		$this->description = $description;
+		return $this;
+	}
+	
+	public function getOrder(){
+		return $this->order;
+	}
+	
+	public function setOrder($order){
+		$this->order = $order;
 		return $this;
 	}
 	

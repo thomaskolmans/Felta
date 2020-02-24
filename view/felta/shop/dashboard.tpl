@@ -7,7 +7,7 @@
    <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
    <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
    <script src="/felta/js/jquery-1.11.3.min.js"></script>
-   <script src="/felta/js/Chart.min.js"></script>
+   <script src="/felta/js/chartjs/Chart.min.js"></script>
    <script src="/felta/js/shop.js"></script>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">

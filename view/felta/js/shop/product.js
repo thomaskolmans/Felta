@@ -8,7 +8,7 @@ $("#image_edit_cancel, #image_editor_background").click(function(){
   closeImageEditor();
 });
 
-$("#cancelphoto").on("click",function(){
+$("#cancelphoto").on("click", function(){
   closeImageEditor();
 });
 
@@ -90,7 +90,7 @@ function setupVariant(id) {
     document.getElementById("variants-container").append(newVariant);
   
     $("#" + id + " #variant_name")[0].setAttribute("name", "variants[" + (variants - 1) + "][variant_name]");
-    $("#" + id + " #sku")[0].setAttribute("sku", "variants[" + (variants - 1) + "][sku]");
+    $("#" + id + " #sku")[0].setAttribute("name", "variants[" + (variants - 1) + "][sku]");
     $("#" + id + " #currency")[0].setAttribute("name", "variants[" + (variants - 1)+ "][currency]");
     $("#" + id + " #amount")[0].setAttribute("name", "variants[" + (variants - 1) + "][amount]");
     $("#" + id + " #quantity")[0].setAttribute("name", "variants[" + (variants - 1) + "][quantity]");

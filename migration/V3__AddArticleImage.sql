@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `article_image`(
     `article` varchar(255),
     `url` varchar(1024),
     `description` text,
+    `order` int,
     `createdAt` DateTime
 );
 

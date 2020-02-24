@@ -610,7 +610,9 @@ hr
 .image-selector
   height: 80px
   margin-top: 15px
-  span
+  display: flex
+  list-style: none
+  li
     display: inline-block
     position: relative
   .add,img
@@ -619,6 +621,7 @@ hr
     display: inline-block
     background: $main
     position: relative
+    object-fit: cover
   .add
     &:hover
       cursor: pointer

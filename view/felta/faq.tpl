@@ -131,9 +131,9 @@
     <include>Felta/parts/nav.tpl</include>
     <div class="main-wrapper">
         <div class="main dashboard container multi-page" id="main">
-            <h1>Blog</h1>
+            <h1>FAQ</h1>
             <div class="stats no-margin news relative">
-            <a href="#new"><button class="add">Add blog</button></a>
+            <a href="#new"><button class="add">Add Q&A</button></a>
             <table>
             <tr>
                 <th>Name</th>
@@ -178,11 +178,11 @@
             </div>
         </div>
         <div class="main dashboard multi-page" id="new">
-            <h1>New blog</h1>
+            <h1>New Q&A</h1>
             <form method="post" class="full" onsubmit="return (function(e){
                 e.preventDefault();
                 $.ajax({
-                    url: '/felta/blog',
+                    url: '/felta/faq',
                     type: 'POST',
                     data: $('#new form').serialize(),
                     success: function(result) {
@@ -192,7 +192,7 @@
             })(event)">
                 <div class="input-group">
                     <label>Title</label>
-                    <input type="text" name="title" placeholder="Imagine this..." />
+                    <input type="text" name="title" placeholder="Title..." />
                 </div>
                 <div class="input-group">
                   <label>Questions</label>

@@ -616,8 +616,10 @@ hr {
 
 .image-selector {
   height: 80px;
-  margin-top: 15px; }
-  .image-selector span {
+  margin-top: 15px;
+  display: flex;
+  list-style: none; }
+  .image-selector li {
     display: inline-block;
     position: relative; }
   .image-selector .add, .image-selector img {
@@ -625,7 +627,8 @@ hr {
     height: 80px;
     display: inline-block;
     background: #000c0c;
-    position: relative; }
+    position: relative;
+    object-fit: cover; }
   .image-selector .add:hover {
     cursor: pointer; }
     .image-selector .add:hover::before {

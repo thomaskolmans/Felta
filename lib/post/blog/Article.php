@@ -76,13 +76,23 @@ class Article {
     
     public static function fromResult($result){
         $images = [];
+        $sqlImages = Felta::getInstance()->getSQL()->query()
+        ->select()
+        ->from("article_image")
+        ->where("article", $result["id"])
+        ->execute();
+
+        foreach($sqlImages as $resultImage) {
+            $images[] = ArticleImage::fromResult($resultImage);
+        }
+        
         $article = new Article(
             $result["id"],
             $result["blog"],
             $result["title"],
             $result["author"],
             $result["description"],
-            [],
+            $images,
             $result["body"],
             $result["active"],
             new DateTime($result["activeFrom"]),
@@ -113,6 +123,10 @@ class Article {
             $this->createdAt->format("Y-m-d H:i:s"),
             $this->updatedAt->format("Y-m-d H:i:s")
         ]);
+
+        foreach($this->getImages() as $image) {
+            $image->save();
+        }
     }
     
     public function update(){
@@ -124,6 +138,11 @@ class Article {
         $this->sql->update("activeFrom", "article", ["id" => $this->id], $this->activeFrom->format("Y-m-d H:i:s"));
         $this->sql->update("createdAt", "article", ["id" => $this->id], $this->createdAt->format("Y-m-d H:i:s"));
         $this->sql->update("updatedAt", "article", ["id" => $this->id], $this->updatedAt->format("Y-m-d H:i:s"));
+        
+        $this->sql->delete("article_image", ["article" => $this->id]);
+        foreach($this->getImages() as $image) {
+            $image->save();
+        }
     }
 
     public function delete(){
@@ -136,7 +155,13 @@ class Article {
 
     public function expose(){
         $exposed = get_object_vars($this);
-		unset($exposed["sql"]);
+        unset($exposed["sql"]);
+        
+        $exposed["images"] = [];
+        foreach($this->getImages() as $image) {
+            $exposed["images"][] = $image->expose();
+        }
+        
 	    return $exposed;
     }
 
