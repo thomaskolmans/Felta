@@ -127,7 +127,7 @@
                                 <td onclick='return (function(e) {
                                     e.preventDefault();
                                     $.ajax({
-                                        url: \"/felta/blog/delete/" . $item->getId() . "\",
+                                        url: \"/felta/article/delete/" . $item->getId() . "\",
                                         type: \"DELETE\",
                                         success: function(result) {
                                             window.location.reload();
@@ -299,7 +299,7 @@
             </div>
             <div class="input-group">
                 <label>Active From</label>
-                <?php echo '<input type="text" value="' . $article->getAuthor() . '" id="datetimepicker_update" name="activeFrom" />'; ?>
+                <?php echo '<input type="text" value="' . $article->getActiveFrom()->format("d-m-Y H:i:s") . '" id="datetimepicker_update" name="activeFrom" />'; ?>
             </div>
             <div class="input-group right">
                 <?php echo '<a href="/felta/blog/' . $blog->getId() . '/article"><input type="button" value="Cancel"></a>'; ?>

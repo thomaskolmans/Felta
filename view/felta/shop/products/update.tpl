@@ -153,11 +153,11 @@
                   <?php
                     foreach($variant->getImages() as $imageKey => $image){
                       echo '
-                        <span>
+                        <ul>
                           <span class="delete" onclick="deleteImage(this,\''.$image.'\')"></span>
                           <input type="hidden" name="variants['.$key.'][images][]" value="'.$image.'" /> 
                           <img src="'.$image.'" />
-                        </span>
+                        </li>
                       ';
                     }
                   ?>
@@ -236,9 +236,9 @@
         <input type="hidden" name="variables" id="variables"  placeholder="10">
         <div class="input-group">
           <label>Image</label>
-          <div class="image-selector" id="image-selector">
-            <div class="add" onclick="imageEditor()"></div>
-          </div>
+          <ul class="image-selector" id="image-selector">
+            <li class="add" onclick="imageEditor()"></div>
+        </ul>
         </div>
         <div class="input-group">
           <label>Attributes</label>

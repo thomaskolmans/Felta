@@ -111,9 +111,9 @@
         <input type="hidden" name="variables" id="variables" placeholder="10">
         <div class="input-group">
           <label>Image</label>
-          <div class="image-selector" id="image-selector">
-            <div class="add" onclick="imageEditor()"></div>
-          </div>
+          <ul class="image-selector" id="image-selector">
+            <li class="add" onclick="imageEditor()"></li>
+          </ul>
         </div>
         <div class="input-group">
           <label>Attributes</label>

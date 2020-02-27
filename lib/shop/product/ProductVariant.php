@@ -189,7 +189,6 @@ class ProductVariant{
         }
 
         foreach ($this->attributes as $attribute) {
-            var_dump($attribute);
             $attribute->insert();
         }
     }
@@ -210,8 +209,14 @@ class ProductVariant{
 
     public function expose(){
         $exposed = get_object_vars($this);
-		unset($exposed["sql"]);
-	    return $exposed;
+        unset($exposed["sql"]);
+        $exposed["attributes"] = [];
+        foreach($this->attributes as $attribute){
+            $exposed["attributes"][] = $attribute->expose();
+        }
+        unset($exposed["sql"]);
+        return $exposed;
+
     }
 
     public function getId(){
@@ -220,7 +225,6 @@ class ProductVariant{
     public function getSid(){
         return $this->sid;
     }
-
 
     public function getSku(){
         return $this->sku;

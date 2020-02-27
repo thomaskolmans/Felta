@@ -162,7 +162,7 @@ function setupTabs() {
       $("#"+last+"-tab").removeClass("active");
       active = $(this).attr("column");
       if (active) {
-        activeVariant = active.replace("variant");
+        activeVariant = active.replace("variant", "");
       }
       $("#"+active).removeClass("hidden");
       $("#"+active+"-tab").addClass("active");

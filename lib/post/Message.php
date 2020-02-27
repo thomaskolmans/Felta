@@ -34,7 +34,9 @@ class Message extends Post{
     private function sendNotification($title,$message,$url){
         $email = new Email();
         $email->html(true);
-        $email->setTo("thomaskolmans@gmail.com");
+        $email->setSMTP();
+        $email->setTo(Felta::getConfig("email"));
+        $email->setFrom(Felta::getConfig("smtp")["username"]);
         $email->setSubject("You've got a new notification from your website.");
         $email->setMessage(str_replace(["{title}","{message}","{url}"], [$title,$message,$url], $email->load("emails/message.html")));
         $email->send();

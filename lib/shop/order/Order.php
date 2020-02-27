@@ -1,6 +1,8 @@
 <?php
 namespace lib\shop\order;
 
+use \DateTime;
+use \Exception;
 use lib\Felta;
 use lib\shop\Shop;
 use lib\shop\product\ProductVariant;
@@ -42,10 +44,17 @@ class Order {
             $sorder["customer"],
             $sorder["orderstatus"],
             null,
-            new \DateTime($sorder["order"]),
+            new DateTime($sorder["order"]),
             $products
         );
     }
+
+    public static function getFromTransaction($id){
+        $transaction = Felta::getInstance()->getSQL()->select("*","shop_transaction",["id" => $id])[0];
+        if($transaction == null) return new Order("", "", "" , "" , new DateTime(), []);
+        return Order::get($transaction["order"]);
+    }
+
 
     public static function exists($id){
         return Felta::getInstance()->getSQL()->exists("shop_order",["id" => $id]);
@@ -61,6 +70,7 @@ class Order {
         $date = new \DateTime();
         return new Order($id,$customer,$orderStatus,$promotion,$date,$products);
     }
+    
 
     public static function getLatest($from,$until){
         return Felta::getInstance()->getSQL()
@@ -122,6 +132,7 @@ class Order {
         $email->setMessage(str_replace(["{title}","{message}","{url}"], [$title,$message,$url], $email->load("emails/shop/thankyou.html")));
         $email->send();
     }
+
     public function update(){
         $this->sql->update("customer","shop_order",["id" => $this->id],$this->customer);
         $this->sql->update("orderstatus","shop_order",["id" => $this->id],$this->orderStatus);
@@ -206,6 +217,14 @@ class Order {
         $source = \Stripe\Source::create($total);
         return $source;
     }
+    
+    public function getVariants(){
+        foreach($this->products as $item => $quantity){
+            $variant = ProductVariant::get($item);
+            $variant->setQuantity($quantity);
+            $this->variants[] = $variant;
+        }
+    }
 
     public function toPaypal(){
         $payer = new Payer();
@@ -261,49 +280,71 @@ class Order {
         $approvalUrl = $payment->getApprovalLink();
     }
 
+    public function expose(){
+        $this->getVariants();
+        $exposed = get_object_vars($this);
+        unset($exposed["sql"]);
+        $exposed["variants"] = [];
+        foreach($this->variants as $variant) {
+            $exposed["variants"][] = $variant->expose();
+        }
+        return $exposed;
+    }
     
     public function getId(){
         return $this->id;
     }
+
     public function setId($id){
         $this->id = $id;
         return $this;
     }
+
     public function getCustomer(){
         return $this->customer;
     }
+
     public function setCustomer($customer){
         $this->customer = $customer;
         return $this;
     }
+
     public function getorderStatus(){
         return $this->orderStatus;
     }
+
     public function setorderStatus($orderStatus){
         $this->orderStatus = $orderStatus;
         return $this;
     }
+
     public function addItem(array $item){
-        $products[] = $item;
+        $this->products[] = $item;
+        return $this;
     }
 
     public function removeItem($id){
-        unset($products[$id]);
+        unset($this->products[$id]);
+        return $this;
     }
 
     public function getItems(){
         return $this->shoptitems;
     }
+
     public function getDate(){
         return $this->date;
     }
+
     public function setDate($date){
         $this->date = $date;
         return $this;
     }
+
     public function getProducts(){
         return $this->products;
     }
+
     public function setProducts($products){
         $this->products = $products;
         return $this;

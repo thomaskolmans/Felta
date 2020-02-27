@@ -177,8 +177,12 @@ class Product{
 
     public function expose(){
         $exposed = get_object_vars($this);
-		unset($exposed["sql"]);
-	    return $exposed;
+        unset($exposed["sql"]);
+        $exposed["variants"] = [];
+        foreach($this->variants as $variant){
+            $exposed["variants"][] = $variant->expose();
+        }
+        return $exposed;
     }
     
     public function getId(){

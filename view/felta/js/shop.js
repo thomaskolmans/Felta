@@ -1,4 +1,5 @@
 var croppie;
+
 function getDomain(){
     if(document.domain.length){
         var parts = document.domain.replace(/^(www\.)/,"").split('.');
@@ -55,13 +56,16 @@ function paypal(oid){
 }
 
 function mollie(oid, method) {
+    var url = new URL(window.location.href);
+    var testKey = decodeURI(url.searchParams.get("testKey"));
     return new Promise(function(resolve){
         $.ajax({
             url: "/felta/shop/mollie/transaction",
             type: "POST", 
             data: {
               oid: oid,
-              method: method
+              method: method,
+              testKey: testKey
             },
             success: function(response){
                 resolve(JSON.parse(response));
@@ -157,10 +161,25 @@ function deleteShoppingcartItem(item){
               item: item
             },
             success: function(response){
+                window.dataLayer = window.dataLayer || [];
+                var json = JSON.parse(response);
+                var product = json.product;
+                product.quantity = json.quantity;
+                product.price = intToDouble(product.price);
+
                 if(dataLayer) {
-                    dataLayer.push(JSON.parse(response))
+                    dataLayer.push({
+                        "event": "addToCart",
+                        "products": [...dataLayer.products || [], product],
+                        'ecommerce': {
+                            'currencyCode': 'EUR',
+                            'add': {   
+                                'products': [product]
+                            }
+                        }
+                    })
                 }
-                resolve(JSON.parse(response));
+                resolve(json);
             }
         })
     });
@@ -175,10 +194,17 @@ function addShoppingcartItem(item, quantity){
               quantity: quantity
             },
             success: function(response){
+                window.dataLayer = window.dataLayer || [];
+                var json = JSON.parse(response);
+                var product = json.product;
+                product.quantity = json.quantity;
                 if(dataLayer) {
-                    dataLayer.push(JSON.parse(response))
+                    dataLayer.push({
+                        "event": "updateCart",
+                        "products": [...dataLayer.products || [], product]
+                    })
                 }
-                resolve(JSON.parse(response));
+                resolve(json);
             }
         })
     });
@@ -193,10 +219,17 @@ function updateShoppingcartItem(item, quantity){
               quantity: quantity
             },
             success: function(response){
+                window.dataLayer = window.dataLayer || [];
+                var json = JSON.parse(response);
+                var product = json.product;
+                product.quantity = json.quantity;
                 if(dataLayer) {
-                    dataLayer.push(JSON.parse(response))
+                    dataLayer.push({
+                        "event": "updateCart",
+                        "products": [...dataLayer.products || [], product]
+                    })
                 }
-                resolve(JSON.parse(response));
+                resolve(json);
             }
         })
     });
@@ -261,6 +294,7 @@ function base64ToBlob(base64, mime) {
 
     return new Blob(byteArrays, {type: mime});
 }
+
 function image(input){
     var $image;
     function readFile(input) {
@@ -286,6 +320,7 @@ function image(input){
     });
     readFile(input);
 }
+
 function imageEditor(callback = function(){
     image(document.getElementById("file"));
 
@@ -349,7 +384,7 @@ function closeImageEditor(){
     $("#image_editor").fadeOut();
     $(".editor").removeClass("full");
     document.getElementById("file").value = "";
-    if (croppie){
+    if ($("#imageid").croppie){
         $("#imageid").croppie('destroy');
     }
     if($(".select-image")[0]){

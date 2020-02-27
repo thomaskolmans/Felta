@@ -58,6 +58,12 @@ class Attribute {
         $this->sql->update("name","shop_product_variant_attribute",["id" => $this->id],$this->name);
         $this->sql->update("value","shop_product_variant_attribute",["id" => $this->id],$this->value);
     }
+        
+    public function expose(){
+        $exposed = get_object_vars($this);
+        unset($exposed["sql"]);
+        return $exposed;
+    }
     
     public function getId(){
         return $this->id;
