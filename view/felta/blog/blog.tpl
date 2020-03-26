@@ -129,7 +129,7 @@
 
     use lib\post\blog\Blog;
     ?>
-    <include>Felta/parts/nav.tpl</include>
+    <include>felta/parts/nav.tpl</include>
     <div class="main-wrapper">
         <div class="main dashboard container multi-page" id="main">
             <h1>Blog</h1>

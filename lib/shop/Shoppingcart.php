@@ -2,6 +2,7 @@
 namespace lib\shop;
 
 use lib\Felta;
+use lib\shop\product\ProductVariant;
 use lib\helpers\UUID;
 
 class Shoppingcart{

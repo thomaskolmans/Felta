@@ -2,7 +2,6 @@
 namespace lib;
 
 use lib\SimpleSQL;
-use lib\Cleverload;
 use lib\user\User;
 use lib\post\Statistics;
 use lib\post\Settings;

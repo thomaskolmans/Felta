@@ -126,7 +126,8 @@ function createCharge(oid,source,method){
 
 function getShopppingCart(){
     return new Promise(function(resolve)  {
-        if(getCookie("SCID") === null){
+        var oldCookie = getCookie("SCID");
+        if(oldCookie === null || oldCookie == ""){
             $.ajax({
                 url: "/felta/shop/create/shoppingcart",
                 type: "GET",

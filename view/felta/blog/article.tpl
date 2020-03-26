@@ -94,7 +94,7 @@
 
     $blog = Blog::get($_GET["blog"]);
     ?>
-    <include>Felta/parts/nav.tpl</include>
+    <include>felta/parts/nav.tpl</include>
     <div class="main-wrapper">
         <div class="main dashboard container multi-page" id="main">
             <h1 class="no-padding-bottom">Articles</h1>
