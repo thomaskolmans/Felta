@@ -138,8 +138,7 @@ class BlogController {
     }
     
     public static function UPDATE_ARTICLE(){
-        parse_str(file_get_contents("php://input"),$_POST);
-
+        parse_str(file_get_contents("php://input"), $_POST);
         $imageUrls = array_filter((isset($_POST["images"]) ? $_POST["images"] : []));
         $images = [];
         foreach($imageUrls as $key => $url) {
@@ -155,17 +154,23 @@ class BlogController {
 
         $article = Article::get(Input::value("id"));
 
-        $article->setTitle(Input::clean("title"));
-        $article->setAuthor(Input::clean("author"));
-        $article->setDescription(Input::value("description"));
-        $article->setBody(Input::value("body"));
-        $article->setActive(Input::clean("active") === "on");
-        $article->setActiveFrom(new DateTime(Input::clean("activeFrom")));
-        $article->setImages($images);
+        if ($article !== null){
+            $article->setTitle(Input::clean("title"));
+            $article->setAuthor(Input::clean("author"));
+            $article->setDescription(Input::value("description"));
+            $article->setBody(Input::value("body"));
+            $article->setActive(Input::clean("active") === "on");
+            $article->setActiveFrom(new DateTime(Input::clean("activeFrom")));
+            $article->setImages($images);
+    
+            $article->save();
+            echo json_encode(["success" => true, "message" => "Article has been updated!", "article" => $article->expose()]);
 
-        $article->save();
+        } else {
+            echo json_encode(["success" => false, "message" => "Article has not been updated!"]);
+
+        }
         
-        echo json_encode(["success" => true, "message" => "Article has been updated!", "article" => $article->expose()]);
     }
 
     public static function DELETE_ARTICLE($id){

@@ -15,6 +15,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript">
+    
+        var contentEditor;
+        var contentUpdateEditor;
+
         $(document).ready(function() {
             var active = document.location.pathname;
             var parts = active.split('/');
@@ -27,7 +31,7 @@
             }
 
             onePage("#" + active_id, null, null);
-            var lastactive = "#" + active_id;
+            var lastActive = "#" + active_id;
             $("a").on("click", function(e) {
                 if ($(this).attr("href")[0] == "#") {
                     e.preventDefault();
@@ -40,14 +44,17 @@
                             startDate: new Date()
                         });
                     }
-                    onePage("#" + active_id, id, lastactive);
-                    lastactive = id;
+                    onePage("#" + active_id, id, lastActive);
+                    lastActive = id;
                 }
             });
 
             $(".background").on("click", function() {
                 closeImageEditor();
             });
+
+            contentEditor = CKEDITOR.replace("content");
+            contentUpdateEditor = CKEDITOR.replace("update-content");
 
             Sortable.create(document.getElementById('image-selector'), {
                 'filter': '.add'
@@ -56,14 +63,11 @@
             Sortable.create(document.getElementById('image-selector-update'), {
                 'filter': '.add'
             });
-
-            var contentEditor = CKEDITOR.replace("content");
-            CKEDITOR.replace("update-content");
         });
 
-        function onePage(first, id, lastactive) {
-            if (lastactive != null) {
-                $(lastactive).hide();
+        function onePage(first, id, lastActive) {
+            if (lastActive != null) {
+                $(lastActive).hide();
             }
             if (first)
                 if (id != null) {
@@ -105,10 +109,12 @@
                     <tr>
                         <th>Title</th>
                         <th>updatedAt</th>
+                        <th>Active</th>
                         <th class="clear"></th>
                         <th class="clear"></th>
                     </tr>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -123,6 +129,7 @@
                             <tr>
                                 <td>" . $item->getTitle() . "</td>
                                 <td>" . $item->getUpdatedAt()->format("d-m-Y H:m") . "</td>
+                                <td>" . (($item->getActive() && $item->getActiveFrom() <= new DateTime()) ? "true" : "false"). "</td>
                                 <td><a href='/felta/blog/" . $blog->getId() . "/article/" . $item->getId() . "/update'><button>Edit</button></a></td>
                                 <td onclick='return (function(e) {
                                     e.preventDefault();
@@ -148,10 +155,15 @@
             <h1>New article</h1>
             <form method="post" class="full" onsubmit="return (function(e){
                 e.preventDefault();
+                var formData = new FormData($('#new form')[0]);
+                var body = contentEditor.getData();
+                formData.set('body', body);
                 $.ajax({
                     url: '/felta/article',
                     type: 'POST',
-                    data: $('#new form').serialize(),
+                    data: new URLSearchParams(formData).toString(),
+                    processData: false,
+                    contentType: false,
                     success: function(result) {
                         window.location.reload();
                     }
@@ -160,7 +172,7 @@
                 <?php echo '<input type="text" name="blog" value="' . $blog->getId() . '" style="display:none" /> '; ?>
                 <div class="input-group">
                     <label>Title</label>
-                    <input type="text" name="title" placeholder="General" />
+                    <input type="text" name="title" placeholder="Imagine this..." />
                 </div>
                 <div class="input-group">
                     <label>Author</label>
@@ -224,10 +236,14 @@
             ?>
             <?php echo '<form method="post" class="full" onsubmit="return (function(e){
                     e.preventDefault();
+                    var formData = new FormData($(\'#update form\')[0]);
+                    var body = contentUpdateEditor.getData();
+                    formData.set(\'body\', body);
+
                     $.ajax({
                         url: \'/felta/article\',
                         type: \'PUT\',
-                        data: $(\'#update form\').serialize(),
+                        data: new URLSearchParams(formData).toString(),
                         success: function(result) {
                             window.location.replace(\'/felta/blog/' . $blog->getId() . '/article\');
                         }
@@ -237,7 +253,7 @@
             <?php echo '<input type="text" name="blog" value="' . $blog->getId() . '" style="display:none" /> '; ?>
             <div class="input-group">
                 <label>Title</label>
-                <?php echo '<input type="text" value="' . $article->getTitle() . '" name="title" placeholder="General" />'; ?>
+                <?php echo '<input type="text" value="' . $article->getTitle() . '" name="title" placeholder="Imagine this..." />'; ?>
             </div>
             <div class="input-group">
                 <label>Author</label>
@@ -289,7 +305,7 @@
             <div class="input-group">
                 <label>Active</label>
                 <label class="switch">
-                    <?php if ($blog->getActive()) {
+                    <?php if ($article->getActive()) {
                         echo '<input type="checkbox" name="active" class="switcher" checked />';
                     } else {
                         echo '<input type="checkbox" name="active" class="switcher" />';

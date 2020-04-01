@@ -196,12 +196,8 @@
                     <input type="text" name="title" placeholder="Imagine this..." />
                 </div>
                 <div class="input-group">
-                    <label>Author</label>
-                    <input type="text" name="author" placeholder="Unknown" />
-                </div>
-                <div class="input-group">
                     <label>Description</label>
-                    <textarea name="description"></textarea>
+                    <textarea name="description" id="editor"></textarea>
                 </div>
                 <div class="input-group">
                     <label>Active</label>

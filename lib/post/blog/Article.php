@@ -2,7 +2,6 @@
 namespace lib\post\blog;
 
 use lib\Felta;
-use lib\helpers\UUID;
 
 use \DateTime;
 
@@ -56,12 +55,34 @@ class Article {
         return Article::fromResult($articleResult);
     }
 
+    public static function activeFromBlog($blog, $from, $to) {
+        $articleResults = Felta::getInstance()->getSQL()->query()
+            ->select()
+            ->from("article")
+            ->where("blog", $blog)
+            ->and("active", true)
+            ->and("activeFrom", " <= ", (new DateTime())->format("Y-m-d H:i:s"))
+            ->orderby("updatedAt")
+            ->desc()
+            ->limit($from, $to)
+            ->execute();
+
+        if ($articleResults != null && count($articleResults) < 1) return [];
+
+        $articles = [];
+        foreach($articleResults as $result) {
+            $articles[] = Article::fromResult($result);
+        }
+        return $articles;
+    }
+
     public static function allFromBlog($blog, $from, $to){
         $articleResults = Felta::getInstance()->getSQL()->query()
             ->select()
             ->from("article")
             ->where("blog", $blog)
             ->orderby("updatedAt")
+            ->desc()
             ->limit($from, $to)
             ->execute();
 

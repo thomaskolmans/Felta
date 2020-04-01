@@ -2,6 +2,8 @@
 namespace lib\controllers;
 
 use lib\Felta;
+use lib\helpers\UUID;
+use lib\filesystem\File;
 
 class FeltaController {
 
@@ -34,7 +36,7 @@ class FeltaController {
         $file->setExtension("png");
         $file->setName($uid);
         $file->upload(null);
-        echo json_encode(["success" => "Image has been succesfully added", "url" => $file->getRelativeDest(),"uid"=> $uid]);
+        echo json_encode(["success" => "Image has been successfully added", "url" => $file->getRelativeDest(),"uid"=> $uid]);
     }
 }
 
