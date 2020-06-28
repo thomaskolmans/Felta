@@ -104,7 +104,6 @@ class Template extends Router{
                 continue;
             }
         }
-        return "";
         return $content;
     }
 
