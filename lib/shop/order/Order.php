@@ -107,7 +107,7 @@ class Order {
         // Message to store owner
         $message = new Message();
         $url = Felta::getInstance()->settings->get("website_url")."/felta/shop/order/".$this->id;
-        $message->put("You've recieved a new order", "Yes! You've recieved a new order from your webshop. It has been succesfully paid.", $url);
+        $message->put("You've received a new order", "Yes! You've received a new order from your webshop. It has been successfully paid.", $url);
 
         // Message to customer
         $this->customer = Customer::get($this->customer);

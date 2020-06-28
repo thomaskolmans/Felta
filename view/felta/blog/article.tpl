@@ -162,8 +162,6 @@
                     url: '/felta/article',
                     type: 'POST',
                     data: new URLSearchParams(formData).toString(),
-                    processData: false,
-                    contentType: false,
                     success: function(result) {
                         window.location.reload();
                     }

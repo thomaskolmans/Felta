@@ -9,7 +9,8 @@ class Newsletter {
     public static function subscribe($email){
         if(!Newsletter::isSubscribed($email)){
             $date = new DateTime();
-            Felta::getInstance()->getSQL()->insert("newsletter_subscription",[
+            Felta::getInstance()->getSQL()
+                ->insert("newsletter_subscription",[
                 0,
                 $email,
                 $date->format("Y-m-d H:i:s")

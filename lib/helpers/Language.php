@@ -217,8 +217,8 @@ class Language{
         return $this;
     }
     public function getLanguageList(){
-        $langs = $this->sql->select("name","languages",array());
-        $this->addToList($this->languages[$this->default]);
+        $langs = $this->sql->select("lang","languages",array());
+        $this->addToList($this->default);
         if(!is_array($langs)){
             if($langs !== null){
                 $this->addToList($langs);
@@ -226,7 +226,7 @@ class Language{
             return $this->languagelist;
         }
         foreach($langs as $lang){
-            $this->addToList($lang["name"]);
+            $this->addToList($lang["lang"]);
         }
         return $this->languagelist;
     }

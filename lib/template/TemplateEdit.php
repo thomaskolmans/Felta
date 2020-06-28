@@ -39,69 +39,75 @@ class TemplateEdit{
 
     public function compileEditNodes(){
         foreach($this->editNodes as $node){
+
             $value = "";
             $val = $node->nodeValue;
+
             if($node->hasAttribute("fid")){
                 $id = $node->getAttribute("fid");
             }
+
             if($node->hasChildNodes()){
-                $childs = $node->childNodes;
-                foreach($childs as $child){
+                $children = $node->childNodes;
+                foreach($children as $child){
                     $class = get_class($child);
                     $reflection = new \ReflectionClass($class);
                     if($reflection->getShortName() == "DOMElement"){
                         if($child->hasAttribute("edit")){
                             $id = $child->getAttribute("edit");
                             if($child->hasChildNodes()){
-                                $childs2 = $child->childNodes;
-                                foreach($childs2 as $child2){
-                                    $value .= $this->getHTML($child2);
+                                $childNodes = $child->childNodes;
+                                foreach($childNodes as $childNode){
+                                    $value .= $this->getHTML($childNode);
                                 }
                             }
                         }
                     }
                 }
             }
+
             if(count($node->childNodes) > 1){
-                $this->saveText($id,$value,$this->language->getDefault());
-            }else{
+                $this->saveText($id, $value, $this->language->getDefault());
+            } else {
                 if($node->hasChildNodes()){
-                    $n = $node->childNodes[0];
-                    $f = false;
-                    if(isset($n->tagName)){
-                        switch (strtoupper($n->tagName)) {
+                    $childNode = $node->childNodes[0];
+                    $found = false;
+                    if(isset($childNode->tagName)){
+                        switch (strtoupper($childNode->tagName)) {
                             case 'H1':
                             case 'H2':
                             case 'H3':
                             case 'H4':
                             case 'H5':
-                                $this->saveText($id,$val,$this->language->getDefault());
-                                $f = true;
+                                $this->saveText($id, $val,$this->language->getDefault());
+                                $found = true;
                             break;
                             case 'IMG':
                             case 'IFRAME':
                                 if($child->hasAttribute("src")){
-                                    $this->saveText($id,$child->getAttribute("src"),$this->language->getDefault());
-                                    $f = true;
+                                    $this->saveText($id, $child->getAttribute("src"), $this->language->getDefault());
+                                    $found = true;
                                 }
                             break;
                             default:
-                                $this->saveText($id,$value,$this->language->getDefault());
-                                $f = true;
+                                $this->saveText($id, $value, $this->language->getDefault());
+                                $found = true;
                             break;
                         }
                     }
-                    if(!$f){$this->saveText($id,$value,$this->language->getDefault());}
+                    if(!$found){ 
+                        $this->saveText($id, $value, $this->language->getDefault());
+                    }
                 }
-
             }
-            
         }
         return $this->dom;
     }
+
     public function compileLangNodes(){
         foreach($this->langNodes as $node){
             if($node->hasChildNodes()){
+                $availableLanguages = $this->language->getLanguageList();
                 $langs = [];
                 foreach($node->childNodes as $langNode){
                     $class = get_class($langNode);
@@ -113,13 +119,12 @@ class TemplateEdit{
                         }
                     }
                 }
-                $languagelist = $this->language->getLanguageList();
                 $languages = array_keys($langs);
                 if(is_array($languages)){
                     $outcome = [];
-                    foreach($languages as $l){
-                        if(in_array($this->language->languages[$l], $languagelist)){
-                            $outcome[] = $l;
+                    foreach($languages as $language){
+                        if(in_array($language, $availableLanguages)){
+                            $outcome[] = $language;
                         }
                     }
                     $languages = $outcome;
@@ -133,53 +138,38 @@ class TemplateEdit{
 
     public function compileHeadNodes(){
         if($this->headNodes->length > 1){
-            $rests = [];
-            $langs = [];
-            $outcome = [];
+            $availableLanguages = $this->language->getLanguageList();
+            $headLanguages = [];
+            $availableHeadLanguages = [];
+            
             for($i = 0; $i < $this->headNodes->length; $i++){
                 $node = $this->headNodes[$i];
                 if($node->hasAttribute("lang")){
-                    $langs[$node->getAttribute("lang")] = $i;
+                    $headLanguages[] = $node->getAttribute("lang");
                 }
             }
-            $languages = array_keys($langs);
-            if(is_array($languages)){
-                $languagelist = $this->language->getLanguageList();
-                foreach($languages as $l){
-                    if(in_array($this->language->languages[$l], $languagelist)){
-                        $outcome[$l] = $langs[$l];
-                    }else{
-                        $rests[$l] = $langs[$l];
-                    }
-                }
-                $languages = $outcome;
-                $outcome = $this->language->get((array) array_keys($languages));
-                unset($languages[$outcome]);
-                foreach($languages as $l){
-                    $rests[] = $this->headNodes[$l];
+            
+            foreach($headLanguages as $headLanguage) {
+                if (in_array($headLanguage, $availableLanguages)) {
+                    $availableHeadLanguages[] = $headLanguage;
                 }
             }
-            if(count($outcome) < 1){
-                for($i = 0; $i < $this->headNodes->length; $i++){
-                    $node = $this->headNodes[$i];
-                    if($i > 0){
-                        $node->parentNode->removeChild($node);
-                    }
+
+            $selectedLanguage = $this->language->get((array) $availableHeadLanguages);
+            for($i = 0; $i < $this->headNodes->length; $i++){
+                $node = $this->headNodes[$i];
+                if($node->hasAttribute("lang") && $node->getAttribute("lang") !== $selectedLanguage){
+                    $node->parentNode->removeChild($node);
                 }
-            }else{
-                foreach($rests as $rest){
-                    $rest->parentNode->removeChild($rest);
-                }      
             }
         }
-
-
     }
+
     public function insertEditText(){
         foreach($this->editNodes as $node){
             if($node->hasChildNodes()){
-                $childs = $node->childNodes;
-                foreach($childs as $child){
+                $children = $node->childNodes;
+                foreach($children as $child){
                     $class = get_class($child);
                     $reflection = new \ReflectionClass($class);
                     if($reflection->getShortName() == "DOMElement"){
@@ -218,15 +208,17 @@ class TemplateEdit{
 
     private function getHTML($node){
         if($node instanceof DOMNode){
+
             $html = "";
             $children = $node->childNodes;
+            
             foreach($children as $child){
                 $html .= $node->ownerDocument->saveHTML($child);
             }
             return $html;
-        }else{
-            return $node->ownerDocument->saveHTML($node);
         }
+
+        return $node->ownerDocument->saveHTML($node);
     }
 }
 

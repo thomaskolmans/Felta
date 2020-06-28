@@ -81,17 +81,17 @@ class Template extends Router{
     }
 
     public function extractPHP($content){
-        $matches = self::getInBetween($content,"<?php","?>");
+        $matches = self::getInBetween($content,"<?php", "?>");
         foreach($matches as $match){
             $uid = uniqid();
-            $content = str_replace($match," ".$uid." ",$content);
-            self::$php[] = array($uid,$match);
+            $content = str_replace("<?php$match?>", "<?php ".$uid." ?>" ,$content);
+            self::$php[] = array($uid, $match);
         }
         return $content;
     }
 
     public static function insertPHP($content){        
-        $matches = self::getInBetween($content,"<?php"," ?>");
+        $matches = self::getInBetween($content,"<?php", "?>");
         for($i = 0; $i < count($matches); $i++){
             $match = trim($matches[$i]);
             if($i <= count(self::$php) - 1){
@@ -104,6 +104,7 @@ class Template extends Router{
                 continue;
             }
         }
+        return "";
         return $content;
     }
 
@@ -127,9 +128,9 @@ class Template extends Router{
 
     public function load(){
         if ($this->dom != null && !empty($this->dom)) {
-            $templateEdit = new TemplateEdit($this->dom);
-            $templateloader = new TemplateLoader($this);
-            return $templateloader->execute();
+            new TemplateEdit($this->dom);
+            $templateLoader = new TemplateLoader($this);
+            return $templateLoader->execute();
         }
     }
 }
