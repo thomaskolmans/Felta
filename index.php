@@ -2,9 +2,8 @@
 use lib\Felta;
 use lib\SimpleSQL;
 use lib\Cleverload;
-use lib\Http\Request;
-use lib\Shop\Shop;
-
+use lib\http\Request;
+use lib\shop\Shop;
 
 require_once("./autoloader.php");
 require_once('./vendor/nytrix/cleverload/autoloader.php');

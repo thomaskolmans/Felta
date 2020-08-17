@@ -152,7 +152,7 @@ class ProductVariant{
             $attributes,
             $quantity, 
             $variables,
-            $active = false
+            $active
         );
     }
 

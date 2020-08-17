@@ -2,6 +2,7 @@
 namespace lib\post;
 
 use lib\Felta;
+use \DateTime;
 
 class News extends Post {
 
@@ -10,6 +11,7 @@ class News extends Post {
         "id" => "int auto_increment",
         "title" => "varchar(255)",
         "description" => "longtext",
+        "location" => "varchar(255)",
         "image" => "varchar(255)",
         "date" => "DateTime",
         "posted" => "DateTime"
@@ -19,14 +21,16 @@ class News extends Post {
         $this->sql = Felta::getInstance()->sql;
         $this->create($this->structure);
     }
-    public function put($title,$description,$image,$date){
-        $now = new \DateTime;
-        $now = $now->format("Y-m-d H:i:s");
-        $this->add([0,$title,$description,$location,$date->format("Y-m-d H:i:s"),$now]);
+
+    public function put($title,$description,$location,$image,$date){
+        $now = new DateTime();
+        $this->add([0,$title,$description,$location, $image, $date->format("Y-m-d H:i:s"),$now->format("Y-m-d H:i:s")]);
     }
+
     public function getAll(){
         return $this->select("*", []);
     }
+
     public function getByDate(){
         $dates = $this->getAll();
         usort($dates, function($a,$b){
@@ -35,8 +39,8 @@ class News extends Post {
             return $t1 - $t2;
         });
     }
+
     public function getById($id){
         return $this->select("*",["id" => $id])[0];
     }
 }
-?>

@@ -12,6 +12,7 @@ class Product{
     private $name;
     private $slug;
     private $category;
+    private $isDownloadable;
     private $shortDescription;
     private $description;
     private $image;
@@ -21,13 +22,25 @@ class Product{
 
     private $variants = [];
 
-    public function __construct($id, $name, $slug, $category, $shortDescription, $description, $image, $date, $active = false){
+    public function __construct(
+        $id, 
+        $name, 
+        $slug, 
+        $category, 
+        $isDownloadable, 
+        $shortDescription, 
+        $description, 
+        $image, 
+        $date, 
+        $active = false
+    ){
         $this->sql = Felta::getInstance()->getSQL();
 
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;
         $this->category = $category;
+        $this->isDownloadable = $isDownloadable;
         $this->shortDescription = $shortDescription;
         $this->description = $description;
         $this->image = $image;
@@ -42,6 +55,7 @@ class Product{
             $result["name"],
             $result["slug"],
             $result["category"],
+            $result["isDownloadable"],
             $result["short_description"],
             $result["description"],
             $result["image"],
@@ -60,10 +74,10 @@ class Product{
         return $product;
     }
 
-    public static function create($name, $slug, $category, $shorDescription, $description, $image, $active = false) {
+    public static function create($name, $slug, $category, $isDownloadable, $shortDescription, $description, $image, $active = false) {
         $id = UUID::generate(6);
         $date = new \DateTime();
-        return new Product($id,$name,$slug,$category,$shorDescription,$description,$image,$date,$active = false);
+        return new Product($id, $name, $slug, $category, $isDownloadable, $shortDescription, $description, $image, $date, $active);
     }
 
     public static function exists($id){
@@ -89,7 +103,7 @@ class Product{
     }
 
     public static function all($from = 0, $amount = 20) {
-        $results = Felta::getInstance()->getSQL()->select("*","shop_product",[]);
+        $results = Felta::getInstance()->getSQL()->query()->select()->from("shop_product")->limit($from, $amount)->execute();
         $products = [];
         foreach($results as $result) {
             $products[] = Product::fromResult($result);
@@ -98,7 +112,7 @@ class Product{
     }
 
     public static function allWithCategory($category, $from = 0, $amount = 20) {
-        $results = Felta::getInstance()->getSQL()->query()->select()->from("shop_product")->where("category", $category)->execute();
+        $results = Felta::getInstance()->getSQL()->query()->select()->from("shop_product")->where("category", $category)->limit($from, $amount)->execute();
         $products = [];
         foreach($results as $result) {
             $products[] = Product::fromResult($result);
@@ -139,6 +153,7 @@ class Product{
             $this->id,
             $this->name,
             $this->slug,
+            $this->isDownloadable,
             $this->category,
             $this->shortDescription,
             $this->description,
@@ -154,7 +169,7 @@ class Product{
     public function update(){
         $this->sql->update("name","shop_product",["id" => $this->id],$this->name);
         $this->sql->update("slug","shop_product",["id" => $this->id],$this->slug);
-
+        $this->sql->update("isDownloadable","shop_product",["id" => $this->id],$this->isDownloadable);
         $this->sql->update("category","shop_product",["id" => $this->id],$this->category);
         $this->sql->update("short_description","shop_product",["id" => $this->id],$this->shortDescription);
         $this->sql->update("description","shop_product",["id" => $this->id],$this->description);

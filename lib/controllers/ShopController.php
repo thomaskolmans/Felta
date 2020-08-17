@@ -13,6 +13,7 @@ use lib\shop\order\Customer;
 use lib\shop\Transaction;
 use lib\shop\TransactionState;
 use lib\shop\Payment;
+use lib\shop\Promotion;
 
 use lib\helpers\UUID;
 use lib\filesystem\File;
@@ -161,9 +162,6 @@ class ShopController {
         echo json_encode(["success" => "Image has been succesfully deleted"]);
     }
 
-    /**
-     * Settings
-     */
 
     /**
      * Category
@@ -185,6 +183,36 @@ class ShopController {
     
     /**
      * Promotions
+     */
+    public static function GET_PROMOTIONS($from = 0, $amount = 20){
+        $promotions = Promotion::all($from, $amount);
+        $exposedPromotions = [];
+        foreach($promotions as $promotion) {
+            $exposedPromotions[] = $promotion->expose();
+        }
+        echo json_encode(["success" => "", "promotions" => $exposedPromotions]);
+    }
+
+	public static function ADD_PROMOTION(){
+        Shop::getInstance()->addCategory($_POST["category"]);
+        echo json_encode(["success" => "Category has succesfully been added"]);
+        header("Location: /felta/shop/categories");
+    }
+    public static function UPDATE_PROMOTION(){
+        Shop::getInstance()->addCategory($_POST["category"]);
+        echo json_encode(["success" => "Category has succesfully been added"]);
+        header("Location: /felta/shop/categories");
+    }
+    
+    public static function DELETE_PROMOTION($id){
+        $promotion = Promotion::get($id);
+        $promotion->delete();
+        echo json_encode(["success" => "Item has succesfully deleted"]);
+    }
+
+    
+    /**
+     * Settings
      */
     public static function UPDATE_ADDRESS(){
         Shop::getInstance()->updateShopAddress(
@@ -214,54 +242,54 @@ class ShopController {
     }
 
     /**
-     * Shoppingcart
+     * ShoppingCart
      */
-    public static function CREATE_SHOPPINGCART(){
+    public static function CREATE_SHOPPING_CART(){
         echo json_encode(Shoppingcart::create()->getId());
     }
 
-    public static function GET_SHOPPINGCART() {
-        $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
-        $shoppingcart->pull();
-        echo json_encode(["items" => $shoppingcart->getItems()]);
+    public static function GET_SHOPPING_CART() {
+        $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
+        $ShoppingCart->pull();
+        echo json_encode(["items" => $ShoppingCart->getItems()]);
     }
 
-    public static function ADD_ITEM_SHOPPINGCART(){
-        $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
-        $shoppingcart->set($_POST["item"], $_POST["quantity"]);
-        $shoppingcart->save();
+    public static function ADD_ITEM_SHOPPING_CART(){
+        $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
+        $ShoppingCart->set($_POST["item"], $_POST["quantity"]);
+        $ShoppingCart->save();
         echo json_encode(
             [
             "action" => "add",
             "product" => ProductVariant::get($_POST["item"])->expose(),
             "quantity" => $_POST["quantity"],
-            "amount" => $shoppingcart->getTotalAmount()
+            "amount" => $ShoppingCart->getTotalAmount()
             ]
         );
     }
 
-    public static function UPDATE_ITEM_SHOPPINGCART(){
-        $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
-        $shoppingcart->update($_POST["item"], $_POST["quantity"]);
+    public static function UPDATE_ITEM_SHOPPING_CART(){
+        $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
+        $ShoppingCart->update($_POST["item"], $_POST["quantity"]);
         
         echo json_encode(
             [
             "action" => "update",
             "product" => ProductVariant::get($_POST["item"])->expose(),
             "quantity" => $_POST["quantity"],
-            "amount" => $shoppingcart->getTotalAmount()
+            "amount" => $ShoppingCart->getTotalAmount()
             ]
         );
     }
 
-    public static function DELETE_ITEM_SHOPPINGCART(){
-        $shoppingcart = new Shoppingcart($_COOKIE["SCID"]);
-        $shoppingcart->delete($_POST["item"]);
+    public static function DELETE_ITEM_SHOPPING_CART(){
+        $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
+        $ShoppingCart->delete($_POST["item"]);
         echo json_encode(
             [
             "action" => "delete",
             "product" => ProductVariant::get($_POST["item"])->expose(), 
-            "amount" => $shoppingcart->getTotalAmount()
+            "amount" => $ShoppingCart->getTotalAmount()
             ]
         );
     }

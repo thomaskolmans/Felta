@@ -1,9 +1,11 @@
 <?php
+
 namespace lib\post;
 
 use lib\Felta;
 
-class Agenda extends Post{
+class Agenda extends Post
+{
 
     protected $name = "post_agenda";
     protected $structure = [
@@ -22,7 +24,8 @@ class Agenda extends Post{
         $this->sql = Felta::getInstance()->sql;
         $this->create($this->structure);
     }
-    public function put($title,$description,$image,$location,$from,$until){
+
+    public function put($title, $description, $image, $location, $from, $until){
         $now = new \DateTime;
         $this->add([
             0,
@@ -34,25 +37,27 @@ class Agenda extends Post{
             $until->format("Y-m-d H:i:s"),
             $now->format("Y-m-d H:i:s"),
             $now->format("Y-m-d H:i:s")
-            ]
-        );
+        ]);
     }
+
     public function getAll(){
         return $this->select("*", []);
     }
+
     public function getByDate(){
         $dates = $this->getAll();
-        usort($dates, function($a,$b){
+        usort($dates, function ($a, $b) {
             $t1 = strtotime($a['date']);
             $t2 = strtotime($b['date']);
             return $t1 - $t2;
         });
     }
+
     public function getWeekDay($date){
-        return date(date('w',strtotime($date)));
+        return date(date('w', strtotime($date)));
     }
+
     public function getById($id){
-        return $this->select("*",["id" => $id])[0];
+        return $this->select("*", ["id" => $id])[0];
     }
 }
-?>

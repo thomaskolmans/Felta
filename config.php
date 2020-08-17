@@ -16,10 +16,11 @@ return array(
     "username" => "admin",
     "email" => "thomaskolmans@gmail.com",
     
-    // Shop keys
+    // External resources keys
     "stripe" => "",
     "paypal" => "",
     "mollie" => "",
+    "mailchimp" => "",
 
     "primary" => [ 
         "host"          => "127.0.0.1",

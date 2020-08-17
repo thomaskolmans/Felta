@@ -5,6 +5,7 @@ use \DateTime;
 use \Exception;
 use lib\Felta;
 use lib\shop\Shop;
+use lib\shop\Promotion;
 use lib\shop\product\ProductVariant;
 use lib\post\Message;
 use lib\helpers\UUID;
@@ -33,18 +34,18 @@ class Order {
     }
 
     public static function get($id){
-        $sorder = Felta::getInstance()->getSQL()->select("*","shop_order",["id" => $id])[0];
-        $sitems = Felta::getInstance()->getSQL()->select("*","shop_order_product",["oid" => $id]);
+        $order = Felta::getInstance()->getSQL()->select("*","shop_order",["id" => $id])[0];
+        $orderProducts = Felta::getInstance()->getSQL()->select("*","shop_order_product",["oid" => $id]);
         $products = [];
-        foreach($sitems as $item){
-            $products[$item["iid"]] = $item["quantity"];
+        foreach($orderProducts as $orderProduct){
+            $products[$orderProduct["iid"]] = $orderProduct["quantity"];
         }
         return new Order(
             $id,
-            $sorder["customer"],
-            $sorder["orderstatus"],
-            null,
-            new DateTime($sorder["order"]),
+            $order["customer"],
+            $order["orderstatus"],
+            Promotion::get($order["promotion"]),
+            new DateTime($order["order"]),
             $products
         );
     }

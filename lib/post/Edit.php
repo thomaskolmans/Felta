@@ -40,11 +40,11 @@ class Edit extends Post{
 
     public function getText($id){
         $languages = $this->getAvailableLanguages($id);
-        $languagelist = $this->language->getLanguageList();
+        $languageList = $this->language->getLanguageList();
         if(is_array($languages)){
             $outcome = [];
             foreach($languages as $l){
-                if(in_array($this->language->languages[$l["language"]], $languagelist)){
+                if(in_array($this->language->languages[$l["language"]], $languageList)){
                     $outcome[] = $l["language"];
                 }
             }

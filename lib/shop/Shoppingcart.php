@@ -5,7 +5,7 @@ use lib\Felta;
 use lib\shop\product\ProductVariant;
 use lib\helpers\UUID;
 
-class Shoppingcart{
+class ShoppingCart{
 
     private $sql;
 
@@ -19,7 +19,7 @@ class Shoppingcart{
 
 
     public static function create(){
-        return new Shoppingcart(UUID::generate(20));
+        return new ShoppingCart(UUID::generate(20));
     }
 
     public static function exists($id){

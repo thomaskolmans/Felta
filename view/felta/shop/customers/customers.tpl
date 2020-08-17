@@ -1,6 +1,6 @@
 <html>
 <head>
-   <title>Felta | Shop products</title>
+   <title>Felta | Customer</title>
    <link href="/felta/stylesheets/main.css" rel="stylesheet">
    <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
    <link rel="icon" href="/felta/images/black.png" type="image/png" />
@@ -14,9 +14,7 @@
 </head>
 <body>
   <?php
-    use lib\shop\Transaction;
     use lib\shop\order\Order;
-    use lib\shop\Shop;
     use lib\Felta;
   ?>
   <include>felta/parts/nav.tpl</include>

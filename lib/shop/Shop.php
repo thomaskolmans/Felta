@@ -34,9 +34,9 @@ class Shop {
 
         self::$instance = $this;
         if(!isset($_COOKIE["SCID"])){
-            $shoppingcart = Shoppingcart::create();
-            $_COOKIE["SCID"] = $shoppingcart->getId();
-            $shoppingcart->save();
+            $shoppingCart = ShoppingCart::create();
+            $_COOKIE["SCID"] = $shoppingCart->getId();
+            $shoppingCart->save();
         }
     }
     public static function getInstance(){
@@ -88,8 +88,8 @@ class Shop {
             ->select()->from("shop_product")->orderBy("date")->desc()->limit($from, $to)->execute();
     }
 
-    public static function getItemsByCatagory($catagory){
-        return Felta::getInstance()->getSQL()->select("*", "shop_product",["catagory" => $catagory]);
+    public static function getItemsByCategory($category){
+        return Felta::getInstance()->getSQL()->select("*", "shop_product",["category" => $category]);
     }
 
     public static function getVariants($sid){
@@ -228,28 +228,23 @@ class Shop {
 		return $this->paypal;
 	}
 	
-	
 	public function setPaypal($paypal){
 		$this->paypal = $paypal;
 		return $this;
 	}
-	
 
 	public function getStripe(){
 		return $this->stripe;
 	}
 	
-	
 	public function setStripe($stripe){
 		$this->stripe = $stripe;
 		return $this;
 	}
-	
 
 	public function getMollie(){
 		return $this->mollie;
 	}
-	
 	
 	public function setMollie($mollie){
 		$this->mollie = $mollie;
