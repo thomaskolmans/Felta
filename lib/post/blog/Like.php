@@ -2,6 +2,9 @@
 
 namespace lib\post\blog;
 
+use lib\Felta;
+use \DateTime;
+
 class Like {
 
     private $sql;
@@ -37,7 +40,9 @@ class Like {
     }
 
     public static function get($id){
-        
+        $likeResult = Felta::getInstance()->getSQL()->select("*", "like", ["id" => $id])[0];
+        if ($likeResult == null) return null;
+        return Like::fromResult($likeResult);
     }
 
     public static function fromResult($result) {
@@ -74,11 +79,11 @@ class Like {
     }
     
     public function update(){
-        $this->sql->update("user", "`like`", ["id" => $this->$id], $this->user);
-        $this->sql->update("name", "`like`", ["id" => $this->$id], $this->name);
-        $this->sql->update("type", "`like`", ["id" => $this->$id], $this->type);
-        $this->sql->update("createdAt", "`like`", ["id" => $this->$id], $this->createdAt->format("Y-m-d H:i:s"));
-        $this->sql->update("updatedAt", "`like`", ["id" => $this->$id], $this->updatedAt->format("Y-m-d H:i:s"));
+        $this->sql->update("user", "`like`", ["id" => $this->id], $this->user);
+        $this->sql->update("name", "`like`", ["id" => $this->id], $this->name);
+        $this->sql->update("type", "`like`", ["id" => $this->id], $this->type);
+        $this->sql->update("createdAt", "`like`", ["id" => $this->id], $this->createdAt->format("Y-m-d H:i:s"));
+        $this->sql->update("updatedAt", "`like`", ["id" => $this->id], $this->updatedAt->format("Y-m-d H:i:s"));
     }
 
     public function delete(){
@@ -154,5 +159,3 @@ class Like {
 		return $this;
 	}
 }
-
-?>

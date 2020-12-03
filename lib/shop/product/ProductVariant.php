@@ -17,6 +17,7 @@ class ProductVariant{
     private $price;
     private $currency;
     private $shipsFrom;
+    private $files = [];
 
     private $sizeWidth;
     private $sizeHeight;
@@ -337,5 +338,3 @@ class ProductVariant{
         return $this;
     }
 }
-
-?>

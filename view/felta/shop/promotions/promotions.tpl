@@ -53,11 +53,12 @@
                 foreach($promotions as $promotion){
                   echo "
                   <tr>
-                    <td class='align-left'>{$promotion['id']}</td>
-                    <td class='align-left'>{$promotion['name']}</td>
-                    <td>{$product['category']}</td>
-                    <td><a href='/felta/shop/update/promotion/".$promotion["id"]."'><button>Edit</button></a></td>
-                    <td><a href='/felta/shop/delete/promotion/".$promotion["id"]."'><div class='delete'></div></a></td>
+                    <td class='align-left'>".$promotion->getId()."</td>
+                    <td class='align-left'>".$promotion->getName()."</td>
+                    <td>".$promotion->getStartsAt()->format("d-m-Y H:s")."</td>
+                    <td>".$promotion->getEndsAt()->format("d-m-Y H:s")."</td>
+                    <td><a href='/felta/shop/update/promotion/".$promotion->getId()."'><button>Edit</button></a></td>
+                    <td><a href='/felta/shop/delete/promotion/".$promotion->getId()."'><div class='delete'></div></a></td>
                   </tr>
                   ";
                 }

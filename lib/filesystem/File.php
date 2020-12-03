@@ -21,6 +21,7 @@ class File{
     protected $image = ["jpg","png","gif","tiff"];
     protected $video = ["mp4","avi","mov"];
     protected $audio = ["wav","mp3"];
+    protected $pdf = ["pdf"];
 
    public function __construct($file,$name = ""){
         $this->files = $file;
@@ -124,4 +125,3 @@ class File{
         return false;
     }
 }
-?>

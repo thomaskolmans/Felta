@@ -249,12 +249,12 @@ Route::group(["namespace" => "/felta"], function () use ($felta) {
              * Promotion
              */
             Route::get("/promotions/{from}/{until}", "felta/shop/promotions/promotions.tpl");
-            // Route::post("/add/promotion", function () {
-            //     ShopController::ADD_PROMOTION();
-            // });
-            // Route::post("/update/promotion", function () {
-            //     ShopController::UPDATE_PROMOTION();
-            // });
+            Route::post("/add/promotion", function () {
+                ShopController::ADD_PROMOTION();
+            });
+            Route::post("/update/promotion", function () {
+                ShopController::UPDATE_PROMOTION();
+            });
             Route::get("/add/promotion", "felta/shop/promotions/create.tpl");
             Route::get("/update/promotion/{id}", "felta/shop/promotions/update.tpl");
             Route::get("/delete/promotion/{id}", function ($id) {

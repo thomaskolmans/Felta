@@ -1,21 +1,24 @@
 <html>
+
 <head>
-   <title>Felta | Customer</title>
-   <link href="/felta/stylesheets/main.css" rel="stylesheet">
-   <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
-   <link rel="icon" href="/felta/images/black.png" type="image/png" />
-   <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
-   <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
-   <script src="/felta/js/jquery-1.11.3.min.js"></script>
-   <script src="/felta/js/Chart.min.js"></script>
-   <script src="/felta/js/shop.js"></script>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Felta | Customer</title>
+  <link href="/felta/stylesheets/main.css" rel="stylesheet">
+  <link href="/felta/js/quill/quill.snow.css" rel="stylesheet">
+  <link rel="icon" href="/felta/images/black.png" type="image/png" />
+  <link rel="stylesheet" href="/felta/fonts/font-awesome.min.css" />
+  <link rel="stylesheet" href="/felta/fonts/font-awesome.css" />
+  <script src="/felta/js/jquery-1.11.3.min.js"></script>
+  <script src="/felta/js/Chart.min.js"></script>
+  <script src="/felta/js/shop.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
   <?php
-    use lib\shop\order\Order;
-    use lib\Felta;
+
+  use lib\shop\Shop;
+  use lib\Felta;
   ?>
   <include>felta/parts/nav.tpl</include>
   <div class="main-wrapper">
@@ -27,61 +30,56 @@
             <th>ID</th>
             <th>Name</th>
             <th>Orders</th>
-            <th class="clear"></th>
-            <th class="clear"></th>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
           </tr>
           <?php
-              $from = 0;
-              $until = 20;
-              if(isset($_GET["from"]) && isset($_GET["until"])){
-                $from = $_GET["from"];
-                $until = $_GET["until"];
-              }
-              $products = Shop::getInstance()->getItems($from, $until);
-              if($products != null){
-                foreach($products as $product){
-                  echo "
+          $from = 0;
+          $until = 20;
+          if (isset($_GET["from"]) && isset($_GET["until"])) {
+            $from = $_GET["from"];
+            $until = $_GET["until"];
+          }
+          $customers = Shop::getInstance()->getItems($from, $until);
+          if ($customers != null) {
+            foreach ($customers as $customer) {
+              echo "
                   <tr>
-                    <td class='align-left'>{$product['id']}</td>
-                    <td class='align-left'>{$product['name']}</td>
-                    <td>{$product['category']}</td>
-                    <td><a href='/felta/shop/update/item/".$product["id"]."'><button>Edit</button></a></td>
-                    <td><a href='/felta/shop/delete/item/".$product["id"]."'><div class='delete'></div></a></td>
+                    <td class='align-left'>{$customer['id']}</td>
+                    <td class='align-left'>{$customer['name']}</td>
+                    <td>{$customer['category']}</td>
                   </tr>
                   ";
-                }
-              } else {
-                echo "<tr> <td colspan='5'><i>No products</i></td></tr>";
-              }
+            }
+          } else {
+            echo "<tr> <td colspan='5'><i>No customer</i></td></tr>";
+          }
           ?>
         </table>
       </section>
       <?php
-            if(count($products) >= $until || $from > 0){
-              echo '<div class="buttons">';
-                    if($from > 0){
-                      if($from < 20){
-                        $from = 0;
-                        $until = 20;
-                      }
-                      echo '<a href="/felta/shop/products/'.$from.'/'.$until.'"><button>Previous</button></a>';
-                    }
-                    if(count($products) >= $until){
-                      $until += 20;
-                      $from += 20;
-                      echo '<a href="/felta/shop/products/'.$from.'/'.$until.'"><button>Next</button></a>';
-                    }
-              echo '</div>';
-            }
+      if (count($customers) >= $until || $from > 0) {
+        echo '<div class="buttons">';
+        if ($from > 0) {
+          if ($from < 20) {
+            $from = 0;
+            $until = 20;
+          }
+          echo '<a href="/felta/shop/customers/' . $from . '/' . $until . '"><button>Previous</button></a>';
+        }
+        if (count($customers) >= $until) {
+          $until += 20;
+          $from += 20;
+          echo '<a href="/felta/shop/customers/' . $from . '/' . $until . '"><button>Next</button></a>';
+        }
+        echo '</div>';
+      }
       ?>
-      </div>
     </div>
+  </div>
 </body>
+
 </html>

@@ -1,144 +1,168 @@
 <?php
+
 namespace lib\shop;
 
 use lib\Felta;
+use lib\shop\ShoppingCart;
+use lib\shop\product\ProductVariant;
 use lib\helpers\UUID;
 
-abstract class ProductList{
+abstract class ProductList
+{
 
     private $sql;
 
     private $id;
     private $items = [];
 
-    public function __construct($id){
+    public function __construct($id)
+    {
         $this->sql = Felta::getInstance()->getSQL();
         $this->id = $id;
     }
 
-    public static function create(){
-        return new Shoppingcart(UUID::generate(20));
+    public static function create()
+    {
+        return new ShoppingCart(UUID::generate(20));
     }
 
-    public static function exists($id){
-        return Felta::getInstance()->getSQL()->exists("shop_cart",["id" => $id]);
+    public static function exists($id)
+    {
+        return Felta::getInstance()->getSQL()->exists("shop_cart", ["id" => $id]);
     }
 
-    public function save(){
-        foreach($this->items as $item => $quantity){
-            if($this->sql->exists("shop_cart",["iid" => $item, "id" => $this->id])){
-                $this->updatesql($item,$quantity);
-            }else{
-                $this->sql->insert("shop_cart",[
+    public function save()
+    {
+        foreach ($this->items as $item => $quantity) {
+            if ($this->sql->exists("shop_cart", ["iid" => $item, "id" => $this->id])) {
+                $this->updatesql($item, $quantity);
+            } else {
+                $this->sql->insert("shop_cart", [
                     0,
                     $this->id,
                     $item,
                     $quantity
-                ]);     
+                ]);
             }
-        }   
+        }
     }
 
-    public function updatesql($item,$quantity){
-        $this->sql->update("quantity","shop_cart",["id" => $this->id,"iid" => $item],$quantity);
+    public function updatesql($item, $quantity)
+    {
+        $this->sql->update("quantity", "shop_cart", ["id" => $this->id, "iid" => $item], $quantity);
     }
 
-    public function pull(){
-        $results = $this->sql->select("*","shop_cart",["id" => $this->id]);
-        if($results !== null){
-            foreach($results as $result){
-                $this->set($result["iid"],$result["quantity"]);
+    public function pull()
+    {
+        $results = $this->sql->select("*", "shop_cart", ["id" => $this->id]);
+        if ($results !== null) {
+            foreach ($results as $result) {
+                $this->set($result["iid"], $result["quantity"]);
             }
         }
         return $this;
     }
 
-    public function set($item,$quantity){
-        if(ProductVariant::exists($item) && is_numeric($quantity)){
+    public function set($item, $quantity)
+    {
+        if (ProductVariant::exists($item) && is_numeric($quantity)) {
             $this->items[$item] = $quantity;
             $this->save();
         }
     }
-    public function add($item,$quantity){
-        if(ProductVariant::exists($item) && is_numeric($quantity)){
+    
+    public function add($item, $quantity)
+    {
+        if (ProductVariant::exists($item) && is_numeric($quantity)) {
             $this->items[$item] = $quantity;
             $this->save();
         }
     }
-    public function update($item,$quantity){
-        if(ProductVariant::exists($item) && is_numeric($quantity)){
-            $this->items[$item] = $quantity;
-            $this->updatesql($item,$quantity);
-        }
 
+    public function update($item, $quantity)
+    {
+        if (ProductVariant::exists($item) && is_numeric($quantity)) {
+            $this->items[$item] = $quantity;
+            $this->updatesql($item, $quantity);
+        }
     }
-    public function delete($item){
+
+    public function delete($item)
+    {
         unset($this->items[$item]);
-        $this->sql->delete("shop_cart",["id" => $this->id, "iid" => $item]);
+        $this->sql->delete("shop_cart", ["id" => $this->id, "iid" => $item]);
     }
 
-    public function destroy(){
-        $this->sql->delete("shop_cart",["id" => $this->id]);
+    public function destroy()
+    {
+        $this->sql->delete("shop_cart", ["id" => $this->id]);
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
-    public function getItems(){
+
+    public function getItems()
+    {
         return $this->items;
     }
 
-    public function getSubTotal(){
+    public function getSubTotal()
+    {
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
-        if(boolval($settings["exclbtw"])){
-            foreach($this->items as $item => $quantity){
+        if (boolval($settings["exclbtw"])) {
+            foreach ($this->items as $item => $quantity) {
                 $itemv = ProductVariant::get($item);
                 $amount += intval($itemv->getPrice()) * $quantity;
             }
-            if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
+            if (boolval($settings["shipping"]) && !boolval($settings["freeshipping"])) {
                 $amount += $this->getShippingCost();
             }
         } else {
-            foreach($this->items as $item => $quantity){
+            foreach ($this->items as $item => $quantity) {
                 $itemv = ProductVariant::get($item);
                 $amount += intval($itemv->getPrice()) * $quantity;
             }
-            if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
+            if (boolval($settings["shipping"]) && !boolval($settings["freeshipping"])) {
                 $amount += $this->getShippingCost();
             }
-            $amount -= $this->getBtw($amount, true); 
+            $amount -= $this->getBtw($amount, true);
         }
 
         return $amount;
     }
 
-    public function getTotalAmount(){
+    public function getTotalAmount()
+    {
         $amount = 0;
         $settings = Shop::getInstance()->getSettings();
-        foreach($this->items as $item => $quantity){
+        foreach ($this->items as $item => $quantity) {
             $itemv = ProductVariant::get($item);
             $amount += intval($itemv->getPrice()) * $quantity;
         }
-        if(boolval($settings["shipping"]) && !boolval($settings["freeshipping"])){
+        if (boolval($settings["shipping"]) && !boolval($settings["freeshipping"])) {
             $amount += $this->getShippingCost();
         }
-        if(boolval($settings["exclbtw"])){
+        if (boolval($settings["exclbtw"])) {
             $amount += $this->getBtw($amount, true);
         }
         return $amount;
     }
 
-    public function getBtw($amount,$excl = false){
+    public function getBtw($amount, $excl = false)
+    {
         $exclBtw = boolval(Shop::getInstance()->getSettings()["exclbtw"]);
-        if($excl || !$exclBtw){
+        if ($excl || !$exclBtw) {
             return $amount - Shop::doubleToInt(round(Shop::intToDouble($amount) / ((Shop::getInstance()->getSettings()["btw"] / 100) + 1), 2));
-        }else{
-            return Shop::doubleToInt(round(Shop::intToDouble($amount) * (Shop::getInstance()->getSettings()["btw"] / 100),2));
+        } else {
+            return Shop::doubleToInt(round(Shop::intToDouble($amount) * (Shop::getInstance()->getSettings()["btw"] / 100), 2));
         }
     }
-    
-    public function getShippingCost(){
+
+    public function getShippingCost()
+    {
         $items = count($this->items);
         $settings = Shop::getInstance()->getShipping();
         $price = $settings["amount"];
@@ -146,9 +170,9 @@ abstract class ProductList{
 
         $amount = $price;
         $counter = 0;
-        foreach($this->items as $item => $quantity){
+        foreach ($this->items as $item => $quantity) {
             $counter += $quantity;
-            if($counter > $ipp){
+            if ($counter > $ipp) {
                 $amount += $price;
                 $counter -= $ipp;
             }
@@ -156,5 +180,3 @@ abstract class ProductList{
         return $amount;
     }
 }
-
-?>

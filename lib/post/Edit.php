@@ -61,4 +61,3 @@ class Edit extends Post{
         return $this->select("text", ["key" => $id,"language" => $this->language->getDefault()]);
     }
 }
-?>

@@ -1,5 +1,8 @@
 <?php
+
 namespace lib\controllers;
+
+use \DateTime;
 
 use lib\Felta;
 
@@ -19,28 +22,30 @@ use lib\helpers\UUID;
 use lib\filesystem\File;
 use lib\helpers\Input;
 
-class ShopController {
+class ShopController
+{
 
-	public static function PUBLIC_KEY(){
-
-	}
+    public static function PUBLIC_KEY()
+    {
+    }
 
     /**
      * Shop items
      */
-	public static function ADD_ITEM(){
+    public static function ADD_ITEM()
+    {
         $name = Input::clean("name");
         $slug = Input::clean("slug");
         $category = Input::clean("category");
         $shortDescription = Input::clean("short_description");
-		$description = Input::clean("description");
-		$image = null;
-		$product = Product::create($name, $slug, $category, $shortDescription, $description, $image, true);
+        $description = Input::clean("description");
+        $image = null;
+        $product = Product::create($name, $slug, $category, $shortDescription, $description, $image, true);
 
         $productVariants = [];
         $variants = $_POST["variants"];
 
-        foreach($variants as $variant) {
+        foreach ($variants as $variant) {
             $variantId = UUID::generate(20);
             $images = [];
             if (array_key_exists("images", $variant)) {
@@ -49,17 +54,17 @@ class ShopController {
 
             $attributes = [];
             if (array_key_exists("attributes", $variant)) {
-                foreach($variant["attributes"] as $attribute) {
+                foreach ($variant["attributes"] as $attribute) {
                     $attributes[] = Attribute::create($variantId, $attribute["name"], $attribute["value"]);
                 }
             }
- 
+
             $productVariant = new ProductVariant(
                 $variantId,
                 $product->getId(),
                 $variant["variant_name"],
                 $variant["sku"],
-                str_replace([",","."],["",""], $variant["amount"]),
+                str_replace([",", "."], ["", ""], $variant["amount"]),
                 $variant["currency"],
                 $variant["sizeWidth"],
                 $variant["sizeHeight"],
@@ -73,13 +78,14 @@ class ShopController {
             $productVariants[] = $productVariant;
         }
 
-		$product->setVariants($productVariants);
+        $product->setVariants($productVariants);
         $product->save();
         echo json_encode(["success" => "Item has succesfully added"]);
         Header("location: /felta/shop/products");
-	}
+    }
 
-	public static function UPDATE_ITEM(){
+    public static function UPDATE_ITEM()
+    {
         $id = $_POST["id"];
         $product = Product::get($id);
 
@@ -87,7 +93,7 @@ class ShopController {
         $slug = Input::clean("slug");
         $category = Input::value("category");
         $shortDescription = Input::clean("short_description");
-		$description = Input::clean("description");
+        $description = Input::clean("description");
 
         $product->setName($name);
         $product->setSlug($slug);
@@ -98,7 +104,7 @@ class ShopController {
         $productVariants = [];
         $variants = $_POST["variants"];
 
-        foreach($variants as $variant) {
+        foreach ($variants as $variant) {
             $variantId = UUID::generate(20);
             $images = [];
             if (array_key_exists("images", $variant)) {
@@ -107,17 +113,17 @@ class ShopController {
 
             $attributes = [];
             if (array_key_exists("attributes", $variant)) {
-                foreach($variant["attributes"] as $attribute) {
+                foreach ($variant["attributes"] as $attribute) {
                     $attributes[] = Attribute::create($variantId, $attribute["name"], $attribute["value"]);
                 }
             }
- 
+
             $productVariant = new ProductVariant(
                 $variantId,
                 $product->getId(),
                 $variant["variant_name"],
                 $variant["sku"],
-                str_replace([",","."],["",""], $variant["amount"]),
+                str_replace([",", "."], ["", ""], $variant["amount"]),
                 $variant["currency"],
                 $variant["sizeWidth"],
                 $variant["sizeHeight"],
@@ -135,28 +141,31 @@ class ShopController {
         $product->update();
         echo json_encode(["success" => "Item has succesfully updated"]);
         Header("location: /felta/shop/products");
-	}
+    }
 
-	public static function DELETE_ITEM($id){
+    public static function DELETE_ITEM($id)
+    {
         $product = Product::get($id);
         $product->delete();
         echo json_encode(["success" => "Item has succesfully deleted"]);
         Header("Location: /felta/shop/products");
-	}
+    }
 
     /**
      * Images
      */
-    public static function UPLOAD_IMAGE(){
+    public static function UPLOAD_IMAGE()
+    {
         $uid = UUID::generate(20);
-        $file =  new File($_FILES["picture"],null);
+        $file =  new File($_FILES["picture"], null);
         $file->setExtension("png");
         $file->setName($uid);
         $file->upload(null);
-        echo json_encode(["success" => "Image has been succesfully added", "url" => $file->getRelativeDest(),"uid"=> $uid]);
+        echo json_encode(["success" => "Image has been succesfully added", "url" => $file->getRelativeDest(), "uid" => $uid]);
     }
 
-    public static function DELETE_IMAGE(){
+    public static function DELETE_IMAGE()
+    {
         $url = $_POST["url"];
         Shop::deleteImage($url);
         echo json_encode(["success" => "Image has been succesfully deleted"]);
@@ -166,55 +175,84 @@ class ShopController {
     /**
      * Category
      */
-    public static function GET_CATEGORIES(){
+    public static function GET_CATEGORIES()
+    {
         echo json_encode(Shop::getInstance()->getCategories());
     }
 
-	public static function ADD_CATEGORY(){
+    public static function ADD_CATEGORY()
+    {
         Shop::getInstance()->addCategory($_POST["category"]);
         echo json_encode(["success" => "Category has succesfully been added"]);
         header("Location: /felta/shop/categories");
     }
-    
-    public static function DELETE_CATEGORY(){
+
+    public static function DELETE_CATEGORY()
+    {
         Shop::getInstance()->deleteCategory($_POST["category"]);
         echo json_encode(["success" => "Category has succesfully deleted"]);
     }
-    
+
     /**
      * Promotions
      */
-    public static function GET_PROMOTIONS($from = 0, $amount = 20){
+    public static function GET_PROMOTIONS($from = 0, $amount = 20)
+    {
         $promotions = Promotion::all($from, $amount);
         $exposedPromotions = [];
-        foreach($promotions as $promotion) {
+        foreach ($promotions as $promotion) {
             $exposedPromotions[] = $promotion->expose();
         }
         echo json_encode(["success" => "", "promotions" => $exposedPromotions]);
     }
 
-	public static function ADD_PROMOTION(){
-        Shop::getInstance()->addCategory($_POST["category"]);
-        echo json_encode(["success" => "Category has succesfully been added"]);
-        header("Location: /felta/shop/categories");
+    public static function ADD_PROMOTION()
+    {
+
+        $promotion = new Promotion(
+            UUID::generate(20),
+            Input::clean("name"),
+            Input::clean("code"),
+            Input::clean("percentage"),
+            Input::clean("amount"),
+            new DateTime(Input::clean("startsAt")),
+            new DateTime(Input::clean("endsAt")),
+            new DateTime(),
+            new DateTime()
+        );
+        $promotion->save();
+
+        echo json_encode(["success" => "Promotion has succesfully been added", "promotion" => $promotion->expose()]);
+        header("Location: /felta/shop/promotions");
     }
-    public static function UPDATE_PROMOTION(){
-        Shop::getInstance()->addCategory($_POST["category"]);
-        echo json_encode(["success" => "Category has succesfully been added"]);
-        header("Location: /felta/shop/categories");
-    }
-    
-    public static function DELETE_PROMOTION($id){
-        $promotion = Promotion::get($id);
-        $promotion->delete();
-        echo json_encode(["success" => "Item has succesfully deleted"]);
+    public static function UPDATE_PROMOTION()
+    {
+        $promotion = Promotion::get($_POST["id"]);
+        $promotion->setName(Input::clean("name"));
+        $promotion->setCode(Input::clean("code"));
+        $promotion->setPercentage(Input::clean("percentage"));
+        $promotion->setAmount(Input::clean("amount"));
+        $promotion->setStartsAt(Input::clean("startsAt"));
+        $promotion->setEndsAt(Input::clean("endsAt"));
+
+        $promotion->update();
+        echo json_encode(["success" => "Promotion has succesfully been updated", "promotion" => $promotion->expose()]);
+        header("Location: /felta/shop/promotions");
     }
 
-    
+    public static function DELETE_PROMOTION($id)
+    {
+        $promotion = Promotion::get($id);
+        $promotion->delete();
+        echo json_encode(["success" => "Promotion has succesfully deleted"]);
+    }
+
+
     /**
      * Settings
      */
-    public static function UPDATE_ADDRESS(){
+    public static function UPDATE_ADDRESS()
+    {
         Shop::getInstance()->updateShopAddress(
             htmlspecialchars($_POST["street"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["number"], ENT_QUOTES, 'UTF-8'),
@@ -224,7 +262,8 @@ class ShopController {
         );
     }
 
-    public static function UPDATE_SETTINGS(){
+    public static function UPDATE_SETTINGS()
+    {
         Shop::getInstance()->updateSettings(
             htmlspecialchars($_POST["url"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["btw"], ENT_QUOTES, 'UTF-8'),
@@ -234,7 +273,8 @@ class ShopController {
         );
     }
 
-    public static function UPDATE_SHIPPING(){
+    public static function UPDATE_SHIPPING()
+    {
         Shop::getInstance()->updateShipping(
             Shop::doubleToInt($_POST["amount"]),
             htmlspecialchars($_POST["ipp"], ENT_QUOTES, 'UTF-8')
@@ -244,52 +284,57 @@ class ShopController {
     /**
      * ShoppingCart
      */
-    public static function CREATE_SHOPPING_CART(){
+    public static function CREATE_SHOPPING_CART()
+    {
         echo json_encode(Shoppingcart::create()->getId());
     }
 
-    public static function GET_SHOPPING_CART() {
+    public static function GET_SHOPPING_CART()
+    {
         $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
         $ShoppingCart->pull();
         echo json_encode(["items" => $ShoppingCart->getItems()]);
     }
 
-    public static function ADD_ITEM_SHOPPING_CART(){
+    public static function ADD_ITEM_SHOPPING_CART()
+    {
         $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
         $ShoppingCart->set($_POST["item"], $_POST["quantity"]);
         $ShoppingCart->save();
         echo json_encode(
             [
-            "action" => "add",
-            "product" => ProductVariant::get($_POST["item"])->expose(),
-            "quantity" => $_POST["quantity"],
-            "amount" => $ShoppingCart->getTotalAmount()
+                "action" => "add",
+                "product" => ProductVariant::get($_POST["item"])->expose(),
+                "quantity" => $_POST["quantity"],
+                "amount" => $ShoppingCart->getTotalAmount()
             ]
         );
     }
 
-    public static function UPDATE_ITEM_SHOPPING_CART(){
+    public static function UPDATE_ITEM_SHOPPING_CART()
+    {
         $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
         $ShoppingCart->update($_POST["item"], $_POST["quantity"]);
-        
+
         echo json_encode(
             [
-            "action" => "update",
-            "product" => ProductVariant::get($_POST["item"])->expose(),
-            "quantity" => $_POST["quantity"],
-            "amount" => $ShoppingCart->getTotalAmount()
+                "action" => "update",
+                "product" => ProductVariant::get($_POST["item"])->expose(),
+                "quantity" => $_POST["quantity"],
+                "amount" => $ShoppingCart->getTotalAmount()
             ]
         );
     }
 
-    public static function DELETE_ITEM_SHOPPING_CART(){
+    public static function DELETE_ITEM_SHOPPING_CART()
+    {
         $ShoppingCart = new Shoppingcart($_COOKIE["SCID"]);
         $ShoppingCart->delete($_POST["item"]);
         echo json_encode(
             [
-            "action" => "delete",
-            "product" => ProductVariant::get($_POST["item"])->expose(), 
-            "amount" => $ShoppingCart->getTotalAmount()
+                "action" => "delete",
+                "product" => ProductVariant::get($_POST["item"])->expose(),
+                "amount" => $ShoppingCart->getTotalAmount()
             ]
         );
     }
@@ -297,24 +342,28 @@ class ShopController {
     /**
      * Wishlist
      */
-    public static function CREATE_WISHLIST(){
+    public static function CREATE_WISHLIST()
+    {
         echo json_encode(Shoppingcart::create()->getId());
     }
 
-    public static function ADD_ITEM_WISHLIST(){
+    public static function ADD_ITEM_WISHLIST()
+    {
         $shoppingcart = new Shoppingcart($_COOKIE["WID"]);
-        $shoppingcart->set($_POST["item"],$_POST["quantity"]);
+        $shoppingcart->set($_POST["item"], $_POST["quantity"]);
         $shoppingcart->save();
         echo json_encode(["amount" => $shoppingcart->getTotalAmount()]);
     }
 
-    public static function UPDATE_ITEM_WISHLIST(){
+    public static function UPDATE_ITEM_WISHLIST()
+    {
         $shoppingcart = new Shoppingcart($_COOKIE["WID"]);
-        $shoppingcart->update($_POST["item"],$_POST["quantity"]);
+        $shoppingcart->update($_POST["item"], $_POST["quantity"]);
         echo json_encode(["amount" => $shoppingcart->getTotalAmount()]);
     }
 
-    public static function DELETE_ITEM_WISHLIST(){
+    public static function DELETE_ITEM_WISHLIST()
+    {
         $shoppingcart = new Shoppingcart($_COOKIE["WID"]);
         $shoppingcart->delete($_POST["item"]);
         echo json_encode(["amount" => $shoppingcart->getTotalAmount()]);
@@ -323,20 +372,22 @@ class ShopController {
     /**
      * Create sources
      */
-    public static function CREATE_SOURCE_IDEAL(){
+    public static function CREATE_SOURCE_IDEAL()
+    {
         $order = Order::get($_POST["oid"]);
-        $url = Felta::getInstance()->settings->get("website_url")."/felta/shop/return";
+        $url = Felta::getInstance()->settings->get("website_url") . "/felta/shop/return";
         echo json_encode($order->toSource("ideal", "eur", $url, array("ideal" => array("bank" => $_POST["bank"]))));
     }
 
     /**
      * Transaction
      */
-    public static function CREATE_TRANSACTION(){
+    public static function CREATE_TRANSACTION()
+    {
         $customer = Customer::create(
             htmlspecialchars($_POST["firstname"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["lastname"], ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars($_POST["email"],ENT_QUOTES,'UTF-8'),
+            htmlspecialchars($_POST["email"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["street"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["number"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["zipcode"], ENT_QUOTES, 'UTF-8'),
@@ -347,12 +398,13 @@ class ShopController {
             false
         );
         $customer->save();
-        $order = Order::createFromShoppingcart(new Shoppingcart($_COOKIE["SCID"]),$customer->id);
+        $order = Order::createFromShoppingcart(new Shoppingcart($_COOKIE["SCID"]), $customer->id);
         $order->save();
-        header("Location: /pay/".$order->getId());
+        header("Location: /pay/" . $order->getId());
     }
 
-    public static function MOLLIE_TRANSACTION() {
+    public static function MOLLIE_TRANSACTION()
+    {
         $order = Order::get($_POST["oid"]);
         $tid = UUID::generate(15);
         $payment = Shop::getInstance()->getMollie()->payments->create([
@@ -361,8 +413,8 @@ class ShopController {
                 "value" => Shop::intToDoubleSeperator($order->getTotalAmount(), ".")
             ],
             "description" => "A cleanheating payment",
-            "redirectUrl" => Felta::getInstance()->settings->get("website_url")."/shop/return/". $tid,
-            "webhookUrl"  => Felta::getInstance()->settings->get("website_url")."/felta/shop/mollie/". $tid,
+            "redirectUrl" => Felta::getInstance()->settings->get("website_url") . "/shop/return/" . $tid,
+            "webhookUrl"  => Felta::getInstance()->settings->get("website_url") . "/felta/shop/mollie/" . $tid,
             "method" => $_POST["method"]
         ]);
 
@@ -372,7 +424,7 @@ class ShopController {
             htmlspecialchars($_POST["oid"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars("ideal", ENT_QUOTES, 'UTF-8'),
             $order->getTotalAmount(),
-            "EUR",              
+            "EUR",
             htmlspecialchars(0, ENT_QUOTES, 'UTF-8'),
             new \DateTime()
         );
@@ -380,11 +432,12 @@ class ShopController {
         echo json_encode(["transaction" => $transaction, "checkoutUrl" => $payment->getCheckoutUrl()]);
     }
 
-    public static function CHECK_MOLLIE_PAYMENT(){
+    public static function CHECK_MOLLIE_PAYMENT()
+    {
         $transaction = Transaction::get($_POST["tid"]);
         if ($transaction != null) {
             $payment = Shop::getInstance()->getMollie()->payments->get($transaction->transactionid);
-            if ($payment->isPaid() && $transaction->state != TransactionState::COMMITTED){
+            if ($payment->isPaid() && $transaction->state != TransactionState::COMMITTED) {
                 //Set order to paid
                 $order = Order::get($transaction->order);
                 $order->paid();
@@ -403,51 +456,56 @@ class ShopController {
         echo json_encode(["success" => false]);
     }
 
-	public static function TRANSACTION(){
+    public static function TRANSACTION()
+    {
         $transaction = Transaction::create(
             htmlspecialchars($_POST["sid"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["oid"], ENT_QUOTES, 'UTF-8'),
-            htmlspecialchars($_POST["method"], ENT_QUOTES, 'UTF-8'),                
+            htmlspecialchars($_POST["method"], ENT_QUOTES, 'UTF-8'),
             htmlspecialchars($_POST["state"], ENT_QUOTES, 'UTF-8'),
             new \DateTime()
         );
         $transaction->save();
         echo json_encode($transaction);
     }
-    
-    public static function WEEK_TRANSACTIONS(){
+
+    public static function WEEK_TRANSACTIONS()
+    {
         echo json_encode(Transaction::getWeekTransactions());
     }
 
     /** Charge */
-	public static function CHARGE(){
+    public static function CHARGE()
+    {
         $source = Payment::getSource($_POST["source"]);
         $orderid = $_POST["oid"];
         $order = Order::get($orderid);
         $amount = $order->getTotalAmount();
         $method = htmlspecialchars($_POST["method"], ENT_QUOTES, 'UTF-8');
         $currency = "eur";
-        $payment = new Payment($orderid,$source,$method,$amount,$currency,"");
+        $payment = new Payment($orderid, $source, $method, $amount, $currency, "");
         $payment->pay();
         echo json_encode($payment);
+    }
 
-	}
+    public static function CHARGE_SOURCE()
+    {
+        echo json_encode(Payment::chargeFromSource($_POST["source"]));
+    }
 
-	public static function CHARGE_SOURCE(){
-		echo json_encode(Payment::chargeFromSource($_POST["source"]));
-	}
-
-	public static function WEBHOOK(){
+    public static function WEBHOOK()
+    {
         $input = @file_get_contents("php://input");
-        $json = json_decode($input,true);
+        $json = json_decode($input, true);
         echo json_encode(Payment::chargeFromSource($json["data"]["object"]));
     }
-    
-    public static function MOLLIE_WEBHOOK($tid){
+
+    public static function MOLLIE_WEBHOOK($tid)
+    {
         $transaction = Transaction::get($tid);
         if ($transaction != null) {
             $payment = Shop::getInstance()->getMollie()->payments->get($transaction->transactionid);
-            if ($payment->isPaid() && $transaction->state != TransactionState::COMMITTED){
+            if ($payment->isPaid() && $transaction->state != TransactionState::COMMITTED) {
                 //Set order to paid
                 $order = Order::get($transaction->order);
                 $order->paid();
@@ -466,4 +524,3 @@ class ShopController {
         echo json_encode(["success" => false]);
     }
 }
-?>

@@ -1,6 +1,8 @@
 <?php
-
 namespace lib\post\blog;
+
+use lib\Felta;
+use \DateTime;
 
 class Comment {
 
@@ -42,7 +44,9 @@ class Comment {
     }
 
     public static function get($id){
-        
+        $commentResult = Felta::getInstance()->getSQL()->select("*", "comment", ["id" => $id])[0];
+        if ($commentResult == null) return null;
+        return Comment::fromResult($commentResult);
     }
 
     public static function fromResult($result) {
@@ -82,12 +86,12 @@ class Comment {
     }
     
     public function update(){
-        $this->sql->update("user", "article", ["id" => $this->$id], $this->user);
-        $this->sql->update("name", "article", ["id" => $this->$id], $this->name);
-        $this->sql->update("comment", "article", ["id" => $this->$id], $this->comment);
-        $this->sql->update("accepted", "article", ["id" => $this->$id], $this->accepted);
-        $this->sql->update("createdAt", "article", ["id" => $this->$id], $this->createdAt->format("Y-m-d H:i:s"));
-        $this->sql->update("updatedAt", "article", ["id" => $this->$id], $this->updatedAt->format("Y-m-d H:i:s"));
+        $this->sql->update("user", "article", ["id" => $this->id], $this->user);
+        $this->sql->update("name", "article", ["id" => $this->id], $this->name);
+        $this->sql->update("comment", "article", ["id" => $this->id], $this->comment);
+        $this->sql->update("accepted", "article", ["id" => $this->id], $this->accepted);
+        $this->sql->update("createdAt", "article", ["id" => $this->id], $this->createdAt->format("Y-m-d H:i:s"));
+        $this->sql->update("updatedAt", "article", ["id" => $this->id], $this->updatedAt->format("Y-m-d H:i:s"));
     }
 
     public function delete(){
@@ -172,5 +176,3 @@ class Comment {
 		return $this;
 	}
 }
-
-?>
