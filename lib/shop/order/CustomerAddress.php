@@ -1,10 +1,11 @@
 <?php
+
 namespace lib\shop\order;
 
 use lib\Felta;
-use lib\helpers\UUID;
 
-class CustomerAddress{
+class CustomerAddress
+{
 
     private $sql;
     private $id;
@@ -15,7 +16,8 @@ class CustomerAddress{
     private $city;
     private $country;
 
-    public function __construct($id, $street,$number,$zipcode,$city,$country){
+    public function __construct($id, $street, $number, $zipcode, $city, $country)
+    {
         $this->sql = Felta::getInstance()->getSQL();
 
         $this->id = $id;
@@ -26,17 +28,20 @@ class CustomerAddress{
         $this->country = $country;
     }
 
-    public static function create($id,$street,$number,$zipcode,$city,$country){
-        return new CustomerAddress($id, $street,$number,$zipcode,$city,$country);
+    public static function create($id, $street, $number, $zipcode, $city, $country)
+    {
+        return new CustomerAddress($id, $street, $number, $zipcode, $city, $country);
     }
-    
-    public static function get($id){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_customer_address",["id" => $id])[0];
+
+    public static function get($id)
+    {
+        $result = Felta::getInstance()->getSQL()->select("*", "shop_customer_address", ["id" => $id])[0];
         return CustomerAddress::fromResult($result);
     }
 
-    public static function fromResult($result){
-        return new CustomerAddress (
+    public static function fromResult($result)
+    {
+        return new CustomerAddress(
             $result["id"],
             $result["street"],
             $result["number"],
@@ -46,8 +51,9 @@ class CustomerAddress{
         );
     }
 
-    public function save(){
-        $this->sql->insert("shop_customer_address",[
+    public function save()
+    {
+        $this->sql->insert("shop_customer_address", [
             $this->id,
             $this->street,
             $this->number,
@@ -57,39 +63,49 @@ class CustomerAddress{
         ]);
     }
 
-    public function setStreet($street){
+    public function setStreet($street)
+    {
         $this->street = $street;
         return $this;
     }
-    public function getStreet(){
+    public function getStreet()
+    {
         return $this->street;
     }
-    public function setNumber($number){
+    public function setNumber($number)
+    {
         $this->number = $number;
         return $this;
     }
-    public function getNumber(){
+    public function getNumber()
+    {
         return $this->number;
     }
-    public function setzipcode($zipcode){
+    public function setzipcode($zipcode)
+    {
         $this->zipcode = $zipcode;
         return $this;
     }
-    public function getzipcode(){
+    public function getzipcode()
+    {
         return $this->zipcode;
     }
-    public function setCity($city){
+    public function setCity($city)
+    {
         $this->city = $city;
         return $this;
     }
-    public function getCity(){
+    public function getCity()
+    {
         return $this->city;
     }
-    public function setCountry($country){
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
-    public function getCountry(){
+    public function getCountry()
+    {
         return $this->country;
     }
 }

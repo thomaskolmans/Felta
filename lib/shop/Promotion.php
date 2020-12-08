@@ -78,12 +78,17 @@ class Promotion
         return Promotion::fromResult($result);
     }
 
+    public static function getFromCode($code)
+    {
+        $result = Felta::getInstance()->getSQL()->select("*", "promotion", ["code" => $code])[0];
+        if ($result == null) return null;
+        return Promotion::fromResult($result);
+    }
+
     public static function exists($id)
     {
         return Felta::getInstance()->getSQL()->exists("promotion", ["id" => $id]);
     }
-
-
 
     public function save()
     {

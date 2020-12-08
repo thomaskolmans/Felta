@@ -1,11 +1,14 @@
 <?php
+
 namespace lib\filesystem;
 
-class Stream {
+class Stream
+{
 
     public $file;
 
-    public function __construct($file){
+    public function __construct($file)
+    {
         $this->file = $file;
     }
 }

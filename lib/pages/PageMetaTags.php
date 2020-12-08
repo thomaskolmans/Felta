@@ -1,6 +1,7 @@
 <?php
 namespace lib\post;
 
+use \DateTime;
 use lib\Felta;
 
 class PageMetaTags {
@@ -8,8 +9,10 @@ class PageMetaTags {
     private $sql;
 
     private $id;
-    private $name;
-    private $routes;
+    private $title;
+    private $description;
+	private $keywords;
+	private $image; 
 
     private $createdAt;
     private $updatedAt;
@@ -62,4 +65,3 @@ class PageMetaTags {
 	}
 	
 }
-?>

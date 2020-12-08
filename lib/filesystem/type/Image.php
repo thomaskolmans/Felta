@@ -12,6 +12,7 @@ class Image extends File{
     public function __construct($file){
         $this->file = new File($file);
     }
+    
     public function load($image){
         $this->image = $image;
         $file = new File($this->image);
@@ -19,6 +20,7 @@ class Image extends File{
             return false;
         }
     }
+
     public static function resize($path,$x1,$y1,$w,$h,$x2,$y2){
         $x = getimagesize($path);            
         switch ($x['mime']) {
@@ -69,5 +71,3 @@ class Image extends File{
         return $uid;
     }
 }
-
-?>

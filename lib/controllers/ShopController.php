@@ -398,7 +398,7 @@ class ShopController
             false
         );
         $customer->save();
-        $order = Order::createFromShoppingcart(new Shoppingcart($_COOKIE["SCID"]), $customer->id);
+        $order = Order::createFromShoppingcart(new Shoppingcart($_COOKIE["SCID"]), Input::clean("promotion"), $customer->id);
         $order->save();
         header("Location: /pay/" . $order->getId());
     }

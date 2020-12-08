@@ -6,4 +6,3 @@ use lib\Felta;
 class StatisticsController {
 
 }
-?>

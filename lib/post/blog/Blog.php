@@ -175,5 +175,3 @@ class Blog {
 		return $this;
 	}
 }
-
-?>

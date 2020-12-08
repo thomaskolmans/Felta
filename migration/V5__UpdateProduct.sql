@@ -9,3 +9,5 @@ CREATE TABLE IF NOT EXISTS `promotion` (
     `createdAt` datetime,
     `updatedAt` datetime
 );
+
+ALTER TABLE `shop_product` ADD COLUMN `isDownloadable` varchar(255) AFTER `category`;

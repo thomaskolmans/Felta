@@ -1,11 +1,12 @@
 <?php
+
 namespace lib\shop;
 
-class Subscription {
+class Subscription
+{
 
     private $sql;
 
     private $id;
     private $name;
-
 }

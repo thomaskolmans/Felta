@@ -39,5 +39,3 @@ class FeltaController {
         echo json_encode(["success" => "Image has been successfully added", "url" => $file->getRelativeDest(),"uid"=> $uid]);
     }
 }
-
-?>

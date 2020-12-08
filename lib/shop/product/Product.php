@@ -1,10 +1,12 @@
 <?php
+
 namespace lib\shop\product;
 
 use lib\Felta;
 use lib\helpers\UUID;
 
-class Product{
+class Product
+{
 
     private $sql;
 
@@ -23,17 +25,17 @@ class Product{
     private $variants = [];
 
     public function __construct(
-        $id, 
-        $name, 
-        $slug, 
-        $category, 
-        $isDownloadable, 
-        $shortDescription, 
-        $description, 
-        $image, 
-        $date, 
+        $id,
+        $name,
+        $slug,
+        $category,
+        $isDownloadable,
+        $shortDescription,
+        $description,
+        $image,
+        $date,
         $active = false
-    ){
+    ) {
         $this->sql = Felta::getInstance()->getSQL();
 
         $this->id = $id;
@@ -48,8 +50,9 @@ class Product{
         $this->active = $active;
     }
 
-    public static function fromResult($result){
-        $variants = Felta::getInstance()->getSQL()->select("id","shop_product_variant",["sid" => $result["id"]]);
+    public static function fromResult($result)
+    {
+        $variants = Felta::getInstance()->getSQL()->select("id", "shop_product_variant", ["sid" => $result["id"]]);
         $product = new Product(
             $result["id"],
             $result["name"],
@@ -62,67 +65,75 @@ class Product{
             $result["date"],
             $result["active"]
         );
-        if($variants !== null){
-            if(is_array($variants)){
-                foreach($variants as $variant){
+        if ($variants !== null) {
+            if (is_array($variants)) {
+                foreach ($variants as $variant) {
                     $product->addVariant(ProductVariant::get($variant["id"]));
                 }
-            }else{
+            } else {
                 $product->addVariant(ProductVariant::get($variants));
             }
         }
         return $product;
     }
 
-    public static function create($name, $slug, $category, $isDownloadable, $shortDescription, $description, $image, $active = false) {
+    public static function create($name, $slug, $category, $isDownloadable, $shortDescription, $description, $image, $active = false)
+    {
         $id = UUID::generate(6);
         $date = new \DateTime();
         return new Product($id, $name, $slug, $category, $isDownloadable, $shortDescription, $description, $image, $date, $active);
     }
 
-    public static function exists($id){
-        return Felta::getInstance()->getSQL()->exists("shop_product",["id" => $id]);
+    public static function exists($id)
+    {
+        return Felta::getInstance()->getSQL()->exists("shop_product", ["id" => $id]);
     }
 
-    public static function get($id){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_product",["id" => $id])[0];
-        if($result == null) return null;
+    public static function get($id)
+    {
+        $result = Felta::getInstance()->getSQL()->select("*", "shop_product", ["id" => $id])[0];
+        if ($result == null) return null;
         return Product::fromResult($result);
     }
 
-    public static function getFromSlug($slug) {
-        $result = Felta::getInstance()->getSQL()->select("*","shop_product",["slug" => $slug])[0];
-        if($result == null) return null;
-        return Product::fromResult($result);
-    }
-    
-    public static function getSolo($id){
-        $result = Felta::getInstance()->getSQL()->select("*","shop_product",["id" => $id])[0];
-        if($result == null) return null;
+    public static function getFromSlug($slug)
+    {
+        $result = Felta::getInstance()->getSQL()->select("*", "shop_product", ["slug" => $slug])[0];
+        if ($result == null) return null;
         return Product::fromResult($result);
     }
 
-    public static function all($from = 0, $amount = 20) {
+    public static function getSolo($id)
+    {
+        $result = Felta::getInstance()->getSQL()->select("*", "shop_product", ["id" => $id])[0];
+        if ($result == null) return null;
+        return Product::fromResult($result);
+    }
+
+    public static function all($from = 0, $amount = 20)
+    {
         $results = Felta::getInstance()->getSQL()->query()->select()->from("shop_product")->limit($from, $amount)->execute();
         $products = [];
-        foreach($results as $result) {
+        foreach ($results as $result) {
             $products[] = Product::fromResult($result);
         }
         return $products;
     }
 
-    public static function allWithCategory($category, $from = 0, $amount = 20) {
+    public static function allWithCategory($category, $from = 0, $amount = 20)
+    {
         $results = Felta::getInstance()->getSQL()->query()->select()->from("shop_product")->where("category", $category)->limit($from, $amount)->execute();
         $products = [];
-        foreach($results as $result) {
+        foreach ($results as $result) {
             $products[] = Product::fromResult($result);
         }
         return $products;
     }
-    
-    public function getLowestPrice() {
+
+    public function getLowestPrice()
+    {
         $lowestPrice = null;
-        foreach($this->variants as $variant) {
+        foreach ($this->variants as $variant) {
             if ($lowestPrice === null || $variant->getPrice() < $lowestPrice) {
                 $lowestPrice = $variant->getPrice();
             }
@@ -130,9 +141,10 @@ class Product{
         return $lowestPrice;
     }
 
-    public function getHighestPrice() {
+    public function getHighestPrice()
+    {
         $highestPrice = null;
-        foreach($this->variants as $variant) {
+        foreach ($this->variants as $variant) {
             if ($highestPrice === null || $variant->getPrice() > $highestPrice) {
                 $highestPrice = $variant->getPrice();
             }
@@ -140,16 +152,18 @@ class Product{
         return $highestPrice;
     }
 
-    public function getAveragePrice() {
+    public function getAveragePrice()
+    {
         $prices = [];
-        foreach($this->variants as $variant) {
+        foreach ($this->variants as $variant) {
             $prices[] = $variant->getPrice();
         }
         return array_sum($prices) / count($prices);
     }
 
-    public function save(){
-        $this->sql->insert("shop_product",[
+    public function save()
+    {
+        $this->sql->insert("shop_product", [
             $this->id,
             $this->name,
             $this->slug,
@@ -161,104 +175,123 @@ class Product{
             $this->date->format("Y-m-d H:i:s"),
             $this->active
         ]);
-        foreach($this->variants as $variant){
+        foreach ($this->variants as $variant) {
             $variant->save();
         }
     }
 
-    public function update(){
-        $this->sql->update("name","shop_product",["id" => $this->id],$this->name);
-        $this->sql->update("slug","shop_product",["id" => $this->id],$this->slug);
-        $this->sql->update("isDownloadable","shop_product",["id" => $this->id],$this->isDownloadable);
-        $this->sql->update("category","shop_product",["id" => $this->id],$this->category);
-        $this->sql->update("short_description","shop_product",["id" => $this->id],$this->shortDescription);
-        $this->sql->update("description","shop_product",["id" => $this->id],$this->description);
-        $this->sql->update("image","shop_product",["id" => $this->id],$this->image);
-        $this->sql->update("date","shop_product",["id" => $this->id],$this->date);
-        $this->sql->update("active","shop_product",["id" => $this->id],$this->active);
+    public function update()
+    {
+        $this->sql->update("name", "shop_product", ["id" => $this->id], $this->name);
+        $this->sql->update("slug", "shop_product", ["id" => $this->id], $this->slug);
+        $this->sql->update("isDownloadable", "shop_product", ["id" => $this->id], $this->isDownloadable);
+        $this->sql->update("category", "shop_product", ["id" => $this->id], $this->category);
+        $this->sql->update("short_description", "shop_product", ["id" => $this->id], $this->shortDescription);
+        $this->sql->update("description", "shop_product", ["id" => $this->id], $this->description);
+        $this->sql->update("image", "shop_product", ["id" => $this->id], $this->image);
+        $this->sql->update("date", "shop_product", ["id" => $this->id], $this->date);
+        $this->sql->update("active", "shop_product", ["id" => $this->id], $this->active);
 
         $this->sql->delete("shop_product_variant", ["sid" => $this->id]);
-        foreach($this->variants as $variant){
+        foreach ($this->variants as $variant) {
             $variant->update();
         }
     }
 
-    public function delete(){
-        $this->sql->delete("shop_product",["id" => $this->id]);
-        foreach($this->variants as $variant){
+    public function delete()
+    {
+        $this->sql->delete("shop_product", ["id" => $this->id]);
+        foreach ($this->variants as $variant) {
             $variant->delete();
         }
     }
 
-    public function expose(){
+    public function expose()
+    {
         $exposed = get_object_vars($this);
         unset($exposed["sql"]);
         $exposed["variants"] = [];
-        foreach($this->variants as $variant){
+        foreach ($this->variants as $variant) {
             $exposed["variants"][] = $variant->expose();
         }
         return $exposed;
     }
-    
-    public function getId(){
+
+    public function getId()
+    {
         return $this->id;
     }
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
-    public function getSlug(){
+    public function getSlug()
+    {
         return $this->slug;
     }
-    public function setSlug($slug){
+    public function setSlug($slug)
+    {
         $this->slug = $slug;
         return $this;
     }
-    public function getCategory(){
+    public function getCategory()
+    {
         return $this->category;
     }
-    public function setCategory($category){
+    public function setCategory($category)
+    {
         $this->category = $category;
         return $this;
     }
-    public function getShortDescription(){
+    public function getShortDescription()
+    {
         return $this->shortDescription;
     }
-    public function setShortDescription($shortDescription){
+    public function setShortDescription($shortDescription)
+    {
         $this->shortDescription = $shortDescription;
         return $this;
     }
-    public function getDescription(){
+    public function getDescription()
+    {
         return $this->description;
     }
-    public function setDescription($description){
+    public function setDescription($description)
+    {
         $this->description = $description;
         return $this;
     }
-    public function getActive(){
+    public function getActive()
+    {
         return $this->active;
     }
-    public function setActive($active){
+    public function setActive($active)
+    {
         $this->active = $active;
         return $this;
     }
-    public function getVariants(){
+    public function getVariants()
+    {
         return $this->variants;
     }
-    public function addVariant($variant){
+    public function addVariant($variant)
+    {
         $this->variants[] = $variant;
         return $this;
     }
-    public function setVariants($variants){
+    public function setVariants($variants)
+    {
         $this->variants = $variants;
         return $this;
     }
-
 }
